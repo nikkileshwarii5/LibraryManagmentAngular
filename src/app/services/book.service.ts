@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class BookService {
-  private API = 'http://localhost:8080/api/books';
+  private API = 'http://15.206.209.161:8080/api/books';
 
   constructor(private http: HttpClient) {}
 
