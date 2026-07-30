@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-const API = 'http://localhost:8080/api/payments';
+const API = 'http://15.206.209.161:8080/api/payments';
 
 @Injectable({ providedIn: 'root' })
 export class PaymentService {
