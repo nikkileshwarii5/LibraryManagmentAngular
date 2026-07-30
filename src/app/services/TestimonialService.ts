@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 
 export class TestimonialService {
 
-  API = 'http://localhost:8080/testimonials';
+  API = 'http://15.206.209.161:8080/testimonials';
 
   constructor(private http: HttpClient) {}
 
