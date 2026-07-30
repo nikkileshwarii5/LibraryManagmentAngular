@@ -5,7 +5,7 @@ import {
   HttpHeaders
 } from '@angular/common/http';
 
-const API = 'http://localhost:8080/api/wishlist';
+const API = 'http://15.206.209.161:8080/api/wishlist';
 
 @Injectable({
   providedIn: 'root'
