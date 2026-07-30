@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class GenreService {
 
-  private API = 'http://localhost:8080/api/genres';
+  private API = 'http://15.206.209.161:8080/api/genres';
 
   constructor(private http: HttpClient) {}
 
