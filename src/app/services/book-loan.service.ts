@@ -11,7 +11,7 @@ import { BookLoanStatistics } from '../models/book-loan-statistics';
 })
 export class BookLoanService {
 
-  API ='http://localhost:8080/api/book-loans';
+  API ='http://15.206.209.161:8080/api/book-loans';
 
   constructor(
     private http: HttpClient
@@ -78,7 +78,7 @@ export class BookLoanService {
   createFine(body: any) {
 
     return this.http.post(
-      `http://localhost:8080/api/fines`,
+      `http://15.206.209.161:8080/api/fines`,
       body,
       this.getHeaders()
     );
@@ -110,7 +110,7 @@ export class BookLoanService {
   fetchDashboardStats() {
 
     return this.http.get(
-      'http://localhost:8080/api/dashboard/my-dashboard-stats',
+      'http://15.206.209.161:8080/api/dashboard/my-dashboard-stats',
       this.getHeaders()
     );
 
