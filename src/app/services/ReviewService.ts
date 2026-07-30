@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class ReviewService {
 
   private apiUrl =
-    'http://localhost:8080/api/reviews';
+    'http://15.206.209.161:8080/api/reviews';
 
   constructor(
     private http: HttpClient
