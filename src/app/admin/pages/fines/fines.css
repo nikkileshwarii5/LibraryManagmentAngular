@@ -1,0 +1,720 @@
+/* ================= PAGE ================= */
+
+.page-wrapper{
+    width:100%;
+    min-height:100vh;
+    background:#f8fafc;
+}
+
+.page-content{
+    width:960px;
+    padding:20px;
+}
+
+/* ================= HEADER ================= */
+
+.header-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:24px;
+}
+
+.title{
+    font-size:34px;
+    font-weight:700;
+    margin:0;
+    color:#111827;
+}
+
+.subtitle{
+    color:#6b7280;
+    margin-top:4px;
+    margin-bottom:0;
+}
+
+/* ================= STATS ================= */
+
+.card{
+    border:none;
+    border-radius:16px;
+    box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+
+.card h3{
+    margin-bottom:8px;
+    font-weight:700;
+}
+
+.stat-label{
+    margin:0;
+    font-size:14px;
+    letter-spacing:.3px;
+}
+
+/* ================= FILTER ================= */
+
+.filter-card{
+    background:#fff;
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,.05);
+    margin-bottom:24px;
+}
+
+.filters-row{
+    display:flex;
+    justify-content:flex-end;
+}
+
+.filter-btn{
+    height:56px;
+    padding:0 24px;
+    border-radius:12px;
+    border:2px solid #6366f1;
+    background:#fff;
+    color:#6366f1;
+    font-weight:600;
+    transition:.2s;
+}
+
+.filter-btn:hover{
+    background:#6366f1;
+    color:#fff;
+}
+
+/* ================= TABLE ================= */
+
+.table-section{
+    margin-top:24px;
+}
+
+.table-card{
+    background:#fff;
+    border-radius:18px;
+    box-shadow:0 4px 12px rgba(0,0,0,.06);
+    overflow:hidden;
+}
+
+.table-scroll-wrapper{
+    width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar{
+    height:8px;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-track{
+    background:#e5e7eb;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-thumb{
+    background:#6366f1;
+    border-radius:20px;
+}
+
+.custom-table{
+    width:100%;
+    min-width:1500px;
+    border-collapse:collapse;
+}
+
+.custom-table thead{
+    background:#ececf9;
+}
+
+.custom-table th{
+    padding:18px;
+    text-align:left;
+    font-size:17px;
+    font-weight:700;
+    color:#1f2937;
+    white-space:nowrap;
+}
+
+.custom-table td{
+    padding:20px 18px;
+    border-top:1px solid #eee;
+    vertical-align:middle;
+}
+
+/* ================= TEXT ================= */
+
+.text-left{
+    text-align:left;
+}
+
+.primary{
+    font-size:17px;
+    font-weight:600;
+    color:#111827;
+}
+
+small{
+    display:block;
+    margin-top:4px;
+    font-size:13px;
+    color:#6b7280;
+}
+
+/* ================= BADGES ================= */
+
+.fine-badge{
+    display:inline-block;
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.fine-badge.success{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.fine-badge.warning{
+    background:#fef3c7;
+    color:#b45309;
+}
+
+.fine-badge.gray{
+    background:#e5e7eb;
+    color:#374151;
+}
+
+/* ================= AMOUNTS ================= */
+
+.amount{
+    font-weight:700;
+    color:#111827;
+}
+
+.paid{
+    font-weight:700;
+    color:#16a34a;
+}
+
+/* ================= ACTION BUTTONS ================= */
+
+.actions{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    min-width:130px;
+}
+
+.fine-btn{
+    border:none;
+    border-radius:8px;
+    padding:7px 12px;
+    font-size:13px;
+    font-weight:500;
+    cursor:pointer;
+    transition:.2s;
+    width:120px;
+}
+
+.fine-btn.success{
+    background:#22c55e;
+    color:#fff;
+}
+
+.fine-btn.warning{
+    background:#f59e0b;
+    color:#fff;
+}
+
+.fine-btn.danger{
+    background:#ef4444;
+    color:#fff;
+}
+
+.fine-btn:hover{
+    opacity:.9;
+}
+
+/* ================= EMPTY ================= */
+
+.no-data{
+    text-align:center;
+    padding:60px;
+    color:#6b7280;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:992px){
+
+    .page-content{
+        width:100%;
+    }
+
+    .filter-btn{
+        width:100%;
+    }
+
+}
+
+
+
+/* Type Badge */
+
+.type-badge{
+    display:inline-block;
+    min-width:90px;
+    padding:8px 16px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+    text-align:center;
+    color:#fff;
+    text-transform:capitalize;
+}
+
+/* Loss */
+
+.type-badge.loss{
+    background:#ff4d5a;
+}
+
+/* Damage */
+
+.type-badge.damage{
+    background:#f59e0b;
+}
+
+
+
+/* Overdue */
+
+.type-badge.overdue{
+    background:#ff0202;
+}
+
+
+/* ================= AMOUNT ================= */
+
+.amount{
+    font-size:18px;
+    font-weight:700;
+    color:#0f5bff;
+    white-space:nowrap;
+}
+
+/* ================= PAID ================= */
+
+.paid{
+    font-size:18px;
+    font-weight:700;
+    color:#22c55e;
+    white-space:nowrap;
+}
+
+
+
+
+/*================== MODERN STATS CARD ==================*/
+
+.stats-card{
+    position:relative;
+    background:#fff;
+    border-radius:20px;
+    padding:26px 24px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(15,23,42,.08);
+    transition:all .35s ease;
+    border:1px solid #eef2f7;
+}
+
+.stats-card::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:5px;
+    background:#6366f1;
+}
+
+.stats-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 18px 40px rgba(0,0,0,.15);
+}
+
+/*============= ICON =============*/
+
+.icon-box{
+    width:58px;
+    height:58px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    margin-bottom:20px;
+}
+
+.stats-card h3{
+    margin:0;
+    font-size:32px;
+    font-weight:700;
+    color:#111827;
+}
+
+.stat-label{
+    margin-top:8px;
+    margin-bottom:0;
+    color:#6b7280;
+    font-size:15px;
+    font-weight:500;
+}
+
+/*============= Pending =============*/
+
+.pending-card::before{
+    background:#f59e0b;
+}
+
+.pending-card .icon-box{
+    background:#fef3c7;
+    color:#d97706;
+}
+
+/*============= Paid =============*/
+
+.paid-card::before{
+    background:#22c55e;
+}
+
+.paid-card .icon-box{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+/*============= Collected =============*/
+
+.collected-card::before{
+    background:#3b82f6;
+}
+
+.collected-card .icon-box{
+    background:#dbeafe;
+    color:#2563eb;
+}
+
+/*============= Outstanding =============*/
+
+.outstanding-card::before{
+    background:#ef4444;
+}
+
+.outstanding-card .icon-box{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+
+.completed-text{
+    color:#9ca3af;
+    font-size:14px;
+    font-style:italic;
+    font-weight:500;
+}
+
+
+
+
+.pagination-wrapper{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:15px;
+    padding:20px;
+    border-top:1px solid #e5e5e5;
+}
+
+.page-info{
+    font-size:14px;
+}
+
+.page-size{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.pagination{
+    display:flex;
+    gap:8px;
+}
+
+.page-btn{
+    padding:8px 14px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.page-btn.active{
+    background:#4f46e5;
+    color:#fff;
+}
+
+
+
+/*==================== WAIVE DIALOG ====================*/
+
+.modal-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+.waive-modal{
+    width:720px;
+    background:#fff;
+    border-radius:14px;
+    padding:28px;
+    box-shadow:0 20px 45px rgba(0,0,0,.2);
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:22px;
+}
+
+.modal-header h3{
+    margin:0;
+    font-size:32px;
+    font-weight:600;
+    color:#222;
+}
+
+.close-btn{
+    border:none;
+    background:none;
+    font-size:24px;
+    cursor:pointer;
+    color:#666;
+}
+
+.waive-alert{
+    display:flex;
+    gap:15px;
+    align-items:flex-start;
+    background:#fff4dd;
+    color:#8a5b00;
+    border-left:5px solid #f59e0b;
+    border-radius:8px;
+    padding:18px;
+    margin-bottom:25px;
+}
+
+.waive-alert i{
+    font-size:30px;
+    color:#f59e0b;
+    margin-top:3px;
+}
+
+.dialog-label{
+    display:block;
+    margin-bottom:10px;
+    font-size:16px;
+    font-weight:600;
+}
+
+.dialog-label span{
+    color:#ef4444;
+}
+
+.form-control{
+    width:100%;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:15px;
+    font-size:16px;
+    resize:none;
+    outline:none;
+}
+
+.form-control:focus{
+    border-color:#f59e0b;
+    box-shadow:0 0 0 3px rgba(245,158,11,.15);
+}
+
+.dialog-footer{
+    margin-top:28px;
+    display:flex;
+    justify-content:flex-end;
+    gap:14px;
+}
+
+.btn-cancel{
+    border:none;
+    background:white;
+    color:#4f46e5;
+    font-size:17px;
+    font-weight:600;
+    padding:12px 22px;
+    cursor:pointer;
+}
+
+.btn-waive{
+    background:#f59e0b;
+    color:white;
+    border:none;
+    border-radius:8px;
+    padding:12px 24px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.btn-waive:hover{
+    background:#d97706;
+}
+
+
+
+
+
+/* ===========================
+   FILTER MODAL
+=========================== */
+
+.modal-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    animation:fadeIn .2s ease;
+}
+
+.filter-modal{
+    width:550px;
+    max-width:95%;
+    background:#fff;
+    border-radius:18px;
+    box-shadow:0 25px 60px rgba(0,0,0,.2);
+    overflow:hidden;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:22px 28px;
+    border-bottom:1px solid #ececec;
+}
+
+.modal-header h3{
+    margin:0;
+    font-size:26px;
+    font-weight:700;
+}
+
+.close-btn{
+    border:none;
+    background:none;
+    font-size:22px;
+    cursor:pointer;
+    color:#777;
+}
+
+.close-btn:hover{
+    color:#000;
+}
+
+.filter-modal .form-group{
+    padding:20px 28px 0;
+}
+
+.filter-modal label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+    color:#444;
+}
+
+.filter-modal .form-control{
+    width:100%;
+    height:52px;
+    border:1px solid #d7d7d7;
+    border-radius:10px;
+    padding:0 16px;
+    font-size:15px;
+    transition:.25s;
+}
+
+.filter-modal .form-control:focus{
+    outline:none;
+    border-color:#4f46e5;
+    box-shadow:0 0 0 3px rgba(79,70,229,.15);
+}
+
+.dialog-footer{
+    display:flex;
+    justify-content:flex-end;
+    gap:12px;
+    padding:24px 28px;
+}
+
+.btn-clear,
+.btn-cancel,
+.btn-apply{
+    border:none;
+    border-radius:10px;
+    padding:12px 22px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.btn-clear{
+    background:#f3f4f6;
+    color:#555;
+}
+
+.btn-clear:hover{
+    background:#e5e7eb;
+}
+
+.btn-cancel{
+    background:white;
+    border:1px solid #ddd;
+}
+
+.btn-cancel:hover{
+    background:#f5f5f5;
+}
+
+.btn-apply{
+    background:#4f46e5;
+    color:white;
+}
+
+.btn-apply:hover{
+    background:#4338ca;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+    }
+    to{
+        opacity:1;
+    }
+}

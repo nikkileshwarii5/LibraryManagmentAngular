@@ -1,0 +1,822 @@
+<div class="min-vh-100 bg-light py-5">
+
+  <div class="container">
+
+    <!-- Header -->
+    <div class="mb-5">
+
+      <h1 class="display-5 fw-bold mb-2">
+        <span class="gradient-text">
+          Admin Settings
+        </span>
+      </h1>
+
+      <p class="text-muted fs-5">
+        Manage your library administration preferences
+      </p>
+
+    </div>
+
+    <!-- ===================== -->
+    <!-- Notification Settings -->
+    <!-- ===================== -->
+
+    <div class="card shadow-sm border-0 mb-4">
+
+      <div class="card-body p-4">
+
+        <div class="d-flex align-items-center mb-4">
+
+          <div class="notification-icon me-3">
+
+            <i class="bi bi-bell-fill fs-3 text-primary"></i>
+
+          </div>
+
+          <div>
+
+            <h2 class="fw-bold mb-1">
+              Notifications
+            </h2>
+
+            <p class="text-muted mb-0">
+              Receive important administrator alerts
+            </p>
+
+          </div>
+
+        </div>
+
+        <!-- Email -->
+
+        <div class="form-check form-switch py-3">
+
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="notifications.emailNotifications"
+            (change)="handleNotificationChange('emailNotifications')">
+
+          <label class="form-check-label ms-2">
+
+            <div class="fw-semibold">
+
+              Email Notifications
+
+            </div>
+
+            <small class="text-muted">
+
+              Receive admin alerts by email
+
+            </small>
+
+          </label>
+
+        </div>
+
+        <hr>
+
+        <!-- Push -->
+
+        <div class="form-check form-switch py-3">
+
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="notifications.pushNotifications"
+            (change)="handleNotificationChange('pushNotifications')">
+
+          <label class="form-check-label ms-2">
+
+            <div class="fw-semibold">
+
+              Push Notifications
+
+            </div>
+
+            <small class="text-muted">
+
+              Browser notifications
+
+            </small>
+
+          </label>
+
+        </div>
+
+        <hr>
+
+        <!-- Return Requests -->
+
+        <div class="form-check form-switch py-3">
+
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="notifications.returnRequests"
+            (change)="handleNotificationChange('returnRequests')">
+
+          <label class="form-check-label ms-2">
+
+            <div class="fw-semibold">
+
+              Return Requests
+
+            </div>
+
+            <small class="text-muted">
+
+              Notify when users request book returns
+
+            </small>
+
+          </label>
+
+        </div>
+
+        <hr>
+
+        <!-- Lost Books -->
+
+        <div class="form-check form-switch py-3">
+
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="notifications.lostBooks"
+            (change)="handleNotificationChange('lostBooks')">
+
+          <label class="form-check-label ms-2">
+
+            <div class="fw-semibold">
+
+              Lost Book Reports
+
+            </div>
+
+            <small class="text-muted">
+
+              Notify when users report lost books
+
+            </small>
+
+          </label>
+
+        </div>
+
+        <hr>
+
+        <!-- Damaged -->
+
+        <div class="form-check form-switch py-3">
+
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="notifications.damagedBooks"
+            (change)="handleNotificationChange('damagedBooks')">
+
+          <label class="form-check-label ms-2">
+
+            <div class="fw-semibold">
+
+              Damaged Book Reports
+
+            </div>
+
+            <small class="text-muted">
+
+              Notify when users report damaged books
+
+            </small>
+
+          </label>
+
+        </div>
+
+        <hr>
+
+        <!-- Reservations -->
+
+        <div class="form-check form-switch py-3">
+
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="notifications.reservations"
+            (change)="handleNotificationChange('reservations')">
+
+          <label class="form-check-label ms-2">
+
+            <div class="fw-semibold">
+
+              Reservation Requests
+
+            </div>
+
+            <small class="text-muted">
+
+              Notify when a new reservation is placed
+
+            </small>
+
+          </label>
+
+        </div>
+
+        <hr>
+
+        <!-- Fine Payments -->
+
+        <div class="form-check form-switch py-3">
+
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="notifications.finePayments"
+            (change)="handleNotificationChange('finePayments')">
+
+          <label class="form-check-label ms-2">
+
+            <div class="fw-semibold">
+
+              Fine Payments
+
+            </div>
+
+            <small class="text-muted">
+
+              Notify when users pay library fines
+
+            </small>
+
+          </label>
+
+        </div>
+
+        <hr>
+
+        <!-- New Users -->
+
+        <div class="form-check form-switch py-3">
+
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="notifications.newUsers"
+            (change)="handleNotificationChange('newUsers')">
+
+          <label class="form-check-label ms-2">
+
+            <div class="fw-semibold">
+
+              New User Registration
+
+            </div>
+
+            <small class="text-muted">
+
+              Notify when a new member registers
+
+            </small>
+
+          </label>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ===================== -->
+    <!-- Library Preferences -->
+    <!-- ===================== -->
+
+    <div class="card shadow-sm border-0 mb-4">
+
+      <div class="card-body p-4">
+
+        <div class="d-flex align-items-center mb-4">
+
+          <div class="notification-icon me-3">
+
+            <i class="bi bi-book-half fs-3 text-success"></i>
+
+          </div>
+
+          <div>
+
+            <h2 class="fw-bold mb-1">
+
+              Library Preferences
+
+            </h2>
+
+            <p class="text-muted mb-0">
+
+              Configure how the library operates
+
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="form-check form-switch py-3">
+
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="library.autoApproveReservations"
+            (change)="toggleLibrarySetting('autoApproveReservations')">
+
+          <label class="form-check-label ms-2">
+
+            <div class="fw-semibold">
+
+              Auto Approve Reservations
+
+            </div>
+
+            <small class="text-muted">
+
+              Automatically approve reservation requests
+
+            </small>
+
+          </label>
+
+        </div>
+
+        <hr>
+
+        <div class="form-check form-switch py-3">
+
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="library.enableFineCalculation"
+            (change)="toggleLibrarySetting('enableFineCalculation')">
+
+          <label class="form-check-label ms-2">
+
+            <div class="fw-semibold">
+
+              Enable Fine Calculation
+
+            </div>
+
+            <small class="text-muted">
+
+              Automatically calculate overdue fines
+
+            </small>
+
+          </label>
+
+        </div>
+
+        <hr>
+
+        <div class="form-check form-switch py-3">
+
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="library.allowRenewals"
+            (change)="toggleLibrarySetting('allowRenewals')">
+
+          <label class="form-check-label ms-2">
+
+            <div class="fw-semibold">
+
+              Allow Book Renewals
+
+            </div>
+
+            <small class="text-muted">
+
+              Users can renew borrowed books
+
+            </small>
+
+          </label>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ===================== -->
+<!-- Security Settings -->
+<!-- ===================== -->
+
+<div class="card shadow-sm border-0 mb-4">
+
+  <div class="card-body p-4">
+
+    <div class="d-flex align-items-center mb-4">
+
+      <div class="notification-icon me-3">
+        <i class="bi bi-shield-lock-fill fs-3 text-danger"></i>
+      </div>
+
+      <div>
+
+        <h2 class="fw-bold mb-1">
+          Security
+        </h2>
+
+        <p class="text-muted mb-0">
+          Protect your administrator account
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- Two Factor -->
+
+    <div class="form-check form-switch py-3">
+
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [checked]="security.twoFactor"
+        (change)="toggleSecuritySetting('twoFactor')">
+
+      <label class="form-check-label ms-2">
+
+        <div class="fw-semibold">
+
+          Two Factor Authentication
+
+        </div>
+
+        <small class="text-muted">
+
+          Add an extra layer of security
+
+        </small>
+
+      </label>
+
+    </div>
+
+    <hr>
+
+    <!-- Login Alerts -->
+
+    <div class="form-check form-switch py-3">
+
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [checked]="security.loginAlerts"
+        (change)="toggleSecuritySetting('loginAlerts')">
+
+      <label class="form-check-label ms-2">
+
+        <div class="fw-semibold">
+
+          Login Alerts
+
+        </div>
+
+        <small class="text-muted">
+
+          Notify whenever someone logs into your account
+
+        </small>
+
+      </label>
+
+    </div>
+
+    <hr>
+
+    <!-- Session Timeout -->
+
+    <div class="form-check form-switch py-3">
+
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [checked]="security.sessionTimeout"
+        (change)="toggleSecuritySetting('sessionTimeout')">
+
+      <label class="form-check-label ms-2">
+
+        <div class="fw-semibold">
+
+          Automatic Session Timeout
+
+        </div>
+
+        <small class="text-muted">
+
+          Automatically logout after inactivity
+
+        </small>
+
+      </label>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ===================== -->
+<!-- Appearance -->
+<!-- ===================== -->
+
+<div class="card shadow-sm border-0 mb-4">
+
+  <div class="card-body p-4">
+
+    <div class="d-flex align-items-center mb-4">
+
+      <div class="notification-icon me-3">
+
+        <i class="bi bi-palette-fill fs-3 text-warning"></i>
+
+      </div>
+
+      <div>
+
+        <h2 class="fw-bold mb-1">
+
+          Appearance
+
+        </h2>
+
+        <p class="text-muted mb-0">
+
+          Customize your admin dashboard
+
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- Dark Mode -->
+
+    <div class="form-check form-switch py-3">
+
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [checked]="appearance.darkMode"
+        (change)="toggleAppearanceSetting('darkMode')">
+
+      <label class="form-check-label ms-2">
+
+        <div class="fw-semibold">
+
+          Dark Mode
+
+        </div>
+
+        <small class="text-muted">
+
+          Enable dark theme
+
+        </small>
+
+      </label>
+
+    </div>
+
+    <hr>
+
+    <!-- Compact -->
+
+    <div class="form-check form-switch py-3">
+
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [checked]="appearance.compactMode"
+        (change)="toggleAppearanceSetting('compactMode')">
+
+      <label class="form-check-label ms-2">
+
+        <div class="fw-semibold">
+
+          Compact Layout
+
+        </div>
+
+        <small class="text-muted">
+
+          Reduce spacing across the dashboard
+
+        </small>
+
+      </label>
+
+    </div>
+
+    <hr>
+
+    <!-- Animations -->
+
+    <div class="form-check form-switch py-3">
+
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [checked]="appearance.animations"
+        (change)="toggleAppearanceSetting('animations')">
+
+      <label class="form-check-label ms-2">
+
+        <div class="fw-semibold">
+
+          Enable Animations
+
+        </div>
+
+        <small class="text-muted">
+
+          Smooth transitions throughout the application
+
+        </small>
+
+      </label>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ===================== -->
+<!-- Danger Zone -->
+<!-- ===================== -->
+
+<div class="card shadow border-danger">
+
+  <div class="card-body p-4">
+
+    <div class="d-flex align-items-center mb-4">
+
+      <div class="notification-icon bg-danger bg-opacity-10 me-3">
+
+        <i class="bi bi-exclamation-triangle-fill text-danger fs-3"></i>
+
+      </div>
+
+      <div>
+
+        <h2 class="fw-bold text-danger mb-1">
+
+          Danger Zone
+
+        </h2>
+
+        <p class="text-muted mb-0">
+
+          These actions cannot be undone
+
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="d-flex flex-wrap gap-3">
+
+      <button
+        class="btn btn-outline-warning"
+        (click)="resetSettings()">
+
+        <i class="bi bi-arrow-clockwise me-2"></i>
+
+        Reset Settings
+
+      </button>
+
+      <button
+        class="btn btn-danger"
+        (click)="deleteAccountDialog=true">
+
+        <i class="bi bi-trash me-2"></i>
+
+        Delete Admin Account
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ===================== -->
+<!-- Delete Modal -->
+<!-- ===================== -->
+
+<div
+  class="modal fade show d-block"
+  *ngIf="deleteAccountDialog">
+
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h5 class="modal-title text-danger">
+
+          Delete Administrator Account?
+
+        </h5>
+
+        <button
+          class="btn-close"
+          (click)="deleteAccountDialog=false">
+        </button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <p>
+
+          This action cannot be undone.
+
+        </p>
+
+        <div class="alert alert-danger">
+
+          Deleting this administrator account
+          will permanently remove access.
+
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+
+        <button
+          class="btn btn-secondary"
+          (click)="deleteAccountDialog=false">
+
+          Cancel
+
+        </button>
+
+        <button
+          class="btn btn-danger"
+          (click)="handleDeleteAccount()">
+
+          Delete Account
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Snackbar -->
+
+<div
+  *ngIf="snackbar.open"
+  class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
+
+  <div class="toast show">
+
+    <div
+      class="alert mb-0"
+      [ngClass]="{
+      'alert-success': snackbar.severity==='success',
+      'alert-warning': snackbar.severity==='warning',
+      'alert-danger': snackbar.severity==='error'
+    }">
+
+      {{ snackbar.message }}
+
+    </div>
+
+  </div>
+
+</div>
+
+  
+
+
+  
+

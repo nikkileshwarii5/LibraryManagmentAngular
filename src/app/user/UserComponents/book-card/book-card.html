@@ -1,0 +1,147 @@
+<div
+  class="book-card position-relative"
+  (click)="handleViewDetails()"
+>
+
+  <!-- COVER -->
+
+  <div class="cover-wrapper">
+
+    <!-- IMAGE -->
+
+    <img
+      *ngIf="book.coverImageUrl"
+      [src]="book.coverImageUrl"
+      [alt]="book.title"
+      class="book-cover"
+    />
+
+    <!-- PLACEHOLDER -->
+
+    <div
+      *ngIf="!book.coverImageUrl"
+      class="placeholder-wrapper"
+    >
+
+      <i class="fa-solid fa-book-open"></i>
+
+    </div>
+
+    <!-- AVAILABILITY -->
+
+    <div class="availability-badge">
+
+      <div
+        *ngIf="isAvailable"
+        class="available-pill"
+      >
+
+        <i class="fa-solid fa-circle-check"></i>
+
+        <span>
+          Available
+        </span>
+
+      </div>
+
+      <div
+        *ngIf="!isAvailable"
+        class="checkedout-pill"
+      >
+
+        <i class="fa-solid fa-circle-xmark"></i>
+
+        <span>
+          Checked Out
+        </span>
+
+      </div>
+
+    </div>
+
+    <!-- GENRE -->
+
+    <div
+      *ngIf="book.genre"
+      class="genre-badge"
+    >
+
+      {{ book.genre.name }}
+
+    </div>
+
+  </div>
+
+  <!-- DETAILS -->
+
+  <div class="book-details">
+
+    <!-- TITLE -->
+
+    <h3 class="book-title">
+
+      {{ book.title }}
+
+    </h3>
+
+    <!-- AUTHOR -->
+
+    <div class="author-wrapper">
+
+      <i class="fa-solid fa-user"></i>
+
+      <span>
+
+        {{ book.author }}
+
+      </span>
+
+    </div>
+
+    <!-- INFO -->
+
+    <div class="book-info">
+
+      <span>
+        ISBN: {{ book.isbn }}
+      </span>
+
+      <span>
+        {{ book.availableCopies }}/{{ book.totalCopies }} copies
+      </span>
+
+    </div>
+
+    <!-- DESCRIPTION -->
+
+    <p
+      *ngIf="book.description"
+      class="book-description"
+    >
+
+      {{ book.description }}
+
+    </p>
+
+    <!-- BUTTON -->
+
+    <div class="button-wrapper">
+
+      <button
+        class="view-btn"
+        (click)="handleViewDetails(); $event.stopPropagation()"
+      >
+
+        View
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- HOVER OVERLAY -->
+
+  <div class="hover-overlay"></div>
+
+</div>

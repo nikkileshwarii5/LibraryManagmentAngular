@@ -1,0 +1,128 @@
+<section class="testimonial-section">
+
+  <div class="container">
+
+    <!-- Header -->
+    <div class="testimonial-header text-center">
+
+      <div class="section-badge">
+        <mat-icon>favorite</mat-icon>
+        <span>Readers Love Us</span>
+      </div>
+
+      <h2>
+        What Our Members
+        <span>Say</span>
+      </h2>
+
+      <p>
+        Don't just take our word for it. Discover why thousands of readers
+        trust LibraOne every day.
+      </p>
+
+    </div>
+
+    <!-- Cards -->
+
+    <div class="row g-4">
+
+      <div
+        class="col-lg-4 col-md-6"
+        *ngFor="let testimonial of testimonials">
+
+        <div class="testimonial-card">
+
+          <div class="quote-bg">
+            <mat-icon>format_quote</mat-icon>
+          </div>
+
+          <div class="stars">
+
+            <mat-icon
+              *ngFor="let star of [1,2,3,4,5]"
+              [class.active]="star <= testimonial.rating">
+
+              star
+
+            </mat-icon>
+
+          </div>
+
+          <p class="testimonial-text">
+
+            "{{testimonial.text}}"
+
+          </p>
+
+          <div class="user-info">
+
+            <div class="avatar">
+
+              {{testimonial.image}}
+
+            </div>
+
+            <div>
+
+              <h5>{{testimonial.name}}</h5>
+
+              <span>{{testimonial.role}}</span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+
+    <div class="testimonial-cta">
+
+      <div>
+
+        <h3>
+
+          Ready to Join Our Reading Community?
+
+        </h3>
+
+        <p>
+
+          Start reading smarter with thousands of books,
+          personalized recommendations and seamless borrowing.
+
+        </p>
+
+      </div>
+
+      <div class="cta-buttons">
+
+        <button class="btn-primary-modern">
+
+          Start Free
+
+          <mat-icon>
+
+            arrow_forward
+
+          </mat-icon>
+
+        </button>
+
+        <button class="btn-outline-modern">
+
+          Membership Plans
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

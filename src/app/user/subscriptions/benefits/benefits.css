@@ -1,0 +1,180 @@
+.benefit-section {
+  
+  position: relative;
+
+  margin-top: 70px;
+
+  padding: 70px 40px;
+
+  border-radius: 15px;
+
+  overflow: hidden;
+
+  background: linear-gradient(
+    135deg,
+    #667eea 0%,
+    #764ba2 100%
+  );
+}
+
+/* GLOW EFFECT */
+
+.benefit-overlay {
+
+  position: absolute;
+
+  top: -120px;
+  right: -120px;
+
+  width: 420px;
+  height: 420px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(255,255,255,0.12) 0%,
+    transparent 70%
+  );
+}
+
+/* CONTENT */
+
+.benefit-content {
+
+  position: relative;
+
+  z-index: 2;
+}
+
+.benefit-content h2 {
+
+  text-align: center;
+
+  font-size: 42px;
+  font-weight: 800;
+
+  color: white;
+
+  margin-bottom: 14px;
+}
+
+.subtitle {
+
+  text-align: center;
+
+  color: rgba(255,255,255,0.9);
+
+  font-size: 18px;
+
+  margin-bottom: 50px;
+}
+
+/* GRID */
+
+/* GRID */
+
+.benefit-grid {
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 34px;
+
+  margin-top: 40px;
+}
+
+/* CARD */
+
+.benefit-card {
+
+  min-height: 150px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 38px 30px;
+
+  border-radius: 10px;
+
+  background: rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(255,255,255,0.14);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.08);
+
+  transition: 0.35s;
+}
+
+.benefit-card:hover {
+
+  transform: translateY(-8px);
+
+  background: rgba(255,255,255,0.12);
+}
+
+.benefit-card:hover {
+
+  transform: translateY(-8px);
+
+  background: rgba(255,255,255,0.12);
+}
+
+/* EMOJI */
+
+.emoji {
+
+  font-size: 52px;
+
+  margin-bottom: 18px;
+}
+
+/* TITLE */
+
+.benefit-card h3 {
+
+  color: white;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  margin-bottom: 14px;
+}
+
+/* DESCRIPTION */
+
+.benefit-card p {
+
+  max-width: 260px;
+
+  margin: 0 auto;
+
+  color: rgba(255,255,255,0.88);
+
+  line-height: 1.7;
+
+  font-size: 14px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 992px) {
+
+  .benefit-grid {
+
+    grid-template-columns: 1fr;
+  }
+
+  .benefit-section {
+
+    padding: 50px 24px;
+  }
+}

@@ -1,0 +1,168 @@
+<div class="dashboard-wrapper">
+
+  <div class="container-fluid py-4">
+
+    <!-- HEADER -->
+
+    <div class="dashboard-header fade-up">
+
+      <h1 class="dashboard-title">
+
+        My
+
+        <span class="gradient-text">
+          Dashboard
+        </span>
+
+      </h1>
+
+      <p class="dashboard-subtitle">
+        Track your reading journey and manage your library
+      </p>
+
+    </div>
+
+    <!-- STATS -->
+
+    <div class="row g-4 mb-4 fade-up delay-1">
+
+      <div
+        class="col-12 col-sm-6 col-lg-3"
+        *ngFor="let item of statsData"
+      >
+
+        <app-stats-card
+          [icon]="item.icon"
+          [value]="item.value"
+          [title]="item.title"
+          [subtitle]="item.subtitle"
+          [bgColor]="item.bgColor"
+          [textColor]="item.textColor"
+        >
+        </app-stats-card>
+
+      </div>
+
+    </div>
+
+    <!-- READING PROGRESS -->
+
+    <div class="progress-card fade-up delay-2">
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+          <h3 class="fw-bold">
+           {{ currentYear }} Reading Goal
+          </h3>
+
+          <p class="text-muted">
+            <!-- {{ stats.booksRead }} of 30 books read -->
+              {{ stats.booksRead }} of {{ stats.totalBooks }} books read
+          </p>
+
+        </div>
+
+        <div class="goal-icon">
+
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+        </div>
+
+      </div>
+
+      <div class="custom-progress">
+
+        <div
+          class="custom-progress-bar"
+          [style.width.%]="readingProgress"
+        >
+        </div>
+
+      </div>
+
+      <p class="small text-muted mt-2">
+        {{ readingProgress | number:'1.0-0' }}% complete
+      </p>
+
+    </div>
+
+    <!-- TABS -->
+
+    <div class="tabs-card fade-up delay-3">
+
+      <div class="tabs-header">
+
+        <button
+          class="tab-btn"
+          [class.active-tab]="activeTab === 0"
+          (click)="activeTab = 0"
+        >
+          Current Loans
+        </button>
+
+        <button
+          class="tab-btn"
+          [class.active-tab]="activeTab === 1"
+          (click)="activeTab = 1"
+        >
+          Reservations
+        </button>
+
+        <button
+          class="tab-btn"
+          [class.active-tab]="activeTab === 2"
+          (click)="activeTab = 2"
+        >
+          Reading History
+        </button>
+
+        <button
+          class="tab-btn"
+          [class.active-tab]="activeTab === 3"
+          (click)="activeTab = 3"
+        >
+          Recommendations
+        </button>
+
+      </div>
+
+      <!-- TAB CONTENT -->
+
+      <!-- <app-current-loans
+        *ngIf="activeTab === 0"
+      >
+      </app-current-loans> -->
+
+      <app-current-loans
+  *ngIf="activeTab === 0"
+  [myLoans]="myLoans">
+</app-current-loans>
+
+      <!-- <app-reservation
+        *ngIf="activeTab === 1"
+      >
+      </app-reservation> -->
+
+      <app-reservation
+  *ngIf="activeTab === 1"
+  [reservations]="myReservations"
+>
+</app-reservation>
+
+      <app-reading-history
+        *ngIf="activeTab === 2"
+      >
+      </app-reading-history>
+
+      <app-recommendation
+        *ngIf="activeTab === 3"
+      >
+      </app-recommendation>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,426 @@
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+<div class="container-fluid py-4" *ngIf="user">
+
+  <!-- Header -->
+
+  <div class="mb-4">
+    <h1 class="fw-bold">
+      My <span class="text-primary">Profile</span>
+    </h1>
+    <p class="text-muted">
+      Manage your account information and preferences
+    </p>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- LEFT SECTION -->
+
+    <div class="col-lg-4">
+
+      <!-- Avatar Card -->
+
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-center">
+
+          <div class="position-relative d-inline-block">
+
+            <!-- <div
+              class="avatar-circle"
+              [style.background]="getMembershipColor(user.membershipTier)"
+            >
+              {{ getInitial() }}
+            </div> -->
+
+            <div class="avatar-wrapper">
+
+  <img
+    *ngIf="user.profileImage"
+    [src]="user.profileImage"
+    class="avatar-image"
+  />
+
+  <div
+    *ngIf="!user.profileImage"
+    class="avatar-circle"
+    [style.background]="getMembershipColor(user.membershipTier)"
+  >
+    {{ getInitial() }}
+  </div>
+
+</div>
+
+            <button
+              class="btn btn-primary btn-sm camera-btn"
+              (click)="openAvatarDialog()"
+            >
+              <i class="fa-solid fa-camera"></i>
+            </button>
+
+          </div>
+
+          <h3 class="mt-4 fw-bold">
+            {{ formData.fullName }}
+          </h3>
+
+          <p class="text-muted">
+            {{ formData.email }}
+          </p>
+
+          <!-- <span
+            class="badge fs-6"
+            [style.background]="getMembershipColor(user.membershipTier)"
+          >
+            {{ user.membershipTier }} Member
+          </span> -->
+
+          <div class="membership-badge">
+            <i class="fa-solid fa-certificate"></i>
+            <span>{{ user.membershipTier }} Member</span>
+          </div>
+<!-- 
+          <div class="mt-3">
+            <i class="fa-solid fa-star text-warning"></i>
+
+            <span class="fw-bold ms-2">
+              {{ user.points }}
+            </span>
+
+            <span class="text-muted">
+              points
+            </span>
+          </div> -->
+
+          <div class="points-section mt-3">
+  <i class="fa-solid fa-star"></i>
+  <span class="fw-bold">{{ user.points }}</span>
+  <span class="text-muted">points</span>
+</div>
+
+        </div>
+      </div>
+
+      <!-- Stats Card -->
+
+      <div class="card shadow-sm border-0 mt-4">
+
+        <div class="card-body">
+
+          <h4 class="fw-bold mb-4">
+  Reading Stats
+</h4>
+
+<div class="stat-row">
+  <div>
+    <i class="fa-solid fa-book-open stat-icon text-primary"></i>
+    Books Read
+  </div>
+  <strong class="text-primary">
+    {{ user.totalBooksRead }}
+  </strong>
+</div>
+
+<div class="stat-row">
+  <div>
+    <i class="fa-solid fa-trophy stat-icon text-warning"></i>
+    Current Streak
+  </div>
+  <strong class="text-warning">
+    {{ user.currentStreak }} days
+  </strong>
+</div>
+
+<div class="stat-row">
+  <div>
+    <i class="fa-solid fa-id-card stat-icon text-success"></i>
+    Member Since
+  </div>
+  <strong>
+    {{ user.lastLogin | date:'yyyy' }}
+  </strong>
+</div>
+
+<hr>
+
+<p class="mb-2 text-muted">
+  Favorite Genre
+</p>
+
+<span class="genre-badge">
+  {{ user.favoriteGenre }}
+</span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT SECTION -->
+
+    <div class="col-lg-8">
+
+      <!-- Profile Card -->
+
+      <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+          <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h3 class="fw-bold">
+              Profile Information
+            </h3>
+
+            <div *ngIf="!isEditing">
+              <button
+                class="btn btn-outline-primary"
+                (click)="isEditing = true">
+               <i class="fa-solid fa-pen me-2"></i>
+                Edit Profile
+              </button>
+            </div>
+
+            <div *ngIf="isEditing">
+
+              <button
+                class="btn btn-outline-secondary me-2"
+                (click)="handleCancel()"
+              >
+                Cancel
+              </button>
+
+              <button
+                class="btn btn-primary"
+                (click)="handleSave()"
+              >
+                Save Changes
+              </button>
+
+            </div>
+
+          </div>
+
+          <!-- Full Name -->
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+                <i class="fa-solid fa-id-badge me-2"></i>
+              Full Name
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="formData.fullName"
+              [disabled]="!isEditing"
+            >
+          </div>
+
+          <!-- Email -->
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+                <i class="fa-solid fa-envelope me-2"></i>
+              Email
+            </label>
+
+            <input
+              type="email"
+              class="form-control"
+              [(ngModel)]="formData.email"
+              [disabled]="!isEditing"
+            >
+          </div>
+
+          <!-- Phone -->
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+               <i class="fa-solid fa-phone me-2"></i>
+              Phone Number
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="formData.phone"
+              [disabled]="!isEditing"
+            >
+          </div>
+
+          <!-- DOB -->
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+                <i class="fa-solid fa-cake-candles me-2"></i>
+              Date Of Birth
+            </label>
+
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="formData.dateOfBirth"
+              [disabled]="!isEditing"
+            >
+          </div>
+
+          <!-- Address -->
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+                 <i class="fa-solid fa-location-dot me-2"></i>
+              Address
+            </label>
+
+            <textarea
+              rows="2"
+              class="form-control"
+              [(ngModel)]="formData.address"
+              [disabled]="!isEditing"
+            ></textarea>
+          </div>
+
+          <!-- Bio -->
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+                <i class="fa-solid fa-user-pen me-2"></i>
+              Bio
+            </label>
+
+            <textarea
+              rows="4"
+              class="form-control"
+              [(ngModel)]="formData.bio"
+              [disabled]="!isEditing"
+            ></textarea>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Achievements -->
+
+      <div class="card shadow-sm border-0 mt-4">
+
+        <div class="card-body">
+
+          <h3 class="fw-bold mb-4">
+            Achievements
+          </h3>
+
+          <div class="row">
+
+            <div
+              class="col-md-6 mb-3"
+              *ngFor="let achievement of achievements"
+            >
+
+              <div
+                class="achievement-box"
+                [class.earned]="achievement.earned"
+              >
+
+                <h5>
+                  {{ achievement.title }}
+                </h5>
+
+                <p>
+                  {{ achievement.description }}
+                </p>
+
+                <span
+                  *ngIf="achievement.earned"
+                  class="badge bg-success"
+                >
+                  Earned
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+<div
+  class="modal-backdrop-custom"
+  *ngIf="avatarDialogOpen"
+>
+
+  <div class="avatar-modal">
+
+    <h3 class="modal-title">
+      Update Profile Picture
+    </h3>
+
+    <div class="upload-section">
+
+      <label class="upload-btn">
+
+        <i class="fa-solid fa-camera me-2"></i>
+
+        CHOOSE PHOTO
+
+        <input
+          type="file"
+          accept="image/*"
+          hidden
+          (change)="handleAvatarUpload($event)"
+        >
+
+      </label>
+
+      <p class="upload-note">
+        Recommended: Square image, at least 400x400px
+      </p>
+
+    </div>
+
+    <div class="modal-footer-custom">
+
+      <button
+        class="cancel-btn"
+        (click)="closeAvatarDialog()"
+      >
+        CANCEL
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div
+  *ngIf="showAlert"
+  class="custom-snackbar"
+  [ngClass]="alertType"
+>
+  <i class="fa-solid fa-circle-check"></i>
+
+  <span>{{ alertMessage }}</span>
+
+  <button
+    class="close-snackbar"
+    (click)="showAlert = false"
+  >
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+</div>
+
+</div>

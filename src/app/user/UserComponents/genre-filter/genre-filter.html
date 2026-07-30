@@ -1,0 +1,181 @@
+<!-- genre-filter.html -->
+
+<div class="card shadow-sm border-0 rounded-4 p-3">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+
+    <h5 class="fw-bold mb-0">
+      Genres
+    </h5>
+
+    <button
+      *ngIf="selectedGenreId"
+      class="btn btn-link text-decoration-none p-0"
+      (click)="onGenreSelect(null)"
+    >
+      Clear
+    </button>
+
+  </div>
+
+  <!-- All Genres -->
+  <div
+    class="genre-item d-flex align-items-center gap-2 mb-2"
+    [ngClass]="{
+      'selected-item': !selectedGenreId
+    }"
+    (click)="onGenreSelect(null)"
+  >
+
+    <i
+      class="bi"
+      [ngClass]="
+        !selectedGenreId
+          ? 'bi-check-circle-fill text-primary'
+          : 'bi-circle'
+      "
+    ></i>
+
+    <span>
+      All Genres
+    </span>
+
+  </div>
+
+  <!-- Genre Tree -->
+  <div class="genre-container">
+
+    <ng-container *ngIf="genres.length > 0; else noGenres">
+
+      <ng-container *ngFor="let genre of genres">
+
+        <!-- Parent Genre -->
+        <div class="mb-1">
+
+          <div
+            class="genre-item d-flex align-items-center gap-2"
+            [ngClass]="{
+              'selected-item': selectedGenreId === +genre.id
+            }"
+            [style.padding-left.px]="12"
+          >
+
+            <!-- Expand Button -->
+            <button
+              *ngIf="genre.children?.length"
+              class="btn btn-sm p-0 border-0 bg-transparent"
+              (click)="toggleGenre(+genre.id); $event.stopPropagation()"
+            >
+
+              <i
+                class="bi"
+                [ngClass]="
+                  isExpanded(+genre.id)
+                    ? 'bi-chevron-down'
+                    : 'bi-chevron-right'
+                "
+              ></i>
+
+            </button>
+
+            <div
+              *ngIf="!genre.children?.length"
+              style="width: 16px;"
+            >
+            </div>
+
+            <!-- Folder Icon -->
+            <i
+              *ngIf="genre.children?.length"
+              class="bi"
+              [ngClass]="
+                isExpanded(+genre.id)
+                  ? 'bi-folder2-open'
+                  : 'bi-folder'
+              "
+            ></i>
+
+            <!-- Genre Name -->
+            <div
+              class="d-flex align-items-center gap-2 flex-grow-1"
+              (click)="onGenreSelect(+genre.id)"
+            >
+
+              <i
+                class="bi"
+                [ngClass]="
+                  selectedGenreId === +genre.id
+                    ? 'bi-check-circle-fill text-primary'
+                    : 'bi-circle'
+                "
+              ></i>
+
+              <span>
+                {{ genre.name }}
+              </span>
+
+            </div>
+
+          </div>
+
+          <!-- Children -->
+          <div
+            *ngIf="genre.children?.length && isExpanded(+genre.id)"
+            class="mt-1"
+          >
+
+            <div
+              *ngFor="let child of genre.children"
+              class="genre-item d-flex align-items-center gap-2"
+              [ngClass]="{
+                'selected-item': selectedGenreId === +child.id
+              }"
+              [style.padding-left.px]="36"
+            >
+
+              <div style="width: 16px;"></div>
+
+              <i class="bi bi-dot"></i>
+
+              <div
+                class="d-flex align-items-center gap-2 flex-grow-1"
+                (click)="onGenreSelect(+child.id)"
+              >
+
+                <i
+                  class="bi"
+                  [ngClass]="
+                    selectedGenreId === +child.id
+                      ? 'bi-check-circle-fill text-primary'
+                      : 'bi-circle'
+                  "
+                ></i>
+
+                <span>
+                  {{ child.name }}
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </ng-container>
+
+    </ng-container>
+
+    <ng-template #noGenres>
+
+      <p class="text-center text-muted py-3 mb-0">
+        No genres available
+      </p>
+
+    </ng-template>
+
+  </div>
+
+</div>

@@ -1,0 +1,65 @@
+.modal {
+  z-index: 1050;
+}
+
+.modal-backdrop {
+  z-index: 1040;
+}
+
+.review-icon {
+  color: #4f46e5;
+  font-size: 28px;
+}
+
+.book-info-card {
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  padding: 18px;
+  border-radius: 16px;
+}
+
+.rating-stars i {
+  cursor: pointer;
+  transition: 0.2s ease;
+  margin-right: 4px;
+}
+
+.active-star {
+  color: #f59e0b;
+}
+
+.empty-star {
+  color: #d1d5db;
+}
+
+.rating-stars i:hover {
+  transform: scale(1.1);
+}
+
+.rating-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #4f46e5;
+  min-width: 120px;
+}
+
+.review-textarea {
+  border-radius: 14px;
+}
+
+.review-textarea:focus {
+  border-color: #4f46e5;
+  box-shadow:
+    0 0 0 0.15rem
+    rgba(79,70,229,0.15);
+}
+
+.btn-primary {
+  background: #4f46e5;
+  border-color: #4f46e5;
+}
+
+.btn-primary:hover {
+  background: #4338ca;
+  border-color: #4338ca;
+}

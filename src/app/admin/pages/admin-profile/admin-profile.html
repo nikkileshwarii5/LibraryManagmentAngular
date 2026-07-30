@@ -1,0 +1,511 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<div class="container-fluid py-4" *ngIf="admin">
+
+  <div class="row g-4">
+
+    <!-- ================= LEFT SECTION ================= -->
+
+    <div class="col-lg-4">
+
+      <!-- Profile Card -->
+      <div class="profile-card shadow-sm">
+
+        <div class="text-center">
+
+          <!-- <img
+            *ngIf="admin.profileImage"
+            [src]="admin.profileImage"
+            class="profile-avatar">
+
+          <img
+            *ngIf="!admin.profileImage"
+            src="https://ui-avatars.com/api/?name=Admin&background=4f46e5&color=fff&size=200"
+            class="profile-avatar"> -->
+
+            <div class="avatar-wrapper">
+
+  <img
+    *ngIf="admin.profileImage"
+    [src]="admin.profileImage"
+    class="profile-avatar">
+
+  <div
+    *ngIf="!admin.profileImage"
+    class="profile-avatar profile-initials">
+
+    {{ getInitials() }}
+
+  </div>
+
+  <button
+    class="camera-btn"
+    (click)="openAvatarDialog()">
+
+    <i class="fa-solid fa-camera"></i>
+
+  </button>
+
+</div>
+
+          <h3 class="mt-3 fw-bold">
+
+            {{ admin.fullName }}
+
+          </h3>
+
+          <p class="text-muted mb-2">
+
+            {{ admin.email }}
+
+          </p>
+
+          <span class="role-chip">
+
+            <i class="fa-solid fa-user-shield me-2"></i>
+
+            {{ admin.role }}
+
+          </span>
+
+        </div>
+
+        <hr>
+
+        <div class="info-item">
+
+          <i class="fa-solid fa-id-badge"></i>
+
+          <div>
+
+            <small>Employee ID</small>
+
+            <h6>{{  getEmployeeId() }} </h6>
+
+          </div>
+
+        </div>
+
+        <div class="info-item">
+
+          <i class="fa-solid fa-building"></i>
+
+          <div>
+
+            <small>Department</small>
+
+            <h6>{{ admin.department || 'Library Administration' }}</h6>
+
+          </div>
+
+        </div>
+
+        <div class="info-item">
+
+          <i class="fa-solid fa-calendar-days"></i>
+
+          <div>
+
+            <small>Joined</small>
+
+            <h6>{{admin.createdAt | date:'dd MMM yyyy'}}</h6>
+
+          </div>
+
+        </div>
+
+
+        <div class="info-item">
+
+        <i class="fa-solid fa-clock-rotate-left"></i>
+
+          <div>
+
+            <small>Last Login</small>
+
+            <h6>{{admin.lastLogin | date:'dd MMM yyyy hh:mm a'}}</h6>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+      <!-- ================= ADMIN STATS ================= -->
+
+      <div class="stats-card shadow-sm mt-4">
+
+        <!-- <h4>
+
+          <i class="fa-solid fa-chart-simple me-2"></i>
+
+          Admin Statistics
+
+        </h4> -->
+
+        
+        <div class="stats-header">
+
+  <div class="stats-icon">
+    <i class="fa-solid fa-chart-simple"></i>
+  </div>
+
+   <div class="stats-text">
+
+        <h4 class="stats-title">
+            Admin Statistics
+        </h4>
+
+        <p class="stats-subtitle">
+            Overall system summary
+        </p>
+
+    </div>
+
+
+  
+
+</div>
+
+        <div class="stat-row">
+
+          <span>
+
+            <i class="fa-solid fa-book"></i>
+
+            Books
+
+          </span>
+
+          <strong>
+
+            {{ stats.booksAdded }}
+
+          </strong>
+
+        </div>
+
+        <div class="stat-row">
+
+          <span>
+
+            <i class="fa-solid fa-users"></i>
+
+            Users
+
+          </span>
+
+          <strong>
+
+            {{ stats.usersManaged }}
+
+          </strong>
+
+        </div>
+
+        <div class="stat-row">
+
+          <span>
+
+            <i class="fa-solid fa-layer-group"></i>
+
+            Genres
+
+          </span>
+
+          <strong>
+
+            {{ stats.genresCreated }}
+
+          </strong>
+
+        </div>
+
+        <div class="stat-row">
+
+          <span>
+
+            <i class="fa-solid fa-bookmark"></i>
+
+            Reservations
+
+          </span>
+
+          <strong>
+
+            {{ stats.reservationsApproved }}
+
+          </strong>
+
+        </div>
+
+        <div class="stat-row">
+
+          <span>
+
+            <i class="fa-solid fa-money-bill-wave"></i>
+
+            Fines Waived
+
+          </span>
+
+          <strong>
+
+            {{ stats.finesWaived }}
+
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ================= RIGHT SECTION ================= -->
+
+    <div class="col-lg-8">
+
+      <div class="profile-details-card shadow-sm">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+          <div>
+
+            <h3 class="fw-bold">
+
+              Profile Information
+
+            </h3>
+
+            <small class="text-muted">
+
+              Update your administrator account information.
+
+            </small>
+
+          </div>
+
+          <button
+            *ngIf="!editMode"
+            class="btn btn-primary"
+            (click)="editProfile()">
+
+            <i class="fa-solid fa-pen me-2"></i>
+
+            Edit Profile
+
+          </button>
+
+        </div>
+
+        <div class="row g-4">
+
+          <div class="col-md-6">
+
+            <label class="form-label">
+
+              Full Name
+
+            </label>
+
+            <input
+              class="form-control"
+              [(ngModel)]="admin.fullName"
+              [readonly]="!editMode">
+
+          </div>
+
+          <div class="col-md-6">
+
+            <label class="form-label">
+
+              Email
+
+            </label>
+
+            <input
+              class="form-control"
+              [(ngModel)]="admin.email"
+              [readonly]="!editMode">
+
+          </div>
+
+          <div class="col-md-6">
+
+            <label class="form-label">
+
+              Phone
+
+            </label>
+
+            <input
+              class="form-control"
+              [(ngModel)]="admin.phone"
+              [readonly]="!editMode">
+
+          </div>
+
+          <div class="col-md-6">
+
+            <label class="form-label">
+
+              Role
+
+            </label>
+
+            <input
+              class="form-control"
+              [value]="admin.role"
+              readonly>
+
+          </div>
+
+          <div class="col-md-6">
+
+            <label class="form-label">
+
+              Department
+
+            </label>
+
+            <input
+              class="form-control"
+              value="Library Administration"
+              readonly>
+
+          </div>
+
+          <div class="col-md-6">
+
+            <label class="form-label">
+
+              Employee ID
+
+            </label>
+
+           <input
+              class="form-control"
+              [value]="getEmployeeId()"
+              readonly>
+
+          </div>
+
+          <div class="col-12">
+
+            <label class="form-label">
+
+              Address
+
+            </label>
+
+            <textarea
+              rows="3"
+              class="form-control"
+              [(ngModel)]="admin.address"
+              [readonly]="!editMode">
+            </textarea>
+
+          </div>
+
+          <div class="col-12">
+
+            <label class="form-label">
+
+              Bio
+
+            </label>
+
+            <textarea
+              rows="4"
+              class="form-control"
+              [(ngModel)]="admin.bio"
+              [readonly]="!editMode">
+            </textarea>
+
+          </div>
+
+        </div>
+
+        <div
+          *ngIf="editMode"
+          class="mt-4 d-flex justify-content-end gap-2">
+
+          <button
+            class="btn btn-light"
+            (click)="cancelEdit()">
+
+            Cancel
+
+          </button>
+
+          <button
+            class="btn btn-success"
+            (click)="saveProfile()">
+
+            <i class="fa-solid fa-floppy-disk me-2"></i>
+
+            Save Changes
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div
+  class="modal-backdrop-custom"
+  *ngIf="avatarDialogOpen">
+
+  <div class="avatar-modal">
+
+    <h3 class="modal-title">
+      Update Profile Picture
+    </h3>
+
+    <div class="upload-section">
+
+      <label class="upload-btn">
+
+        <i class="fa-solid fa-camera me-2"></i>
+
+        CHOOSE PHOTO
+
+        <input
+          type="file"
+          hidden
+          accept="image/*"
+          (change)="handleAvatarUpload($event)">
+
+      </label>
+
+      <p class="upload-note">
+        Recommended: Square image (400 × 400)
+      </p>
+
+    </div>
+
+    <div class="modal-footer-custom">
+
+      <button
+        class="cancel-btn"
+        (click)="closeAvatarDialog()">
+
+        Cancel
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>

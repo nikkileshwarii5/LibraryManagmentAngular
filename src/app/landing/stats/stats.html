@@ -1,0 +1,185 @@
+<section class="stats-section">
+
+  <div class="container">
+
+    <!-- =========================
+          Section Header
+    ========================== -->
+
+    <div class="stats-header text-center">
+
+      <div class="stats-badge">
+
+        <mat-icon>insights</mat-icon>
+
+        <span>Trusted Worldwide</span>
+
+      </div>
+
+      <h2>
+
+        Our Impact in
+
+        <span>Numbers</span>
+
+      </h2>
+
+      <p>
+
+        Thousands of readers trust LibraOne every day.
+        Discover the numbers that define our growing community.
+
+      </p>
+
+    </div>
+
+    <!-- =========================
+          Stats Cards
+    ========================== -->
+
+    <div class="row g-4">
+
+      <div
+        class="col-sm-6 col-xl-3"
+        *ngFor="let stat of stats; let i = index">
+
+        <div
+          class="stat-card  "
+          [id]="'stat-' + i"
+          [style.--topColor]="stat.borderColor">
+
+          <!-- Top Border -->
+          <div class="card-border"></div>
+
+          <!-- Top -->
+
+          <div class="card-top">
+
+            <div
+              class="stat-icon"
+              [ngClass]="stat.bgColor">
+
+              <mat-icon
+                [ngClass]="stat.color">
+
+                {{stat.icon}}
+
+              </mat-icon>
+
+            </div>
+
+            <div class="trend-icon">
+
+              <mat-icon>
+
+                trending_up
+
+              </mat-icon>
+
+            </div>
+
+          </div>
+
+          <!-- Counter -->
+
+          <div class="counter">
+
+            <span class="count">
+
+               {{counts[i] | number}} 
+
+               <!-- {{stat.value | number}} -->
+
+            </span>
+
+            <span
+              class="suffix"
+              [ngClass]="stat.color">
+
+              {{stat.suffix}}
+
+            </span>
+
+          </div>
+
+          <!-- Label -->
+
+          <h5>
+
+            {{stat.label}}
+
+          </h5>
+
+          <!-- Description -->
+<!-- 
+          <p>
+
+            {{stat.subTitle}}
+
+          </p> -->
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- =========================
+          Bottom CTA
+    ========================== -->
+
+    <div class="stats-cta">
+
+      <div class="cta-left">
+
+        <div class="avatars">
+
+          <div class="avatar">👤</div>
+
+          <div class="avatar">👤</div>
+
+          <div class="avatar">👤</div>
+
+          <div class="avatar plus">
+
+            +
+
+          </div>
+
+        </div>
+
+        <div>
+
+          <h4>
+
+            1,200+
+
+          </h4>
+
+          <p>
+
+            New members joined this month
+
+          </p>
+
+        </div>
+
+      </div>
+
+      <button class="join-btn">
+
+        Join Community
+
+        <mat-icon>
+
+          arrow_forward
+
+        </mat-icon>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</section>

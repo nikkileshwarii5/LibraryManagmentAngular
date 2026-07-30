@@ -1,0 +1,95 @@
+<div class="subscriptions-page container-fluid py-5">
+
+  <!-- HERO SECTION -->
+
+  <div class="hero-section">
+
+    <div class="hero-badge">
+
+      <i class="bi bi-bookmark-star-fill"></i>
+
+      <span>
+        Subscription Plans
+      </span>
+
+    </div>
+
+    <p class="hero-description">
+
+      Choose the perfect plan for your reading journey.
+      Upgrade, downgrade, or cancel anytime.
+
+    </p>
+
+  </div>
+
+  <!-- ACTIVE SUBSCRIPTION -->
+
+  <app-active-subscription-card
+    *ngIf="activeSubscription"
+    [subscription]="activeSubscription"
+    (renew)="renewSubscription($event)"
+    (cancel)="openCancelDialog($event)"
+  >
+  </app-active-subscription-card>
+
+  <!-- PLANS HEADER -->
+
+  <div class="plans-section-header">
+
+  <h2>
+    {{ hasActiveSubscription ? 'Available Plans' : 'Choose Your Plan' }}
+  </h2>
+
+  <p>
+    {{
+      hasActiveSubscription
+        ? 'Explore plans & benefits'
+        : 'Select a plan that fits your reading habits'
+    }}
+  </p>
+
+</div>
+
+  <!-- PLAN CARDS -->
+
+  <div class="row g-4">
+
+    <div
+      class="col-md-6 col-xl-4"
+      *ngFor="let plan of plans"
+    >
+
+      <app-subscription-plan-card
+        [plan]="plan"
+        [activeSubscription]="activeSubscription"
+        (subscribe)="openSubscribeDialog($event)"
+      >
+      </app-subscription-plan-card>
+
+    </div>
+
+  </div>
+
+  <!-- DIALOGS -->
+
+  <app-subscribe-dialog
+    [open]="subscribeDialogOpen"
+    [plan]="selectedPlan"
+    (close)="subscribeDialogOpen = false"
+    (subscriptionUpdated)="loadActiveSubscription()"
+    (subscriptionError)="showSnackbar($event)">
+  </app-subscribe-dialog>
+
+  <app-cancel-subscription-dialog
+    [open]="cancelDialogOpen"
+    [subscription]="selectedSubscription"
+    (confirm)="cancelSubscription($event)"
+    (close)="cancelDialogOpen = false"
+  >
+  </app-cancel-subscription-dialog>
+
+  <app-benefits>
+</app-benefits>
+
+</div>

@@ -1,0 +1,487 @@
+.testimonial-card{
+
+    border:none;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 35px rgba(0,0,0,.08);
+
+}
+
+.card-header{
+
+    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+    color:white;
+    padding:25px;
+
+}
+
+.card-header h3{
+
+    margin:0;
+    font-weight:700;
+
+}
+
+.card-header p{
+
+    margin-top:5px;
+    opacity:.9;
+
+}
+
+
+/* ==========================
+   Statistics Cards
+========================== */
+
+.stats-card{
+    background:#fff;
+    border-radius:18px;
+    padding:18px 20px;
+    box-shadow:0 8px 22px rgba(0,0,0,.08);
+    transition:.3s;
+    border-top:5px solid transparent;
+    min-height:170px;
+}
+
+.stats-card:hover{
+    transform:translateY(-4px);
+}
+
+.total-card{
+    border-top:5px solid #2563eb;
+}
+
+.pending-card{
+    border-top:5px solid #f59e0b;
+}
+
+.approved-card{
+    border-top:5px solid #22c55e;
+}
+
+.rejected-card{
+    border-top:5px solid #ef4444;
+}
+
+.stats-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.stats-icon{
+    width:58px;
+    height:58px;
+    border-radius:18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:24px;
+    color:white;
+}
+
+.total-card .stats-icon{
+    background:#2563eb;
+}
+
+.pending-card .stats-icon{
+    background:#f59e0b;
+}
+
+.approved-card .stats-icon{
+    background:#22c55e;
+}
+
+.rejected-card .stats-icon{
+    background:#ef4444;
+}
+
+.stats-badge{
+
+    padding:8px 16px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:600;
+
+}
+
+.total-card .stats-badge{
+    background:#dbeafe;
+    color:#2563eb;
+}
+
+.pending-card .stats-badge{
+    background:#fff3cd;
+    color:#d97706;
+}
+
+.approved-card .stats-badge{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+.rejected-card .stats-badge{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+.stats-card h2{
+    font-size:34px;
+    font-weight:700;
+    margin-bottom:4px;
+    color:#1f2937;
+}
+
+.stats-card p{
+    margin:0;
+    color:#6b7280;
+    font-size:15px;
+}
+
+
+
+
+/* ==========================
+   Table Card
+========================== */
+
+.table-card{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    margin-top:25px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 28px rgba(0,0,0,.08);
+
+}
+
+/* ==========================
+   Table
+========================== */
+
+.testimonial-table{
+
+    margin:0;
+
+}
+
+.testimonial-table thead{
+
+    background:#eef0fb;
+
+}
+
+.testimonial-table thead th{
+
+    border:none;
+
+    padding:22px 20px;
+
+    color:#1f2937;
+
+    font-size:16px;
+
+    font-weight:700;
+
+}
+
+.testimonial-table tbody td{
+
+    padding:24px 20px;
+
+    border-top:1px solid #edf2f7;
+
+    vertical-align:middle;
+
+}
+
+.testimonial-table tbody tr{
+
+    transition:.25s;
+
+}
+
+.testimonial-table tbody tr:hover{
+
+    background:#f8fafc;
+
+}
+
+
+
+
+.avatar{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#6366f1,#9333ea);
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:700;
+
+    font-size:18px;
+
+}
+
+.star{
+
+    color:#ffc107;
+
+    margin-right:2px;
+
+    font-size:18px;
+
+}
+
+.review{
+
+    margin:0;
+
+    color:#555;
+
+    line-height:1.5;
+
+}
+
+.status{
+
+    padding:7px 16px;
+
+    border-radius:25px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+}
+
+.status.pending{
+
+    background:#fff3cd;
+
+    color:#856404;
+
+}
+
+.status.approved{
+
+    background:#d1fae5;
+
+    color:#065f46;
+
+}
+
+.status.rejected{
+
+    background:#fee2e2;
+
+    color:#991b1b;
+
+}
+
+.action-btn{
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:50%;
+
+    margin-right:8px;
+
+}
+
+
+.empty-state{
+
+    padding:60px;
+
+    text-align:center;
+
+}
+
+.empty-state i{
+
+    font-size:60px;
+
+    color:#6366f1;
+
+}
+
+.empty-state h5{
+
+    margin-top:15px;
+
+    font-weight:700;
+
+}
+
+
+
+
+
+
+
+/* ==========================
+   Page Layout
+========================== */
+
+.page-wrapper {
+  min-height: 100vh;
+}
+
+.page-content {
+  width: 960px;
+  padding: 20px;
+}
+
+/* ==========================
+   Table Wrapper
+========================== */
+
+.table-scroll-wrapper{
+    overflow-x:auto;
+    overflow-y:hidden;
+    width:100%;
+}
+
+/* Scrollbar */
+
+.table-scroll-wrapper::-webkit-scrollbar{
+    height:10px;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-track{
+    background:#edf2f7;
+    border-radius:20px;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-thumb{
+    background:#6366f1;
+    border-radius:20px;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-thumb:hover{
+    background:#4f46e5;
+}
+
+/* Firefox */
+
+.table-scroll-wrapper{
+    scrollbar-width:thin;
+    scrollbar-color:#6366f1 #edf2f7;
+}
+
+/* ==========================
+   Table Width
+========================== */
+
+.testimonial-table{
+    width:100%;
+    min-width:1400px;
+    border-collapse:collapse;
+}
+
+.testimonial-table th{
+    white-space:nowrap;
+}
+
+.testimonial-table td{
+    white-space:nowrap;
+}
+
+/* Review column wraps */
+
+.review{
+    white-space:normal;
+    width:420px;
+    max-width:420px;
+    word-break:break-word;
+}
+
+/* ==========================
+   Action Buttons
+========================== */
+
+.action-btn{
+    transition:.25s;
+}
+
+.action-btn:hover{
+    transform:scale(1.08);
+}
+
+/* ==========================
+   Avatar
+========================== */
+
+.avatar{
+    flex-shrink:0;
+}
+
+/* ==========================
+   Responsive
+========================== */
+
+@media(max-width:991px){
+
+    .stats-card{
+        margin-bottom:15px;
+    }
+
+    .page-content{
+        padding:16px;
+    }
+
+}
+
+
+
+.page-header{
+    margin-bottom:28px;
+}
+
+.page-title{
+    font-size:2rem;
+    font-weight:700;
+    color:#1f2937;
+    margin-bottom:8px;
+}
+
+.page-subtitle{
+    font-size:1.1rem;
+    color:#6b7280;
+}
+
+.export-btn{
+    background:#2563eb;
+    border:none;
+    color:#fff;
+    border-radius:14px;
+    padding:14px 24px;
+    font-weight:600;
+    box-shadow:0 10px 24px rgba(37,99,235,.25);
+    transition:.3s;
+}
+
+.export-btn:hover{
+    background:#1d4ed8;
+    transform:translateY(-2px);
+}

@@ -1,0 +1,480 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<div class="page-wrapper">
+
+  <div class="page-content">
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header-row">
+      <div>
+        <h2 class="title">Fines Management</h2>
+        <p class="subtitle">
+          Monitor and manage all library fines
+        </p>
+      </div>
+    </div>
+
+    <!-- ================= STATS ================= -->
+
+     <div class="row mb-4">
+
+      <div class="col-lg-3 col-md-6 mb-3">
+  <div class="stats-card pending-card">
+    <div class="icon-box">
+      <i class="fa-solid fa-clock"></i>
+    </div>
+
+    <h3>{{ allFines.filter(f => f.status==='PENDING').length }}</h3>
+    <p class="stat-label">Pending Fines</p>
+  </div>
+</div>
+
+<div class="col-lg-3 col-md-6 mb-3">
+  <div class="stats-card paid-card">
+    <div class="icon-box">
+      <i class="fa-solid fa-circle-check"></i>
+    </div>
+
+    <h3>{{ allFines.filter(f => f.status==='PAID').length }}</h3>
+    <p class="stat-label">Paid Fines</p>
+  </div>
+</div>
+
+<div class="col-lg-3 col-md-6 mb-3">
+  <div class="stats-card collected-card">
+    <div class="icon-box">
+      <i class="fa-solid fa-wallet"></i>
+    </div>
+
+    <h3>₹ {{ totalCollected | number:'1.2-2' }}</h3>
+    <p class="stat-label">Total Collected</p>
+  </div>
+</div>
+
+<div class="col-lg-3 col-md-6 mb-3">
+  <div class="stats-card outstanding-card">
+    <div class="icon-box">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+    </div>
+
+    <h3>₹ {{ totalOutstanding | number:'1.2-2' }}</h3>
+    <p class="stat-label">Outstanding</p>
+  </div>
+</div>
+
+    </div>
+
+    <!-- ================= FILTER ================= -->
+
+    <div class="filter-card">
+
+      <div class="filters-row">
+
+        <button
+          class="filter-btn"
+          (click)="filterModalOpen=true">
+
+          <i class="fa-solid fa-filter"></i>
+
+          FILTERS
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- ================= TABLE ================= -->
+
+    <div class="table-section">
+
+      <div class="table-card">
+
+        <div class="table-scroll-wrapper">
+
+          <table class="custom-table">
+
+            <thead>
+
+              <tr>
+
+                <th>Fine ID</th>
+                <th>User</th>
+                <th>Book</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Paid</th>
+                <th>Status</th>
+                <th>Reason</th>
+                <th>Created</th>
+                <th>Actions</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr *ngIf="allFines.length==0">
+
+                <td colspan="10" class="no-data">
+
+                  No fines available
+
+                </td>
+
+              </tr>
+
+              <tr *ngFor="let row of allFines">
+
+                <td>{{row.id}}</td>
+
+                <td class="text-left">
+
+                  <div class="primary">
+
+                    {{row.userName}}
+
+                  </div>
+
+                  <small>{{row.userEmail}}</small>
+
+                </td>
+
+                <td class="text-left">
+
+                  <div class="primary">
+
+                    {{row.bookTitle}}
+
+                  </div>
+
+                  <small>{{row.bookIsbn}}</small>
+
+                </td>
+
+               
+
+                <td>
+  <span
+    class="type-badge"
+    [ngClass]="{
+      'loss': row.type.toLowerCase() === 'loss',
+      'damage': row.type.toLowerCase() === 'damage',
+      'overdue': row.type.toLowerCase() === 'overdue'
+    }">
+    {{ row.type }}
+  </span>
+</td>
+
+            
+
+                <td class="amount">₹ {{ row.amount | number:'1.2-2' }}</td>
+
+                <td class="paid">₹ {{ row.amountPaid | number:'1.2-2' }}</td>
+
+                <td>
+
+                  <span
+                    class="fine-badge warning"
+                    *ngIf="row.status=='PENDING'">
+
+                    Pending
+
+                  </span>
+
+                  <span
+                    class="fine-badge success"
+                    *ngIf="row.status=='PAID'">
+
+                    Paid
+
+                  </span>
+
+                  <span
+                    class="fine-badge gray"
+                    *ngIf="row.status=='WAIVED'">
+
+                    Waived
+
+                  </span>
+
+                </td>
+
+                <td>{{row.reason || '-'}}</td>
+
+                <td>{{row.createdAt | date:'dd/MM/yyyy'}}</td>
+
+                <td class="actions">
+
+
+                  <!-- Show only for Pending fines -->
+  <button
+    *ngIf="row.status === 'PENDING'"
+    class="fine-btn warning"
+    (click)="handleOpenWaiveDialog(row)">
+
+    <i class="fa-solid fa-hand"></i>
+    Waive
+
+  </button>
+
+
+  <span
+    *ngIf="row.status !== 'PENDING'"
+    class="completed-text">
+
+    No Actions
+
+  </span>
+
+                
+
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+
+          <div class="pagination-wrapper">
+
+
+
+  <div class="page-size">
+    <label>Rows</label>
+
+    <select
+      [ngModel]="rowsPerPage"
+      (change)="changePageSize($event)">
+
+      <option [value]="10">10</option>
+      <option [value]="20">20</option>
+      <option [value]="50">50</option>
+
+    </select>
+  </div>
+
+  <div class="pagination">
+
+    <button
+      class="page-btn"
+      (click)="previousPage()"
+      [disabled]="page === 0">
+
+      Previous
+
+    </button>
+
+    <button
+      *ngFor="let p of pageNumbers"
+      class="page-btn"
+      [class.active]="page === p"
+      (click)="changePage(p)">
+
+      {{ p + 1 }}
+
+    </button>
+
+    <button
+      class="page-btn"
+      (click)="nextPage()"
+      [disabled]="page >= totalPages - 1">
+
+      Next
+
+    </button>
+
+  </div>
+
+</div>
+
+          
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= FILTER DIALOG ================= -->
+
+<div class="modal-backdrop" *ngIf="filterModalOpen">
+
+  <div class="modal-card filter-modal">
+
+    <div class="modal-header">
+      <h3>Filter Fines</h3>
+
+      <button
+        class="close-btn"
+        (click)="filterModalOpen=false">
+
+        <i class="fa-solid fa-xmark"></i>
+
+      </button>
+    </div>
+
+    <div class="form-group">
+
+      <label>Status</label>
+
+      <select
+        class="form-control"
+        [(ngModel)]="filterStatus">
+
+        <option value="">All Status</option>
+        <option value="PENDING">Pending</option>
+        <option value="PARTIALLY_PAID">Partially Paid</option>
+        <option value="PAID">Paid</option>
+        <option value="WAIVED">Waived</option>
+
+      </select>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Type</label>
+
+      <select
+        class="form-control"
+        [(ngModel)]="filterType">
+
+        <option value="">All Types</option>
+        <option value="OVERDUE">Overdue</option>
+        <option value="DAMAGE">Damage</option>
+        <option value="LOSS">Loss</option>
+
+      </select>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>User ID</label>
+
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Filter by User ID"
+        [(ngModel)]="filterUserId">
+
+    </div>
+
+    <div class="dialog-footer">
+
+      <button
+        class="btn-clear"
+        (click)="handleClearFilters()">
+
+        <i class="fa-solid fa-filter-circle-xmark"></i>
+
+        Clear Filters
+
+      </button>
+
+      <button
+        class="btn-cancel"
+        (click)="filterModalOpen=false">
+
+        Cancel
+
+      </button>
+
+      <button
+        class="btn-apply"
+        (click)="handleApplyFilters()">
+
+        <i class="fa-solid fa-check"></i>
+
+        Apply Filters
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+  <!-- ================= WAIVE DIALOG ================= -->
+
+<div class="modal-backdrop" *ngIf="waiveDialogOpen">
+
+  <div class="modal-card waive-modal">
+
+    <div class="modal-header">
+      <h3>Waive Fine</h3>
+
+      <button
+        class="close-btn"
+        (click)="waiveDialogOpen = false">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="waive-alert">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+
+      <div>
+        You are about to waive
+        <b>Fine #{{selectedFine?.id}}</b>
+        for
+        <b>{{selectedFine?.userName}}</b>
+        <br>
+
+        Amount:
+        <b>₹ {{selectedFine?.amount | number:'1.2-2'}}</b>
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <label class="dialog-label">
+        Reason for Waiver <span>*</span>
+      </label>
+
+      <textarea
+        rows="5"
+        class="form-control"
+        [(ngModel)]="waiveReason"
+        placeholder="Enter waiver reason">
+      </textarea>
+
+    </div>
+
+    <div class="dialog-footer">
+
+      <button
+        class="btn-cancel"
+        (click)="waiveDialogOpen=false">
+
+        Cancel
+
+      </button>
+
+      <button
+        class="btn-waive"
+        (click)="handleWaiveFine()">
+
+        <i class="fa-solid fa-ban"></i>
+
+        Waive Fine
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>

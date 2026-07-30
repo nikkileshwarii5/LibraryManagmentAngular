@@ -1,0 +1,66 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<div class="p-4">
+
+  <h3 class="section-title">
+    Your Book Reservations
+  </h3>
+
+  <div
+    *ngIf="reservations.length === 0"
+    class="empty-state"
+  >
+
+    <p class="empty-title">
+      📚 You haven’t reserved any books yet
+    </p>
+
+    <p class="empty-subtitle">
+      Browse the library and reserve your next read!
+    </p>
+
+  </div>
+
+  <div
+    *ngIf="reservations.length > 0"
+    class="reservation-list"
+  >
+
+    <div
+      *ngFor="let reservation of reservations"
+      class="reservation-card"
+    >
+
+      <div class="reservation-left">
+
+        <div class="reservation-icon">
+
+          <i class="fa-solid fa-calendar-check"></i>
+
+        </div>
+
+        <div>
+
+          <h4 class="book-title">
+            {{ reservation.bookTitle }}
+          </h4>
+
+          <p class="book-author">
+            {{ reservation.bookAuthor }}
+          </p>
+
+        </div>
+
+      </div>
+
+      <button
+        class="btn btn-outline-primary"
+        (click)="navigateToBook(reservation.bookId)"
+      >
+        View
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

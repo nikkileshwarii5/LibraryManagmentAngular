@@ -1,0 +1,99 @@
+
+<div class="reading-history-wrapper p-4">
+
+  <!-- TITLE -->
+
+  <h3 class="history-heading">
+
+    Your Reading History
+
+  </h3>
+
+  <!-- GRID -->
+
+  <div class="row g-4">
+
+    <div
+      class="col-12 col-md-6 col-lg-4"
+      *ngFor="let history of myLoans"
+    >
+
+      <!-- CARD -->
+
+      <div
+        class="history-card"
+        (click)="navigateToBook(history.bookId)"
+      >
+
+        <!-- IMAGE -->
+
+        <img
+          *ngIf="history.bookCoverImage"
+          [src]="history.bookCoverImage"
+          [alt]="history.bookTitle"
+          class="history-image"
+        />
+
+        <!-- PLACEHOLDER -->
+
+        <div
+          *ngIf="!history.bookCoverImage"
+          class="history-placeholder"
+        >
+
+          <i class="fa-solid fa-clock-rotate-left"></i>
+
+        </div>
+
+        <!-- TITLE -->
+
+        <h4 class="book-title">
+
+          {{ history.bookTitle }}
+
+        </h4>
+
+        <!-- AUTHOR -->
+
+        <p class="book-author">
+
+          {{ history.bookAuthor }}
+
+        </p>
+
+        <!-- FOOTER -->
+
+        <div class="history-footer">
+
+          <!-- DATE -->
+
+          <span class="return-date">
+
+            {{
+              history.returnDate| date:'mediumDate'
+            }}
+
+          </span>
+
+          <!-- RATING -->
+
+          <div class="rating-wrapper">
+
+            <span
+              *ngFor="let star of getStars(history.rating)"
+              class="rating-star"
+            >
+              ★★★★★
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

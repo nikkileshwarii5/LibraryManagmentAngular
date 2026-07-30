@@ -1,0 +1,260 @@
+<div class="container py-4">
+
+  <!-- Header -->
+
+
+
+  <div class="fines-header">
+
+  <div class="header-icon">
+    <i class="bi bi-receipt-cutoff"></i>
+  </div>
+
+  <div>
+    <h1 class="gradient-title">
+      My Fines
+    </h1>
+
+    <p class="header-subtitle">
+      Track and manage your library fines
+    </p>
+  </div>
+
+</div>
+
+  <!-- Stats -->
+
+  <app-my-fine-stats
+    [filteredFines]="filteredFines"
+    [totalOutstanding]="totalOutstanding"
+    [totalPaid]="totalPaid">
+  </app-my-fine-stats>
+
+  <!-- Filters -->
+
+ <div class="filters-container">
+
+  <div class="filters-title">
+    <i class="bi bi-funnel"></i>
+    <span>Filters</span>
+  </div>
+
+  <!-- STATUS -->
+<div
+  class="custom-select-wrapper"
+  [class.active]="statusFocused || statusFilter">
+
+  <!-- FLOATING LABEL -->
+  <label
+    class="floating-label"
+    [class.active]="statusFocused || statusFilter">
+
+    Status
+
+  </label>
+
+  <select
+    class="custom-select-box"
+    [(ngModel)]="statusFilter"
+    (change)="applyFilters()"
+    (focus)="statusFocused = true"
+    (blur)="statusFocused = false">
+
+    <!-- EMPTY PLACEHOLDER -->
+    <option value="" hidden></option>
+
+    <!-- DROPDOWN OPTIONS -->
+    <option value="">
+      All Status
+    </option>
+
+    <option value="PENDING">
+      Pending
+    </option>
+
+    <option value="PARTIALLY_PAID">
+      Partially Paid
+    </option>
+
+    <option value="PAID">
+      Paid
+    </option>
+
+    <option value="WAIVED">
+      Waived
+    </option>
+
+  </select>
+
+      <!-- CUSTOM ICON -->
+    <i
+      class="fa-solid dropdown-icon"
+      [ngClass]="
+        statusFocused
+          ? 'fa-sort-up'
+          : 'fa-sort-down'
+      ">
+    </i>
+
+
+</div>
+
+<!-- TYPE -->
+<div
+  class="custom-select-wrapper"
+  [class.active]="typeFocused || typeFilter">
+
+  <!-- FLOATING LABEL -->
+  <label
+    class="floating-label"
+    [class.active]="typeFocused || typeFilter">
+
+    Type
+
+  </label>
+
+  <select
+    class="custom-select-box"
+    [(ngModel)]="typeFilter"
+    (change)="applyFilters()"
+    (focus)="typeFocused = true"
+    (blur)="typeFocused = false">
+
+    <!-- EMPTY PLACEHOLDER -->
+    <option value="" hidden></option>
+
+    <!-- DROPDOWN OPTIONS -->
+    <option value="">
+      All Types
+    </option>
+
+    <option value="OVERDUE">
+      Overdue
+    </option>
+
+    <option value="DAMAGE">
+      Damage
+    </option>
+
+    <option value="LOSS">
+      Loss
+    </option>
+
+    <option value="PROCESSING">
+      Processing
+    </option>
+
+  </select>
+
+    <!-- CUSTOM ICON -->
+    <i
+      class="fa-solid dropdown-icon"
+      [ngClass]="
+        statusFocused
+          ? 'fa-sort-up'
+          : 'fa-sort-down'
+      ">
+    </i>
+
+
+</div>
+
+
+  <!-- Clear Button -->
+
+  <button
+    *ngIf="statusFilter || typeFilter"
+    class="clear-filter-btn"
+    (click)="clearFilters()">
+
+    Clear Filters
+
+  </button>
+
+</div>
+
+  <!-- No Data -->
+
+  <div
+  class="card border-0 shadow-sm text-center py-5 empty-fines-card"
+  *ngIf="filteredFines.length === 0">
+
+  <div class="card-body">
+
+    <!-- ICON -->
+    <div class="empty-icon-wrapper">
+
+      <i class="fa-solid fa-circle-check empty-icon"></i>
+
+    </div>
+
+    <!-- TITLE -->
+    <h3 class="fw-bold text-success mt-3">
+
+      No Fines Found
+
+    </h3>
+
+    <!-- DESCRIPTION -->
+    <p class="text-muted empty-text">
+
+      {{
+        statusFilter || typeFilter
+          ? 'No fines match your current filters.'
+          : 'You have no library fines. Keep up the good work!'
+      }}
+
+    </p>
+
+  </div>
+
+</div>
+
+  <!-- Fine Cards -->
+
+  <div class="d-flex flex-column gap-4">
+
+    <app-my-fine-card
+      *ngFor="let fine of filteredFines"
+      [fine]="fine"
+      (payFine)="handlePayFine($event)">
+    </app-my-fine-card>
+
+  </div>
+
+  <!-- Snackbar -->
+
+
+
+
+  <div
+  *ngIf="snackbar.open"
+  class="custom-snackbar"
+  [ngClass]="
+    snackbar.type === 'success'
+      ? 'snackbar-success'
+      : 'snackbar-danger'
+  ">
+
+  <i
+    class="bi"
+    [ngClass]="
+      snackbar.type === 'success'
+        ? 'bi-check-circle-fill'
+        : 'bi-x-circle-fill'
+    ">
+  </i>
+
+  <span>{{ snackbar.message }}</span>
+
+</div>
+
+</div>
+
+<!-- Payment Dialog -->
+
+<app-fine-payment-dialog
+  [paymentDialog]="paymentDialog"
+  (close)="closeDialog()"
+  (confirm)="confirmPayment()">
+</app-fine-payment-dialog>

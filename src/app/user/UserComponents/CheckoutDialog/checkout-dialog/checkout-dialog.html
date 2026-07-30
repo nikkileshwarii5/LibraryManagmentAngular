@@ -1,0 +1,262 @@
+<div
+  class="modal fade show d-block"
+  tabindex="-1"
+  *ngIf="open"
+>
+
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+
+    <div class="modal-content border-0 rounded-4 shadow-lg">
+
+      <!-- HEADER -->
+      <div class="modal-header border-0 pb-0">
+
+        <div class="d-flex align-items-center gap-2">
+
+          <i
+            class="fa-solid fa-book-open text-primary fs-3"
+          ></i>
+
+          <h4 class="fw-bold mb-0">
+
+            Checkout Book
+
+          </h4>
+
+        </div>
+
+        <button
+          type="button"
+          class="btn-close"
+          (click)="handleClose()"
+        ></button>
+
+      </div>
+
+      <!-- BODY -->
+      <div class="modal-body p-4">
+
+        <!-- BOOK INFO -->
+        <div
+          *ngIf="book"
+          class="book-info-card mb-4"
+        >
+
+          <h5 class="fw-bold mb-1">
+
+            {{ book.title }}
+
+          </h5>
+
+          <p class="text-muted mb-2">
+
+            by {{ book.author }}
+
+          </p>
+
+          <div class="small">
+
+            <span class="fw-semibold">
+
+              Available:
+
+            </span>
+
+            <span class="text-success fw-bold">
+
+              {{ book.availableCopies }}
+              of
+              {{ book.totalCopies }}
+              copies
+
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- ERROR -->
+        <div
+          *ngIf="error"
+          class="alert alert-danger"
+        >
+
+          {{ error }}
+
+        </div>
+
+        <!-- CHECKOUT PERIOD -->
+        <div class="mb-4">
+
+          <label class="form-label fw-semibold">
+
+            Checkout Period
+
+          </label>
+
+          <select
+            class="form-select custom-select"
+            [(ngModel)]="checkoutDays"
+            [disabled]="loading"
+          >
+
+            <option
+              *ngFor="
+                let option
+                of checkoutOptions
+              "
+              [value]="option.value"
+            >
+
+              {{ option.label }}
+
+            </option>
+
+          </select>
+
+        </div>
+
+        <!-- DUE DATE -->
+        <div class="due-date-card mb-4">
+
+          <div
+            class="d-flex align-items-center gap-2 mb-2"
+          >
+
+            <i
+              class="fa-solid fa-calendar-days text-success"
+            ></i>
+
+            <span class="fw-bold text-success">
+
+              Due Date
+
+            </span>
+
+          </div>
+
+          <h6 class="fw-semibold">
+
+            {{ calculateDueDate() }}
+
+          </h6>
+
+          <p class="small mb-0 text-success">
+
+            Please return the book
+            before this date to avoid
+            late fees.
+
+          </p>
+
+        </div>
+
+        <!-- NOTES -->
+        <div class="mb-4">
+
+          <label class="form-label fw-semibold">
+
+            Notes (Optional)
+
+          </label>
+
+          <textarea
+            rows="3"
+            class="form-control"
+            [(ngModel)]="notes"
+            [disabled]="loading"
+            placeholder="Add any special notes..."
+          >
+          </textarea>
+
+        </div>
+
+        <!-- INFO -->
+        <div class="alert alert-info">
+
+          <strong>
+
+            Checkout Policy:
+
+          </strong>
+
+          <ul class="mt-2 mb-0">
+
+            <li>
+              Books can be renewed
+              up to 2 times
+            </li>
+
+            <li>
+              Late fee:
+              Rs 1.00 per day
+            </li>
+
+            <li>
+              Handle books carefully
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+      <!-- FOOTER -->
+      <div class="modal-footer border-0 pt-0">
+
+        <button
+          class="btn btn-light"
+          (click)="handleClose()"
+          [disabled]="loading"
+        >
+
+          Cancel
+
+        </button>
+
+        <button
+          class="btn btn-primary px-4"
+          (click)="handleConfirm()"
+          [disabled]="loading"
+        >
+
+          <span
+            *ngIf="!loading"
+          >
+
+            <i
+              class="fa-solid fa-book-open me-2"
+            ></i>
+
+            Confirm Checkout
+
+          </span>
+
+          <span
+            *ngIf="loading"
+          >
+
+            <span
+              class="spinner-border spinner-border-sm me-2"
+            ></span>
+
+            Processing...
+
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- BACKDROP -->
+<div
+  class="modal-backdrop fade show"
+  *ngIf="open"
+></div>

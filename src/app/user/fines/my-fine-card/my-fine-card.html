@@ -1,0 +1,245 @@
+<div
+  class="fine-card"
+  [ngClass]="{
+    'paid-card': fine.status === 'PAID',
+    'pending-card': fine.status !== 'PAID'
+  }"
+  >
+
+  <!-- Top Border -->
+  
+  <div
+    class="card-top"
+    [ngClass]="{
+      'top-green': fine.status === 'PAID',
+      'top-orange': fine.status !== 'PAID'
+    }">
+</div>
+
+  <div class="card-body-custom">
+
+    <!-- Header -->
+
+    <div class="header">
+
+      <div>
+
+        <small class="fine-id">
+          <i class="bi bi-receipt fine-icon"></i>
+          Fine #{{ fine.id }}
+        </small>
+
+        <h2 class="book-title">
+          {{ fine.bookTitle }}
+        </h2>
+
+      </div>
+
+    </div>
+
+    <!-- Status -->
+
+    <div class="chips">
+
+      <span
+        class="status-chip"
+        [ngClass]="getStatusBadge(fine.status)"
+      >
+        <!-- <i class="bi bi-exclamation-circle"></i> -->
+
+        <i
+      class="bi"
+      [ngClass]="{
+        'bi-exclamation-circle-fill': fine.status === 'PENDING',
+        'bi-check-circle-fill': fine.status === 'PAID',
+        'bi-hourglass-split': fine.status === 'PARTIALLY_PAID'
+      }">
+    </i>
+
+        <!-- {{ fine.status==='PENDING'
+        ?'Pending Payment'
+        :fine.status }} -->
+
+
+            {{ fine.status === 'PENDING'
+        ? 'Pending Payment'
+        : fine.status === 'PARTIALLY_PAID'
+          ? 'Partially Paid'
+          : 'Paid'
+    }}
+
+      </span>
+
+      <span class="type-chip">
+
+          <i
+    class="bi"
+    [ngClass]="{
+      'bi-clock-history': fine.type === 'OVERDUE',
+      'bi-tools': fine.type === 'DAMAGE',
+      'bi-book-fill': fine.type === 'LOST'
+    }">
+  </i>
+        {{ fine.type }}
+      </span>
+
+    </div>
+
+    <!-- Progress -->
+
+    <div
+      *ngIf="fine.status=='PENDING' || fine.status=='PARTIALLY_PAID'"
+      class="mt-4"
+    >
+
+  
+      <div class="d-flex justify-content-between align-items-center mb-2">
+
+    <small class="progress-label">
+        Payment Progress
+    </small>
+
+    <small class="progress-percent">
+        <!-- {{ (fine.amountPaid / fine.amount) * 100 || 0 }}% -->
+          {{ ((fine.amountPaid / fine.amount) * 100) | number:'1.0-0' }}%
+    </small>
+
+</div>
+
+      <div class="progress mt-2">
+
+        <div
+          class="progress-bar"
+          [style.width.%]="(fine.amountPaid/fine.amount)*100 || 0">
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Reason -->
+
+    <div class="reason-box">
+
+      <p>
+        <strong>Reason:</strong>
+
+        {{fine.reason}}
+      </p>
+
+      <p>
+
+        <strong>Notes:</strong>
+
+        {{fine.notes}}
+
+      </p>
+
+    </div>
+
+    <hr>
+
+    <!-- Amount Cards -->
+
+    <div class="row g-3">
+
+      <div class="col-md-3">
+
+        <div class="info-card blue">
+           <i class="bi bi-graph-up-arrow"></i>
+
+          <small>Total Amount</small>
+
+          <!-- <h4>₹{{fine.amount}}</h4> -->
+
+          <h4>₹{{ fine.amount | number:'1.2-2' }}</h4>
+
+        </div>
+
+      </div>
+
+      <div class="col-md-3">
+
+        <div class="info-card green">
+           <i class="bi bi-check-circle-fill"></i>
+
+          <small>Amount Paid</small>
+
+          <h4>₹{{fine.amountPaid | number: '1.2-2'}}</h4>
+
+        </div>
+
+      </div>
+
+      <div class="col-md-3">
+
+        <div class="info-card red">
+           <i class="bi bi-exclamation-triangle-fill"></i>
+
+          <small>Outstanding</small>
+
+          <!-- <h4>₹{{fine.amountOutstanding}}</h4> -->
+           <h4>₹{{ fine.amountOutstanding | number:'1.2-2' }}</h4>
+
+        </div>
+
+      </div>
+
+      <div class="col-md-3">
+
+        <div class="info-card gray">
+  <i class="bi bi-calendar-event"></i>
+          <small>Created Date</small>
+
+          <h4>
+
+            {{fine.createdAt | date:'mediumDate'}}
+
+          </h4>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div
+    *ngIf="fine.status==='PAID'"
+    class="paid-success">
+
+    <div class="d-flex align-items-center">
+
+        <i class="bi bi-check-circle-fill me-3"></i>
+
+        <div>
+            <h5>This fine has been paid in full</h5>
+            <p>Thank you for your payment!</p>
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- Button -->
+
+    <!-- <button
+          *ngIf="fine.status=='PENDING'"
+          class="pay-btn"
+          (click)="payFine.emit(fine)">
+          <i class="bi bi-credit-card"></i>
+          Pay Outstanding Amount : ₹{{fine.amountOutstanding | number:'1.2-2'}} </button> -->
+
+
+          <button
+    *ngIf="fine.status == 'PENDING' || fine.status == 'PARTIALLY_PAID'"
+    class="pay-btn"
+    (click)="payFine.emit(fine)">
+
+    <i class="bi bi-credit-card"></i>
+    Pay Outstanding Amount : ₹{{ fine.amountOutstanding | number:'1.2-2' }}
+
+</button>
+
+  </div>
+
+</div>

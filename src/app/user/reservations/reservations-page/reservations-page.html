@@ -1,0 +1,87 @@
+<div class="container py-4">
+
+ 
+
+  <div class="reservation-header mb-4">
+
+  <div class="title-wrapper">
+
+    <div class="title-icon">
+
+      <i class="bi bi-bookmark-fill"></i>
+
+    </div>
+
+    <div>
+
+      <h1 class="reservation-title">
+        My Reservations
+      </h1>
+
+      <p class="reservation-subtitle">
+        Manage and track your book reservations
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+  <app-reservation-stats
+    [stats]="stats"
+  ></app-reservation-stats>
+
+  <!-- <app-reservation-tabs
+    [activeTab]="activeTab"
+    (activeTabChange)="activeTab = $event"
+  ></app-reservation-tabs> -->
+
+  <app-reservation-tabs
+  [activeTab]="activeTab"
+  (activeTabChange)="onTabChange($event)"
+>
+</app-reservation-tabs>
+
+  <div *ngIf="loading" class="text-center py-5">
+
+    <div class="spinner-border text-primary"></div>
+
+  </div>
+
+  <app-empty-state
+    *ngIf="!loading && reservations.length === 0"
+    (create)="createDialogOpen = true"
+  ></app-empty-state>
+
+  <div
+    class="row g-4"
+    *ngIf="!loading && reservations.length > 0"
+  >
+
+    <div
+      class="col-md-6 col-lg-4"
+      *ngFor="let reservation of reservations"
+    >
+
+      <app-reservation-card
+        [reservation]="reservation"
+      ></app-reservation-card>
+
+    </div>
+
+  </div>
+
+  <app-create-dialog
+    [open]="createDialogOpen"
+    [bookId]="bookId"
+    (close)="createDialogOpen = false"
+    (bookIdChange)="bookId = $event"
+    (create)="handleCreateReservation()"
+  ></app-create-dialog>
+
+  <app-snackbar-alert
+    [snackbar]="snackbar"
+  ></app-snackbar-alert>
+
+</div>

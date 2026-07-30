@@ -1,0 +1,293 @@
+<div
+  class="card shadow-sm border-0 rounded-4 overflow-hidden loan-card"
+  [ngStyle]="{
+    border: loan.isOverdue
+      ? '2px solid #EF4444'
+      : '1px solid rgba(0,0,0,0.08)'
+  }"
+>
+
+  <!-- Status Bar -->
+
+  <div
+    class="d-flex justify-content-between align-items-center px-4 py-3"
+    [ngStyle]="{
+      background: getStatusConfig().bgColor,
+      borderBottom: '1px solid ' + getStatusConfig().color + '20'
+    }"
+  >
+
+    <span
+      class="badge d-flex align-items-center gap-2 px-3 py-2"
+      [ngStyle]="{
+        background: getStatusConfig().color,
+        color: 'white'
+      }"
+    >
+      <i [class]="getStatusConfig().icon"></i>
+      {{ getStatusConfig().label }}
+    </span>
+
+    <span
+      *ngIf="loan.fineAmount > 0 && !loan.finePaid"
+      class="badge bg-danger px-3 py-2"
+    >
+      Fine: ₹{{ loan.fineAmount.toFixed(2) }}
+    </span>
+
+  </div>
+
+  <div class="card-body p-4">
+
+    <div class="row g-4">
+
+      <!-- Book Info -->
+
+      <div class="col-lg-6">
+
+        <div class="d-flex gap-3">
+
+          <!-- Book Cover -->
+
+          <div
+            class="book-cover d-flex align-items-center justify-content-center"
+            (click)="navigateToBook()"
+          >
+            <i class="bi bi-book text-white fs-1"></i>
+          </div>
+
+          <!-- Details -->
+
+          <div class="flex-grow-1">
+
+            <h5
+              class="fw-bold mb-2 book-title"
+              (click)="navigateToBook()"
+            >
+              {{ loan.bookTitle }}
+            </h5>
+
+            <div class="d-flex align-items-center gap-2 mb-2 text-muted">
+              <i class="bi bi-person"></i>
+              <small>{{ loan.bookAuthor }}</small>
+            </div>
+
+            <div class="d-flex align-items-center gap-2 text-muted">
+              <i class="bi bi-123"></i>
+              <small>ISBN: {{ loan.bookIsbn }}</small>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Loan Details -->
+
+      <div class="col-lg-6">
+
+        <div class="row g-3">
+
+          <div class="col-6">
+
+            <small class="text-muted d-block mb-1">
+              Checkout Date
+            </small>
+
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-calendar text-primary"></i>
+              <span class="fw-semibold">
+                {{ formatDate(loan.checkoutDate) }}
+              </span>
+            </div>
+
+          </div>
+
+          <div class="col-6">
+
+            <small class="text-muted d-block mb-1">
+              Due Date
+            </small>
+
+            <div class="d-flex align-items-center gap-2">
+              <i
+                class="bi bi-calendar"
+                [ngStyle]="{
+                  color: loan.isOverdue ? '#EF4444' : '#667eea'
+                }"
+              ></i>
+
+              <span
+                class="fw-semibold"
+                [ngStyle]="{
+                  color: loan.isOverdue ? '#EF4444' : ''
+                }"
+              >
+                {{ formatDate(loan.dueDate) }}
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="col-6" *ngIf="loan.returnDate">
+
+            <small class="text-muted d-block mb-1">
+              Return Date
+            </small>
+
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-arrow-return-left text-success"></i>
+
+              <span class="fw-semibold">
+                {{ formatDate(loan.returnDate) }}
+              </span>
+            </div>
+
+          </div>
+
+          <div class="col-6">
+
+            <small class="text-muted d-block mb-1">
+              Renewals
+            </small>
+
+            <div class="d-flex align-items-center gap-2">
+
+              <i class="bi bi-arrow-repeat text-primary"></i>
+
+              <span class="fw-semibold">
+                {{ loan.renewalCount }} / {{ loan.maxRenewals }}
+              </span>
+
+            </div>
+
+            <div class="progress mt-2" style="height: 6px;">
+              <div
+                class="progress-bar"
+                [style.width.%]="(loan.renewalCount / loan.maxRenewals) * 100"
+              ></div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Due Warning -->
+
+        <div
+          *ngIf="getDueDateWarning()"
+          class="alert alert-warning d-flex align-items-center gap-2 mt-3 mb-0"
+        >
+          <i class="bi bi-clock"></i>
+
+          <span class="fw-semibold">
+            Due in {{ getDueDateWarning() }}
+            {{ getDueDateWarning() === 1 ? 'day' : 'days' }}!
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Notes -->
+
+    <div
+      *ngIf="loan.notes"
+      class="alert alert-primary mt-4 mb-0"
+    >
+      <strong>Note:</strong> {{ loan.notes }}
+    </div>
+
+
+
+    <div
+  *ngIf="loan.status === 'RETURN_REQUESTED'"
+  class="alert alert-warning mt-3 mb-3"
+>
+  <div class="d-flex align-items-start">
+
+    <i class="bi bi-hourglass-split fs-4 me-3"></i>
+
+    <div>
+
+      <strong>Return Request Submitted</strong>
+
+      <br>
+
+      Please return this book to the library counter.
+
+      <br>
+
+      Waiting for librarian approval.
+
+    </div>
+
+  </div>
+</div>
+
+<hr class="my-4">
+
+    
+
+    <!-- Buttons -->
+
+    <div class="d-flex flex-wrap gap-2 justify-content-end">
+
+      <button
+        class="btn btn-outline-primary"
+        (click)="navigateToBook()"
+      >
+        View Book Details
+      </button>
+
+      <button
+        *ngIf="canRenew() && loan.status !== 'RETURN_REQUESTED'"
+        class="btn btn-primary"
+        (click)="onRenewBook()"
+      >
+        <i class="bi bi-arrow-repeat me-2"></i>
+        Renew Book
+      </button>
+
+      <button
+        *ngIf="loan.fineAmount > 0 && !loan.finePaid"
+        class="btn btn-danger"
+        (click)="onPayFineBook()"
+      >
+        <i class="bi bi-credit-card me-2"></i>
+        Pay Fine ₹{{ loan.fineAmount.toFixed(2) }}
+      </button>
+
+     
+
+      <button
+    *ngIf="(loan.status === 'CHECKED_OUT' || loan.status === 'OVERDUE') && !loan.returnDate"
+    class="btn btn-outline-success"
+    (click)="onReturnBook()">
+
+    <i class="bi bi-arrow-return-left me-2"></i>
+
+   Request Return
+
+</button>
+
+<button
+    *ngIf="loan.status==='CHECKED_OUT'"
+    class="btn btn-outline-danger"
+    (click)="onReportLost()">
+
+    <i class="bi bi-exclamation-octagon me-2"></i>
+
+    Report Lost
+
+</button>
+
+    </div>
+
+  </div>
+
+</div>

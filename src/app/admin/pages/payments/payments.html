@@ -1,0 +1,573 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+<div class="page-wrapper">
+
+  <div class="page-content">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between mb-4">
+      <div>
+        <h3 class="fw-bold">Payments Management</h3>
+        <small class="text-muted">Monitor all payment transactions and revenue</small>
+      </div>
+
+      <button class="btn btn-primary" (click)="handleExportCSV()"><i class="fa-solid fa-download"></i>
+        Export CSV
+      </button>
+    </div>
+
+    <!-- STATS -->
+
+    <div class="row g-4 mb-4">
+
+  <!-- Revenue -->
+  <div class="col-lg-3 col-md-6">
+    <div class="stats-card revenue">
+      <div class="stats-top">
+        <div class="stats-icon">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+        </div>
+
+        <span class="stats-chip">
+          <i class="fa-solid fa-chart-line"></i>
+          Revenue
+        </span>
+      </div>
+
+      <h2>₹ {{ monthlyRevenue }}</h2>
+      <p>Total Revenue</p>
+    </div>
+  </div>
+
+  <!-- Success -->
+  <div class="col-lg-3 col-md-6">
+    <div class="stats-card success">
+      <div class="stats-top">
+        <div class="stats-icon">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <span class="stats-chip">
+          <i class="fa-solid fa-check"></i>
+          Success
+        </span>
+      </div>
+
+      <h2>{{ successCount }}</h2>
+      <p>Successful Payments</p>
+    </div>
+  </div>
+
+  <!-- Pending -->
+  <div class="col-lg-3 col-md-6">
+    <div class="stats-card pending">
+      <div class="stats-top">
+        <div class="stats-icon">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+
+        <span class="stats-chip">
+          <i class="fa-solid fa-hourglass-half"></i>
+          Pending
+        </span>
+      </div>
+
+      <h2>{{ pendingCount }}</h2>
+      <p>Pending Payments</p>
+    </div>
+  </div>
+
+  <!-- Failed -->
+  <div class="col-lg-3 col-md-6">
+    <div class="stats-card failed">
+      <div class="stats-top">
+        <div class="stats-icon">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+
+        <span class="stats-chip">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          Failed
+        </span>
+      </div>
+
+      <h2>{{ failedCount }}</h2>
+      <p>Failed Payments</p>
+    </div>
+  </div>
+
+</div>
+
+    <!-- SEARCH -->
+    <!-- <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        placeholder="Search payments..."
+        [(ngModel)]="searchQuery"
+      />
+    </div> -->
+
+
+    <!-- FILTERS -->
+<!-- FILTER WRAPPER -->
+<div class="filters-wrapper">
+
+  <!-- FILTER CARD -->
+  <div class="filters-card">
+
+    <div class="row align-items-center">
+
+  <!-- SEARCH -->
+  <div class="col-md-4">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        placeholder="Search by transaction ID, user or description..."
+        [(ngModel)]="searchQuery"
+      />
+    </div>
+  </div>
+
+  <!-- TYPE -->
+  <div class="col-md-2">
+    <select class="form-select" [(ngModel)]="filterType">
+      <option value="">All Types</option>
+      <!-- <option value="SUBSCRIPTION">Subscription</option> -->
+       <option value="MEMBERSHIP">Membership</option>
+      <option value="FINE">Fine</option>
+    </select>
+  </div>
+
+  <!-- GATEWAY -->
+  <div class="col-md-2">
+    <select class="form-select" [(ngModel)]="filterGateway">
+      <option value="">All Gateways</option>
+      <option value="STRIPE">Stripe</option>
+      <option value="RAZORPAY">Razorpay</option>
+    </select>
+  </div>
+
+  <!-- STATUS -->
+  <div class="col-md-2">
+    <select class="form-select" [(ngModel)]="filterStatus">
+      <option value="">All Status</option>
+      <option value="SUCCESS">Success</option>
+      <!-- <option value="COMPLETED">Completed</option> -->
+      <option value="PENDING">Pending</option>
+      <option value="INITIATED">Initiated</option>
+      <option value="FAILED">Failed</option>
+      <option value="REFUNDED">Refunded</option>
+      <option value="PROCESSING">Processing</option>
+    </select>
+  </div>
+
+  <!-- CLEAR BUTTON -->
+  <div class="col-md-2">
+    <button class="btn btn-outline-secondary w-100"
+            (click)="clearFilters()">
+      <i class="fa-solid fa-filter-circle-xmark me-1"></i>
+      Clear
+    </button>
+  </div>
+
+  </div>
+  </div>
+  </div>
+
+
+
+    <!-- TABLE -->
+    <div class="payments-table">
+
+      <div class="table-card">
+
+        <div class="table-scroll-wrapper">
+
+          <table class="custom-table">
+
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Transaction</th>
+                <th>User</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Gateway</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr *ngIf="filteredPayments.length === 0">
+                <td colspan="9" class="no-data">
+                  No payments available
+                </td>
+              </tr>
+
+              <tr *ngFor="let p of filteredPayments">
+
+                <td>{{ p.id }}</td>
+
+                <td class="txn-id">{{ p.transactionId }}</td>
+
+                <td class="user-cell">
+                  <!-- <div class="avatar">
+                    {{ p.userName?.charAt(0) | uppercase }}
+                  </div> -->
+
+                  <div class="user-info">
+                    <div class="name">{{ p.userName }}</div>
+                    <div class="email">{{ p.userEmail }}</div>
+                  </div>
+                </td>
+
+                <!-- <td class="amount">
+                  {{ p.currency }} {{ p.amount }}
+                </td> -->
+
+                <td>
+  <span class="amount-pill">
+    <i class="fa-solid fa-indian-rupee-sign"></i>
+    {{ p.amount |  number:'1.2-2'  }}
+  </span>
+</td>
+
+                <!-- <td>
+                  <span class="badge gray">{{ p.paymentType }}</span>
+                </td> -->
+
+                <td>
+  <span class="payment-type"
+        [ngClass]="{
+          'membership': p.paymentType === 'MEMBERSHIP',
+          'fine': p.paymentType === 'FINE'
+        }">
+
+   <i
+  class="fa-solid"
+  [ngClass]="{
+    'fa-crown': p.paymentType === 'MEMBERSHIP',
+    'fa-receipt': p.paymentType === 'FINE'
+  }">
+</i>
+
+    {{ p.paymentType }}
+  </span>
+</td>
+
+                <!-- <td>
+                  <span class="badge info">{{ p.gateway }}</span>
+                </td> -->
+
+                <td>
+
+  <span class="gateway-pill stripe"
+        *ngIf="p.gateway==='STRIPE'">
+    <i class="fa-brands fa-stripe"></i>
+    Stripe
+  </span>
+
+  <span class="gateway-pill razorpay"
+        *ngIf="p.gateway==='RAZORPAY'">
+    <i class="fa-solid fa-credit-card"></i>
+    Razorpay
+  </span>
+
+</td>
+
+                <!-- <td>
+                  <span class="status-badge"[ngClass]="getStatusClass(p.status)">{{ p.status }}</span>
+                </td> -->
+
+                <td>
+
+<span class="status-pill"
+      [ngClass]="getStatusClass(p.status)">
+
+<i class="fa-solid"
+   [ngClass]="{
+      'fa-circle-check': p.status==='SUCCESS',
+      'fa-clock': p.status==='PENDING',
+      'fa-spinner': p.status==='PROCESSING',
+      'fa-circle-xmark': p.status==='FAILED',
+      'fa-rotate-left': p.status==='REFUNDED',
+      'fa-hourglass-start': p.status==='INITIATED'
+   }">
+</i>
+
+{{ p.status }}
+
+</span>
+
+</td>
+
+                <td>{{ p.createdAt | date:'dd/MM/yyyy' }}</td>
+
+                <td class="actions">
+                  <button class="fine-btn info"
+                          (click)="handleViewDetails(p)">
+                    <i class="fa-solid fa-eye"></i>
+                    View
+                  </button>
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+
+          
+
+        </div>
+
+      </div>
+
+
+
+      <div class="pagination-wrapper">
+
+  <div class="page-size">
+    <span>Rows:</span>
+
+    <select
+      [(ngModel)]="rowsPerPage"
+      (change)="changeRows($event)">
+
+      <option [value]="5">5</option>
+      <option [value]="10">10</option>
+      <option [value]="20">20</option>
+      <option [value]="50">50</option>
+
+    </select>
+  </div>
+
+  <div class="pagination">
+
+    <button
+      class="btn btn-light"
+      (click)="previousPage()"
+      [disabled]="page===0">
+      Previous
+    </button>
+
+    <button
+      *ngFor="let p of pages"
+      class="btn"
+      [class.btn-primary]="p===page"
+      [class.btn-light]="p!==page"
+      (click)="goToPage(p)">
+      {{p+1}}
+    </button>
+
+    <button
+      class="btn btn-light"
+      (click)="nextPage()"
+      [disabled]="page===totalPages-1">
+      Next
+    </button>
+
+  </div>
+
+</div>
+
+
+    </div>
+
+    <!-- DETAILS MODAL -->
+    <div class="modal fade show"
+     *ngIf="detailsDialogOpen"
+     style="display:block; background:rgba(0,0,0,0.5);">
+
+  <div class="modal-dialog custom-width">
+    <div class="modal-content custom-modal">
+
+      <!-- Header -->
+      <div class="modal-header">
+        <h5 class="modal-title">Payment Details</h5>
+        <!-- <button class="close-btn" (click)="detailsDialogOpen=false">✖</button> -->
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body" id="paymentReceipt">
+
+        <!-- Payment ID -->
+
+<div class="detail-block">
+  <div class="label">
+     <i class="fa-solid fa-credit-card me-2"></i>
+    Payment ID
+  </div>
+  <div class="value mono">
+    {{ selectedPayment?.id || '-' }}
+  </div>
+
+  </div>
+
+  <!-- <div class="divider"></div> -->
+
+
+
+       <div class="detail-block">
+  <div class="label">
+     <i class="fa-solid fa-hashtag me-2"></i>
+     Transaction ID</div>
+  <div class="value mono">
+    {{ selectedPayment?.transactionId || '-' }}
+  </div>
+</div>
+
+        <div class="divider"></div>
+
+        <div class="detail-block">
+          <div class="label"> <i class="fa-solid fa-user me-2"></i>User</div>
+          <div class="value">
+            {{ selectedPayment?.userName }} ({{ selectedPayment?.userEmail }})
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="detail-block">
+          <div class="label"> <i class="fa-solid fa-indian-rupee-sign me-2"></i>Amount</div>
+          <div class="value amount-value">
+            ₹{{ (selectedPayment?.amount) | number:'1.2-2' }}
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+<div class="detail-block">
+  <div class="label">  <i class="fa-solid fa-crown me-2"></i>Payment Type</div>
+  <div class="payment-value">
+    {{ selectedPayment?.paymentType || 'N/A' }}
+  </div>
+</div>
+
+        <div class="divider"></div>
+
+        <div class="detail-block">
+          <div class="label"> <i class="fa-solid fa-circle-check me-2"></i>Status</div>
+          <div class="value status-chip">
+            {{ selectedPayment?.status }}
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="detail-block">
+          <div class="label">  <i class="fa-solid fa-building-columns me-2"></i>Payment Gateway</div>
+          <div class="value gateway-chip">
+            {{ selectedPayment?.gateway }}
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Gateway Payment ID -->
+
+<div class="detail-block">
+  <div class="label"> <i class="fa-solid fa-fingerprint me-2"></i>Gateway Payment ID</div>
+  <div class="value mono">
+    {{ selectedPayment?.gatewayPaymentId || '-' }}
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Gateway Order ID -->
+
+<div class="detail-block">
+  <div class="label"><i class="fa-solid fa-receipt me-2"></i>Gateway Order ID</div>
+  <div class="value mono">
+    {{ selectedPayment?.gatewayOrderId || '-' }}
+  </div>
+</div>
+
+<div class="divider"></div>
+
+
+        <!-- Description -->
+<div class="divider"></div>
+<div class="detail-block">
+  <div class="label"><i class="fa-solid fa-note-sticky me-2"></i>Description</div>
+  <div class="value ">
+    {{ selectedPayment?.description || '-' }}
+  </div>
+</div>
+
+<!-- Initiated At -->
+<div class="divider"></div>
+<div class="detail-block">
+  <div class="label"><i class="fa-solid fa-clock me-2"></i>Initiated At</div>
+  <div class="value">
+    {{ selectedPayment?.initiatedAt 
+       ? (selectedPayment.initiatedAt | date:'dd/MM/yyyy, HH:mm:ss') 
+       : '-' }}
+    </div>
+</div>
+
+<!-- Completed At -->
+<div class="divider"></div>
+<div class="detail-block">
+  <div class="label"><i class="fa-solid fa-square-check me-2"></i>Completed At</div>
+  <div class="value">
+    {{ selectedPayment?.completedAt 
+       ? (selectedPayment.completedAt | date:'dd/MM/yyyy, HH:mm:ss') 
+       : '-' }}
+    </div>
+</div>
+
+<!-- Created At -->
+<div class="divider"></div>
+<div class="detail-block">
+  <div class="label"> <i class="fa-solid fa-calendar-days me-2"></i>Created At</div>
+  <div class="value">
+    {{ selectedPayment?.createdAt 
+       ? (selectedPayment.createdAt | date:'dd/MM/yyyy, HH:mm:ss') 
+       : '-' }}
+    </div>
+</div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button class="btn btn-primary"
+                (click)="detailsDialogOpen=false">
+          Close
+        </button>
+
+        <!-- <button
+    class="btn print-btn me-2"
+    (click)="printReceipt()">
+    <i class="fa-solid fa-print me-2"></i>
+    Print Receipt
+</button> -->
+
+ <button
+    *ngIf="selectedPayment?.status === 'SUCCESS'"
+    class="btn btn-primary"
+    (click)="printReceipt()">
+    <i class="fa-solid fa-print"></i>
+    Print Receipt
+  </button>
+  
+      </div>
+
+     
+
+    </div>
+  </div>
+</div>
+
+</div>

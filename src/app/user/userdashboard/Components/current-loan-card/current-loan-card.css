@@ -1,0 +1,115 @@
+.loan-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.loan-card:hover {
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
+
+.loan-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex: 1;
+}
+
+.book-cover {
+  width: 64px;
+  height: 96px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.book-placeholder {
+  width: 64px;
+  height: 96px;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    #c7d2fe,
+    #e9d5ff
+  );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 30px;
+  color: #4f46e5;
+}
+
+.book-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.book-author {
+  color: #6b7280;
+}
+
+.loan-meta {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.status-chip,
+.days-chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  border: 1px solid #d1d5db;
+}
+
+.success-chip {
+  color: #16a34a;
+  border-color: #16a34a;
+}
+
+.warning-chip {
+  color: #ca8a04;
+  border-color: #ca8a04;
+}
+
+.danger-chip {
+  color: #dc2626;
+  border-color: #dc2626;
+}
+
+
+.due-date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+.loan-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status-active {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.status-returned {
+  background: #ecfdf5;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}

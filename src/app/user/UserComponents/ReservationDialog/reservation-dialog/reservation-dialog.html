@@ -1,0 +1,228 @@
+<div
+  class="modal fade show d-block"
+  tabindex="-1"
+  *ngIf="open"
+>
+
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+
+    <div class="modal-content border-0 rounded-4 shadow-lg">
+
+      <!-- HEADER -->
+      <div class="modal-header border-0 pb-0">
+
+        <div class="d-flex align-items-center gap-2">
+
+          <i
+            class="fa-solid fa-bookmark text-warning fs-3"
+          ></i>
+
+          <h4 class="fw-bold mb-0">
+
+            Reserve Book
+
+          </h4>
+          
+
+        </div>
+
+        <button
+          type="button"
+          class="btn-close"
+          (click)="handleClose()"
+        ></button>
+
+      </div>
+
+      <!-- BODY -->
+      <div class="modal-body p-4">
+
+        <!-- BOOK INFO -->
+        <div
+          *ngIf="book"
+          class="reservation-book-card mb-4"
+        >
+
+          <h5 class="fw-bold mb-1">
+
+            {{ book.title }}
+
+          </h5>
+
+          <p class="text-muted mb-2">
+
+            by {{ book.author }}
+
+          </p>
+
+          <div class="small">
+
+            <span class="fw-semibold">
+
+              Status:
+
+            </span>
+
+            <span class="text-danger fw-bold">
+
+              Currently Unavailable
+
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- ERROR -->
+        <div
+          *ngIf="error"
+          class="alert alert-danger"
+        >
+
+          {{ error }}
+
+        </div>
+
+        <!-- INFO -->
+        <div class="alert alert-info">
+
+          <div
+            class="d-flex align-items-center gap-2 mb-2"
+          >
+
+            <i
+              class="fa-solid fa-bell"
+            ></i>
+
+            <strong>
+
+              How Reservations Work
+
+            </strong>
+
+          </div>
+
+          <ul class="mb-0">
+
+            <li>
+              You'll be notified when
+              the book becomes available
+            </li>
+
+            <li>
+              The book will be held
+              for 48 hours
+            </li>
+
+            <li>
+              You can cancel anytime
+            </li>
+
+            <li>
+              Reservations work in queue
+              order
+            </li>
+
+          </ul>
+
+        </div>
+
+        <!-- NOTES -->
+        <div class="mb-4">
+
+          <label class="form-label fw-semibold">
+
+            Notes (Optional)
+
+          </label>
+
+          <textarea
+            rows="3"
+            class="form-control reservation-textarea"
+            [(ngModel)]="notes"
+            [disabled]="loading"
+            placeholder="Add any special notes..."
+          >
+          </textarea>
+
+        </div>
+
+        <!-- NOTIFICATION -->
+        <div class="alert alert-success">
+
+          <strong>
+
+            You will receive notifications via:
+
+          </strong>
+
+          <ul class="mt-2 mb-0">
+
+            <li>
+              Email notification
+            </li>
+
+            <li>
+              In-app dashboard notification
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+      <!-- FOOTER -->
+      <div class="modal-footer border-0 pt-0">
+
+        <button
+          class="btn btn-light"
+          (click)="handleClose()"
+          [disabled]="loading"
+        >
+
+          Cancel
+
+        </button>
+
+        <button
+          class="btn btn-warning text-white px-4"
+          (click)="handleConfirm()"
+          [disabled]="loading"
+        >
+
+          <span *ngIf="!loading">
+
+            <i
+              class="fa-solid fa-bookmark me-2"
+            ></i>
+
+            Confirm Reservation
+
+          </span>
+
+          <span *ngIf="loading">
+
+            <span
+              class="spinner-border spinner-border-sm me-2"
+            ></span>
+
+            Processing...
+
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- BACKDROP -->
+<div
+  class="modal-backdrop fade show"
+  *ngIf="open"
+></div>

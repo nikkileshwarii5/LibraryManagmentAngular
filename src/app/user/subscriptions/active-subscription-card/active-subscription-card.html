@@ -1,0 +1,169 @@
+<div class="active-card">
+
+  <!-- Floating Badge -->
+  <div class="active-badge">
+    <i class="bi bi-check-circle-fill"></i>
+    Your Active Plan
+  </div>
+
+  <!-- Header -->
+  <div class="top-section">
+
+    <div>
+      <h2 class="plan-name">
+        {{ subscription.planName }}
+      </h2>
+
+      <div class="price-row">
+        
+        <span class="currency">₹{{ subscription.price }}</span>
+        <span class="month">
+
+  {{
+    subscription.planPrice === 199
+      ? '/ month'
+
+      : subscription.planPrice === 499
+      ? '/ 3 months'
+
+      : subscription.planPrice === 1499
+      ? '/ year'
+
+      : '/ plan'
+  }}
+
+</span>
+      </div>
+    </div>
+
+    <div class="status-pill">
+      <i class="bi bi-check-circle-fill"></i>
+      Active
+    </div>
+
+  </div>
+
+  <hr>
+
+  <!-- Details -->
+  <div class="details-grid">
+
+    <div class="detail-box">
+      <i class="bi bi-calendar-check"></i>
+
+      <div>
+        <p class="label">Started</p>
+        <h5>{{ subscription.startDate | date }}</h5>
+      </div>
+    </div>
+
+    <div class="detail-box">
+      <i class="bi bi-calendar-x"></i>
+
+      <div>
+        <p class="label">Expires</p>
+        <h5>{{ subscription.endDate | date }}</h5>
+      </div>
+    </div>
+
+    <div class="detail-box">
+      <i class="bi bi-book"></i>
+
+      <div>
+        <p class="label">Books Allowed</p>
+        <h5>{{ subscription.maxBooksAllowed }} books</h5>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-wrapper">
+
+    <div class="progress-info">
+      <span>Subscription Progress</span>
+
+      <span class="remaining">
+        {{ daysRemaining }} days remaining
+      </span>
+    </div>
+
+<div class="progress">
+  <div
+    class="progress-bar"
+    [style.width.%]="progressPercentage"
+  ></div>
+</div>
+  </div>
+
+  <!-- Benefits -->
+  <!-- <div class="benefits-section">
+
+    <h4>Your Benefits:</h4>
+
+    <div class="benefits-grid">
+
+      <div>
+        <i class="bi bi-check-circle-fill"></i>
+        Borrow up to 10 books at once
+      </div>
+
+      <div>
+        <i class="bi bi-clock"></i>
+        21 days per book
+      </div>
+
+      <div>
+        <i class="bi bi-check-circle-fill"></i>
+        Priority support access
+      </div>
+
+      <div>
+        <i class="bi bi-check-circle-fill"></i>
+        Exclusive member discounts
+      </div>
+
+    </div>
+
+  </div> -->
+
+  <div class="benefits-section">
+
+  <h4>Your Benefits:</h4>
+
+  <div class="benefits-grid">
+
+    <div>
+      <i class="bi bi-book"></i>
+      Borrow up to {{ subscription.maxBooksAllowed }} books at once
+    </div>
+
+    <div>
+      <i class="bi bi-clock"></i>
+      {{ subscription.maxDaysPerBook }} days per book
+    </div>
+
+    <div>
+      <i class="bi bi-calendar-check"></i>
+      Active membership until {{ subscription.endDate | date }}
+    </div>
+
+    <div>
+      <i class="bi bi-shield-check"></i>
+      Access to all library services
+    </div>
+
+  </div>
+
+</div>
+
+  <!-- Button -->
+  <button
+    class="cancel-btn"
+    (click)="cancel.emit(subscription)"
+  >
+    <i class="bi bi-x-circle"></i>
+    Cancel Subscription
+  </button>
+
+</div>

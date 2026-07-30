@@ -1,0 +1,134 @@
+<div class="container-fluid py-4">
+
+  <!-- Page Header -->
+  <div class="page-header mb-4">
+    <h2 class="page-title">
+      <i class="bi bi-chat-square-heart-fill me-2 text-primary"></i>
+      Submit Testimonial
+    </h2>
+
+    <p class="page-subtitle">
+      Share your experience with LibraOne and help other readers discover our library.
+    </p>
+  </div>
+
+  <!-- Testimonial Card -->
+  <div class="testimonial-page">
+
+    <div class="testimonial-card">
+
+      <div class="header">
+
+        <div class="icon-circle">
+          <i class="bi bi-chat-heart-fill"></i>
+        </div>
+
+        <h2>Share Your Experience</h2>
+
+        <p>
+          We'd love to hear your feedback. Your review helps other readers
+          discover LibraOne.
+        </p>
+
+      </div>
+
+      <form (ngSubmit)="submit()">
+
+        <!-- Name -->
+        <div class="mb-4">
+
+          <label class="form-label">
+            <i class="bi bi-person-fill"></i>
+            Full Name
+          </label>
+
+          <input
+            type="text"
+            class="form-control modern-input"
+            [(ngModel)]="form.name"
+            name="name"
+            placeholder="Enter your name">
+
+        </div>
+
+        <!-- Role -->
+        <div class="mb-4">
+
+          <label class="form-label">
+            <i class="bi bi-briefcase-fill"></i>
+            Role
+          </label>
+
+          <input
+            type="text"
+            class="form-control modern-input"
+            [(ngModel)]="form.role"
+            name="role"
+            placeholder="Student / Software Engineer / Teacher">
+
+        </div>
+
+        <!-- Rating -->
+        <div class="mb-4">
+
+          <label class="form-label">
+            <i class="bi bi-star-fill text-warning"></i>
+            Rate Your Experience
+          </label>
+
+          <div class="rating-box">
+
+            <span
+              *ngFor="let star of stars"
+              (click)="setRating(star)"
+              class="rating-star">
+
+              <i
+                class="bi"
+                [ngClass]="star <= form.rating ? 'bi-star-fill text-warning' : 'bi-star text-secondary'">
+              </i>
+
+            </span>
+
+          </div>
+
+          <small class="text-muted d-block mt-2">
+            {{form.rating}} / 5 Stars
+          </small>
+
+        </div>
+
+        <!-- Review -->
+        <div class="mb-4">
+
+          <label class="form-label">
+            <i class="bi bi-pencil-square"></i>
+            Your Review
+          </label>
+
+          <textarea
+            rows="5"
+            class="form-control modern-input"
+            [(ngModel)]="form.text"
+            name="text"
+            placeholder="Tell us about your experience with LibraOne...">
+          </textarea>
+
+        </div>
+
+        <!-- Button -->
+        <button type="submit" class="submit-btn">
+
+          <i class="bi bi-send-fill me-2"></i>
+
+          Submit Review
+
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

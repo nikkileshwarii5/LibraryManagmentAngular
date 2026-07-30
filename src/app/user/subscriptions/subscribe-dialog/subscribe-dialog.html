@@ -1,0 +1,215 @@
+<div
+  class="dialog-backdrop"
+  *ngIf="open"
+>
+  <div class="dialog-container">
+
+    <!-- HEADER -->
+
+    <div class="dialog-header">
+
+      <div class="header-left">
+
+        <i class="bi bi-credit-card header-icon"></i>
+
+        <h2>
+          Subscribe to Plan
+        </h2>
+
+      </div>
+
+      <button
+        class="close-btn"
+        (click)="close.emit()"
+      >
+        <i class="bi bi-x-lg"></i>
+      </button>
+
+    </div>
+
+    <!-- BODY -->
+
+    <div class="dialog-body">
+
+      <!-- PLAN SUMMARY -->
+
+      <div class="plan-summary">
+
+        <div class="summary-top">
+
+          <div>
+
+            <h3>
+              {{ plan?.name }}
+            </h3>
+
+            <p class="description">
+              {{ plan?.description }}
+            </p>
+
+          </div>
+
+       
+<span class="duration-chip">
+  {{
+    plan?.name?.toLowerCase().includes('bronze')
+      ? '1 Month'
+      : plan?.name?.toLowerCase().includes('silver')
+      ? '3 Months'
+      : plan?.name?.toLowerCase().includes('gold')
+      ? '12 Months'
+      : plan?.durationDays + ' Days'
+  }}
+</span>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- PRICE -->
+
+        <div class="price-row">
+
+          <h1>
+            ₹{{ plan?.price }}
+          </h1>
+
+          <span>
+            /plan
+          </span>
+
+        </div>
+
+        <!-- FEATURES -->
+
+        <div class="features-section">
+
+          <h4>
+            What you'll get:
+          </h4>
+
+          <div class="feature-item">
+
+            <i class="bi bi-check-circle-fill"></i>
+
+            <span>
+              Borrow up to {{ plan?.maxBooksAllowed }} books at once
+            </span>
+
+          </div>
+
+          <div class="feature-item">
+
+            <i class="bi bi-check-circle-fill"></i>
+
+            <span>
+              {{ plan?.maxDaysPerBook }} days per book
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- PAYMENT METHODS -->
+
+      <div class="payment-section">
+
+        <h4>
+          Select Payment Method:
+        </h4>
+
+        <!-- RAZORPAY -->
+
+        <label
+          class="payment-card"
+          [class.active]="paymentMethod === 'RAZORPAY'"
+        >
+
+          <input
+            type="radio"
+            name="payment"
+            value="RAZORPAY"
+            [(ngModel)]="paymentMethod"
+          >
+
+          <div class="payment-content">
+
+            <span class="payment-name">
+              Razorpay
+            </span>
+
+            <span class="recommended-tag">
+              Recommended
+            </span>
+
+          </div>
+
+        </label>
+
+        <!-- STRIPE -->
+
+        <label
+          class="payment-card"
+          [class.active]="paymentMethod === 'STRIPE'"
+        >
+
+          <input
+            type="radio"
+            name="payment"
+            value="STRIPE"
+            [(ngModel)]="paymentMethod"
+          >
+
+          <div class="payment-content">
+
+            <span class="payment-name">
+              Stripe
+            </span>
+
+          </div>
+
+        </label>
+
+      </div>
+
+      <!-- TERMS -->
+
+      <div class="terms-box">
+
+        <i class="bi bi-info-circle"></i>
+
+        <p>
+          By subscribing, you agree to our Terms of Service.
+          Your subscription will auto-renew unless cancelled.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <div class="dialog-footer">
+
+      <button
+        class="cancel-btn"
+        (click)="close.emit()"
+      >
+        CANCEL
+      </button>
+
+      <button class="subscribe-btn"
+      (click)="subscribe()" >
+
+        <i class="bi bi-credit-card"></i>
+
+        SUBSCRIBE NOW
+
+      </button>
+
+    </div>
+
+  </div>
+</div>

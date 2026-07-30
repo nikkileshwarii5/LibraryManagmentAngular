@@ -1,0 +1,79 @@
+
+<div class="table-wrapper">
+  <!-- <div class="table-scroll"> -->
+
+    <table class="custom-table">
+
+      <!-- HEADER -->
+      <thead>
+        <tr>
+          <th *ngFor="let col of columns"
+              [style.minWidth.px]="col.minWidth || null"
+              [innerHTML]="col.headerName">
+          </th>
+
+          <th class="actions-col">Actions</th>
+        </tr>
+      </thead>
+
+      <!-- BODY -->
+      <tbody>
+        <tr *ngFor="let row of data">
+
+          <td *ngFor="let col of columns"
+              [style.minWidth.px]="col.minWidth || null"
+              [class.center]="col.align === 'center'">
+
+            <!-- 🔹 IMAGE -->
+         <img *ngIf="col.type === 'image'"
+     [src]="row.coverImageUrl || '/placeholder-book.jpg'"
+     class="cover-img" />
+
+            <!-- 🔹 GENRE CHIP -->
+            <span *ngIf="col.type === 'genreChip'"
+                  class="chip genre">
+              {{ row[col.field] }}
+            </span>
+
+            <!-- 🔹 AVAILABILITY CHIP -->
+            <!-- <span *ngIf="col.type === 'availabilityChip'"
+                  class="chip available">
+              {{ row[col.field] }}
+            </span> -->
+
+
+                 <span
+  *ngIf="col.type === 'availabilityChip'"
+  class="chip"
+  [ngClass]="row[col.field] > 0 ? 'available' : 'unavailable'">
+
+  {{ row[col.field] }}
+
+</span>
+
+            <!-- 🔹 YEAR CHIP -->
+            <span *ngIf="col.type === 'yearChip'"
+                  class="chip year">
+              {{ row[col.field] }}
+            </span>
+
+            <!-- 🔹 DEFAULT TEXT -->
+            <span *ngIf="!col.type">
+              {{ row[col.field] }}
+            </span>
+
+          </td>
+
+          <!-- ACTIONS -->
+          <td class="actions-col">
+            <mat-icon class="edit" (click)="onEdit(row)">edit</mat-icon>
+            <mat-icon class="delete" (click)="onDelete(row)">delete</mat-icon>
+          </td>
+
+        </tr>
+      </tbody>
+
+    </table>
+
+ 
+</div>

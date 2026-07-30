@@ -1,0 +1,35 @@
+/* genre-filter.css */
+
+.genre-container {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.genre-item {
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  white-space: nowrap;
+  min-width: max-content;
+}
+
+.genre-item:hover {
+  background-color: #f8f9fa;
+}
+
+.selected-item {
+  background-color: #eef2ff;
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+.genre-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.genre-container::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}

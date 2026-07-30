@@ -1,0 +1,62 @@
+/* book-skeleton.css */
+
+.skeleton-card {
+  background-color: #fff;
+}
+
+.skeleton-cover {
+  height: 260px;
+  background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+}
+
+.skeleton-line {
+  height: 24px;
+  border-radius: 8px;
+  background-color: #e5e7eb;
+}
+
+.skeleton-small-line {
+  height: 14px;
+  border-radius: 6px;
+  background-color: #e5e7eb;
+}
+
+.skeleton-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+}
+
+.skeleton-button {
+  height: 40px;
+  border-radius: 10px;
+  background-color: #e5e7eb;
+}
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150px;
+  width: 150px;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    left: 100%;
+  }
+}

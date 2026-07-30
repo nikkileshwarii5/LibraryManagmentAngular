@@ -1,0 +1,534 @@
+h3{
+    font-size: 30px;
+}
+/* ===== WRAPPER ===== */
+.genres-table .table-card {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* ===== TABLE ===== */
+.genres-table .custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+/* ===== HEADER ===== */
+.genres-table .custom-table thead {
+  background: #e9e9f3;
+}
+
+.genres-table .custom-table th {
+  padding: 16px;
+  font-weight: 600;
+  color: #000000;
+  text-align: center;
+}
+
+/* ===== BODY ===== */
+.genres-table .custom-table td {
+  padding: 18px;
+  border-top: 1px solid #eee;
+  /* text-align: center; */
+   vertical-align: middle;   
+}
+
+.genre-wrapper {
+  display: inline-flex;   /* 🔥 keeps icon + text in one line */
+  align-items: center;
+  gap: 10px;
+}
+
+.genre-icon {
+  color: #6366f1;
+  font-size: 18px;
+}
+
+.genre-name {
+  font-weight: 600;
+  color: #111827;
+  white-space: nowrap;   /* 🔥 prevents breaking like "Science Fiction" */
+}
+
+.description-cell {
+  text-align: left;        /* 🔥 align like reference */
+  color: #374151;
+  font-size: 14px;
+  line-height: 1.4;        /* nice spacing like UI */
+  max-width: 350px;        /* 🔥 controls wrapping */
+}
+
+/* ===== LEFT TEXT ===== */
+.genres-table .text-left {
+  text-align: left;
+}
+
+.genres-table .primary {
+  font-weight: 500;
+}
+
+/* ===== EMPTY ===== */
+.genres-table .no-data {
+  padding: 60px 0;
+  color: #6b7280;
+}
+
+/* ===== BADGES ===== */
+.genres-table .badge {
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+
+}
+
+.book-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  min-width: 42px;
+  padding: 6px 12px;
+
+  background: #ffb1dc;
+  color: #eb2577;
+
+  
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  transition: all .25s ease;
+}
+
+.book-count i {
+  font-size: 12px;
+}
+
+.book-count:hover {
+  background: #ff1d8a;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgb(252, 130, 191);
+}
+
+.genres-table .primary {
+  background: #e0e7ff;
+  color: #1e40af;
+}
+
+.genres-table .info {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.genres-table .success {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.genres-table .gray {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+/* ===== ACTIONS ===== */
+.genres-table .actions {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+/* ===== BUTTONS ===== */
+.genres-table .action-btn {
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease; 
+}
+
+.genres-table .warning {
+  background: #3613f8;
+  color: white;
+  font-size: 14px;
+}
+.genres-table .warning:hover {
+  background: #1219e8;   /* darker on hover */
+  color: rgb(255, 255, 255);
+}
+
+.genres-table .danger {
+  background: #ef4444;
+  color: white;
+  font-size: 14px;
+}
+.genres-table .danger:hover {
+  background: #dc2626;   /* darker on hover */
+}
+.genres-table .action-btn:hover {
+  transform: translateY(-2px);   /* 🔥 lift effect */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.action-btn i {
+  font-size: 16px;   /* increase this (18px / 20px as needed) */
+}
+/* ===== ACTIVE CLICK ===== */
+.genres-table .action-btn:active {
+  transform: scale(0.95);   /* 🔥 click press */
+}
+
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #6b7280;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+
+
+/* ===== STATS CARD BASE ===== */
+.stats-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: all 0.2s ease;
+}
+
+/* hover effect */
+.stats-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+/* ===== NUMBER ===== */
+.stats-card h4 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+/* ===== LABEL ===== */
+.stats-card small {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* ===== COLORS ===== */
+
+/* Root (purple/blue tone like image) */
+.stats-card.primary h4 {
+  color: #6366f1;
+}
+
+/* Total (green) */
+.stats-card.success h4 {
+  color: #22c55e;
+}
+
+/* Active (blue) */
+.stats-card.info h4 {
+  color: #3b82f6;
+}
+
+
+
+/* ===== ADD GENRE BUTTON ===== */
+.add-genre-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: white;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  box-shadow: 0 4px 10px rgba(102, 126, 234, 0.4);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* hover effect */
+.add-genre-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+}
+
+/* click effect */
+.add-genre-btn:active {
+  transform: scale(0.98);
+}
+
+/* icon size */
+.add-genre-btn i {
+  font-size: 14px;
+}
+
+
+
+/* BACKDROP */
+.custom-modal {
+  display: block;
+  background: rgba(0,0,0,0.4);
+}
+
+/* MODAL BOX */
+.modal-content {
+  border-radius: 12px;
+  padding: 10px;
+}
+
+/* INPUT STYLING */
+.modal-content .form-control,
+.modal-content .form-select {
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+/* LABEL */
+.form-label {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+/* TEXTAREA */
+textarea.form-control {
+  resize: none;
+}
+
+/* FOOTER ALIGN */
+.modal-footer {
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* CREATE BUTTON (gradient like screenshot) */
+.create-btn {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  box-shadow: 0 3px 10px rgba(102,126,234,0.4);
+
+  transition: 0.2s;
+}
+
+.create-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(102,126,234,0.5);
+}
+
+/* CANCEL BUTTON */
+.modal-footer .btn-light {
+  background: transparent;
+  border: none;
+  color: #333;
+}
+
+
+
+
+
+/* ===========================
+   MODERN DASHBOARD CARDS
+=========================== */
+
+.modern-card{
+
+    position:relative;
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:24px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 10px 30px rgba(15,23,42,.08);
+
+    transition:.35s;
+
+    border:1px solid #eef2f7;
+
+}
+
+/* top gradient line */
+
+.modern-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:100%;
+    height:5px;
+
+}
+
+.modern-card.purple::before{
+    background:linear-gradient(90deg,#6366f1,#8b5cf6);
+}
+
+.modern-card.green::before{
+    background:linear-gradient(90deg,#10b981,#34d399);
+}
+
+.modern-card.blue::before{
+    background:linear-gradient(90deg,#3b82f6,#06b6d4);
+}
+
+.modern-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:
+    0 18px 40px rgba(0,0,0,.12);
+
+}
+
+/* top row */
+
+.card-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+/* icon */
+
+.card-icon{
+
+    width:55px;
+
+    height:55px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:22px;
+
+}
+
+.purple .card-icon{
+
+    background:#eef2ff;
+
+    color:#6366f1;
+
+}
+
+.green .card-icon{
+
+    background:#ecfdf5;
+
+    color:#10b981;
+
+}
+
+.blue .card-icon{
+
+    background:#eff6ff;
+
+    color:#3b82f6;
+
+}
+
+/* trend */
+
+.trend{
+
+    font-size:13px;
+
+    font-weight:600;
+
+    padding:6px 12px;
+
+    border-radius:30px;
+
+}
+
+.purple .trend{
+
+    background:#eef2ff;
+
+    color:#6366f1;
+
+}
+
+.green .trend{
+
+    background:#ecfdf5;
+
+    color:#059669;
+
+}
+
+.blue .trend{
+
+    background:#dbeafe;
+
+    color:#2563eb;
+
+}
+
+/* number */
+
+.modern-card h2{
+
+    font-size:40px;
+
+    font-weight:700;
+
+    margin:0;
+
+    color:#111827;
+
+}
+
+/* label */
+
+.modern-card p{
+
+    margin-top:6px;
+
+    color:#6b7280;
+
+    font-size:15px;
+
+    font-weight:500;
+
+}

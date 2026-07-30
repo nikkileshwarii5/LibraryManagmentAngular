@@ -1,0 +1,279 @@
+<div
+  class="modal fade show d-block"
+  tabindex="-1"
+  *ngIf="open"
+>
+
+  <div
+    class="modal-dialog modal-dialog-centered modal-lg"
+  >
+
+    <div
+      class="modal-content border-0 rounded-4 shadow-lg"
+    >
+
+      <!-- HEADER -->
+      <div
+        class="modal-header border-0 pb-0"
+      >
+
+        <div
+          class="d-flex align-items-center gap-2"
+        >
+
+          <i
+            class="fa-solid fa-pen-to-square review-icon"
+          ></i>
+
+          <h4 class="fw-bold mb-0">
+
+            {{
+              existingReview
+                ? 'Edit Your Review'
+                : 'Write a Review'
+            }}
+
+          </h4>
+
+        </div>
+
+        <button
+          class="btn-close"
+          (click)="handleClose()"
+        ></button>
+
+      </div>
+
+      <!-- BODY -->
+      <div class="modal-body p-4">
+
+        <!-- BOOK -->
+        <div
+          *ngIf="book"
+          class="book-info-card mb-4"
+        >
+
+          <h5 class="fw-bold mb-1">
+
+            {{ book.title }}
+
+          </h5>
+
+          <p class="text-muted mb-0">
+
+            by {{ book.author }}
+
+          </p>
+
+        </div>
+
+        <!-- ERROR -->
+        <div
+          *ngIf="error"
+          class="alert alert-danger"
+        >
+
+          {{ error }}
+
+        </div>
+
+        <!-- RATING -->
+        <div class="mb-4">
+
+          <h6 class="fw-bold mb-3">
+
+            How would you rate this book?
+
+          </h6>
+
+          <div
+            class="d-flex align-items-center gap-3"
+          >
+
+            <div class="rating-stars">
+
+              <i
+                *ngFor="
+                  let star of [1,2,3,4,5]
+                "
+                class="fa-star fs-3"
+                [ngClass]="
+                  star <= rating
+                    ? 'fa-solid active-star'
+                    : 'fa-regular empty-star'
+                "
+                (click)="setRating(star)"
+                (mouseenter)="hoverRating = star"
+                (mouseleave)="hoverRating = -1"
+              ></i>
+
+            </div>
+
+            <span class="rating-text">
+
+              {{ getRatingText() }}
+
+            </span>
+
+          </div>
+
+          <small class="text-muted">
+
+            Click on stars to rate
+
+          </small>
+
+        </div>
+
+        <!-- REVIEW -->
+        <div class="mb-4">
+
+          <h6 class="fw-bold mb-2">
+
+            Share your thoughts
+
+          </h6>
+
+          <textarea
+            rows="6"
+            class="form-control review-textarea"
+            [(ngModel)]="comment"
+            [disabled]="loading"
+            placeholder="Write your review here..."
+          >
+          </textarea>
+
+          <div
+            class="d-flex justify-content-between mt-2"
+          >
+
+            <small class="text-muted">
+
+              Minimum 10 characters
+
+            </small>
+
+            <small
+              [ngClass]="
+                comment.length > 1000
+                  ? 'text-danger'
+                  : 'text-muted'
+              "
+            >
+
+              {{ comment.length }}/1000
+
+            </small>
+
+          </div>
+
+        </div>
+
+        <!-- GUIDELINES -->
+        <div class="alert alert-info">
+
+          <strong>
+
+            Review Guidelines:
+
+          </strong>
+
+          <ul class="mt-2 mb-0">
+
+            <li>
+              Be honest and constructive
+            </li>
+
+            <li>
+              Avoid spoilers
+            </li>
+
+            <li>
+              Respect other readers
+            </li>
+
+            <li>
+              Focus on your experience
+            </li>
+
+          </ul>
+
+        </div>
+
+        <!-- EDIT NOTICE -->
+        <div
+          *ngIf="existingReview"
+          class="alert alert-warning"
+        >
+
+          You are editing your existing
+          review.
+
+        </div>
+
+      </div>
+
+      <!-- FOOTER -->
+      <div
+        class="modal-footer border-0 pt-0"
+      >
+
+        <button
+          class="btn btn-light"
+          (click)="handleClose()"
+          [disabled]="loading"
+        >
+
+          Cancel
+
+        </button>
+
+        <button
+          class="btn btn-primary px-4"
+          (click)="handleSubmit()"
+          [disabled]="
+            loading ||
+            rating === 0 ||
+            !comment.trim()
+          "
+        >
+
+          <span *ngIf="!loading">
+
+            <i
+              class="fa-solid fa-star me-2"
+            ></i>
+
+            {{
+              existingReview
+                ? 'Update Review'
+                : 'Submit Review'
+            }}
+
+          </span>
+
+          <span *ngIf="loading">
+
+            <span
+              class="spinner-border spinner-border-sm me-2"
+            ></span>
+
+            Submitting...
+
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- BACKDROP -->
+<div
+  class="modal-backdrop fade show"
+  *ngIf="open"
+></div>

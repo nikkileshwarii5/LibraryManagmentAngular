@@ -1,0 +1,25 @@
+<div class="empty-card text-center">
+
+  <div
+    class="empty-icon"
+    [style.color]="content.iconColor"
+  >
+    <i [class]="content.icon"></i>
+  </div>
+
+  <h2 class="empty-title">
+    {{ content.title }}
+  </h2>
+
+  <p class="empty-message">
+    {{ content.message }}
+  </p>
+
+  <button
+    class="btn browse-btn"
+    (click)="navigateToBooks()"
+  >
+    {{ content.buttonText }}
+  </button>
+
+</div>

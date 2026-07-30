@@ -1,0 +1,28 @@
+<div class="card shadow-sm border-0 mb-4">
+  <div class="card-body p-0">
+
+    <div class="d-flex">
+
+      <button
+        *ngFor="let tab of tabs; let i = index"
+        class="btn flex-fill rounded-0 py-3 fw-semibold"
+        [ngClass]="
+          activeTab === i
+            ? 'btn-primary'
+            : 'btn-light'
+        "
+        (click)="setTab(i)"
+      >
+
+        <span class="material-icons align-middle me-2">
+          {{ tab.icon }}
+        </span>
+
+        {{ tab.label }}
+
+      </button>
+
+    </div>
+
+  </div>
+</div>

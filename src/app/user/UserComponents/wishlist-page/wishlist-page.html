@@ -1,0 +1,270 @@
+<div class="container py-5">
+
+  <!-- Header -->
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+      <h1 class="fw-bold">
+
+        My Wishlist
+
+      </h1>
+
+      <p class="text-muted">
+
+        {{ myWishlist.length }}
+        books saved
+
+      </p>
+
+    </div>
+
+    <!-- <div class="d-flex gap-2">
+
+      <button
+        class="btn btn-outline-primary"
+        (click)="handleShare()"
+      >
+        Share
+      </button>
+
+      <button
+        *ngIf="myWishlist.length > 0"
+        class="btn btn-outline-danger"
+        (click)="clearDialogOpen=true"
+      >
+        Clear All
+      </button>
+
+    </div> -->
+
+    <div class="d-flex gap-2">
+
+  <button
+    class="btn btn-outline-primary"
+    (click)="handleShare()"
+  >
+    <i class="bi bi-share-fill me-2"></i>
+    SHARE
+  </button>
+
+  <button
+    *ngIf="myWishlist.length > 0"
+    class="btn btn-outline-danger"
+    (click)="clearDialogOpen=true"
+  >
+    <i class="bi bi-trash-fill me-2"></i>
+    CLEAR ALL
+  </button>
+
+</div>
+
+  </div>
+
+  <!-- Empty -->
+
+  <div
+    *ngIf="
+      !loading &&
+      myWishlist.length === 0
+    "
+    class="text-center bg-white rounded-4 shadow p-5"
+  >
+
+    <i
+      class="bi bi-heart-fill text-danger opacity-25"
+      style="font-size:80px"
+    ></i>
+
+    <h3 class="mt-3 fw-bold">
+
+      Your Wishlist is Empty
+
+    </h3>
+
+    <p class="text-muted">
+
+      Start adding books
+      you'd like to read
+
+    </p>
+
+  </div>
+
+  <!-- Toolbar -->
+
+  <div
+    *ngIf="myWishlist.length > 0"
+    class="card shadow-sm mb-4"
+  >
+
+    <div class="card-body">
+
+      <div
+        class="d-flex justify-content-between align-items-center flex-wrap gap-3"
+      >
+
+        <div>
+
+          <input
+            type="checkbox"
+            [checked]="
+              selectedItems.size ===
+              filteredAndSortedItems.length
+            "
+            (change)="handleSelectAll()"
+          >
+
+          <span class="ms-2">
+
+            {{
+              selectedItems.size > 0
+                ? selectedItems.size + ' selected'
+                : 'Select All'
+            }}
+
+          </span>
+
+        </div>
+
+        <div class="d-flex gap-2">
+
+          <div class="d-flex gap-3">
+
+  <div class="floating-select">
+
+    <label>
+      <i class="bi bi-funnel-fill me-1"></i>
+      Availability
+    </label>
+
+    <select
+      class="form-select custom-select"
+      [(ngModel)]="filterAvailability"
+    >
+      <option value="all">All Books</option>
+      <option value="available">Available</option>
+      <option value="unavailable">Unavailable</option>
+    </select>
+
+  </div>
+
+  <div class="floating-select">
+
+    <label>
+      <i class="bi bi-sort-down me-1"></i>
+      Sort By
+    </label>
+
+    <select
+      class="form-select custom-select"
+      [(ngModel)]="sortBy"
+    >
+      <option value="dateAdded">Date Added</option>
+      <option value="title">Title</option>
+      <option value="author">Author</option>
+    </select>
+
+  </div>
+
+</div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Cards -->
+
+  <div class="d-flex flex-column gap-4">
+
+    <app-wishlist-card
+
+      *ngFor="let item of filteredAndSortedItems"
+
+      [item]="item"
+
+      [isAvailable]="item.book.availableCopies > 0"
+
+      [isSelected]="selectedItems.has(item.id)"
+
+      (selectItem)="handleSelectItem($event)"
+
+      (removeItem)="handleRemoveItem($event)"
+
+      (reserveBook)="handleReserveBook($event)"
+      (viewBook)="handleViewBook($event)"
+
+    >
+    </app-wishlist-card>
+
+
+    <!-- Clear Wishlist Modal -->
+
+<div
+  class="modal-backdrop-custom"
+  *ngIf="clearDialogOpen"
+>
+
+  <div class="custom-modal">
+
+    <h3>Clear Wishlist?</h3>
+
+    <p>
+      Are you sure you want to remove all books
+      from your wishlist?
+      This action cannot be undone.
+    </p>
+
+    <div class="modal-actions">
+
+      <button
+        class="btn btn-link"
+        (click)="clearDialogOpen = false"
+      >
+        CANCEL
+      </button>
+
+      <button
+        class="btn btn-danger"
+        (click)="handleClearWishlist()"
+      >
+        CLEAR ALL
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+    
+
+  </div>
+
+
+  <div
+  *ngIf="snackbar.open"
+  class="snackbar"
+  [ngClass]="{
+    'success-snackbar': snackbar.severity === 'success',
+    'error-snackbar': snackbar.severity === 'error'
+  }">
+
+  <i
+    class="bi"
+    [ngClass]="{
+      'bi-check-circle-fill': snackbar.severity === 'success',
+      'bi-exclamation-circle-fill': snackbar.severity === 'error'
+    }">
+  </i>
+
+  {{ snackbar.message }}
+
+</div>
+
+</div>

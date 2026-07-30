@@ -1,0 +1,19 @@
+
+/* Smooth transition */
+.stats-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+    border: none !important;
+
+}
+
+/* 🔥 Lift + Glow */
+.stats-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Optional click feel */
+.stats-card:active {
+  transform: scale(0.98);
+}

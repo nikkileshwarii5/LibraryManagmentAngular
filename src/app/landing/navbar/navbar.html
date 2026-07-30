@@ -1,0 +1,121 @@
+<nav class="navbar navbar-expand-lg custom-navbar fixed-top">
+  <div class="container">
+
+    <!-- Logo -->
+    <a class="navbar-brand d-flex align-items-center" routerLink="/">
+      <div class="logo-wrapper">
+        <img src="book.png" class="logo-icon" alt="Logo" width="20" height="20">
+      </div>
+
+      <div class="ms-2">
+        <span class="brand-name">LibraOne</span>
+      </div>
+    </a>
+
+    <!-- Mobile Toggle -->
+    <button
+      class="navbar-toggler border-0 shadow-none"
+      type="button"
+      (click)="toggleMenu()">
+
+      <span class="navbar-toggler-icon"></span>
+
+    </button>
+
+    <!-- Navbar -->
+    <div
+      [ngClass]="{
+      'collapse navbar-collapse': true,
+      'show': isMenuOpen
+    }">
+
+      <!-- Links -->
+      <ul class="navbar-nav mx-auto">
+
+        <li
+          class="nav-item" *ngFor="let link of navLinks">
+
+          <!-- <a
+            class="nav-link"
+            [routerLink]="link.path"
+            routerLinkActive="active">
+
+            {{link.name}}
+
+          </a> -->
+
+           <!-- Home -->
+  <!-- <a
+    *ngIf="link.path"
+    class="nav-link"
+    [routerLink]="link.path"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    (click)="closeMenu()"
+    >
+
+    {{ link.name }}
+
+  </a> -->
+
+
+    <a
+    class="nav-link"
+    href="javascript:void(0)"
+    [class.active]="activeSection === link.section"
+    (click)="scrollToSection(link.section)">
+
+    {{ link.name }}
+
+  </a>
+
+   <!-- About & Contact -->
+  <!-- <a
+    *ngIf="link.section"
+    class="nav-link"
+    href="javascript:void(0)"
+    (click)="scrollToSection(link.section)"
+    [class.active]="activeSection === link.section">
+
+    {{ link.name }}
+
+  </a> -->
+
+        </li>
+
+      </ul>
+
+      <!-- Buttons -->
+      <div class="d-flex align-items-center gap-3">
+
+        <a
+          routerLink="/login"
+          class="btn login-btn">
+
+          Login
+
+        </a>
+
+        <a
+          routerLink="/register"
+          class="btn signup-btn">
+
+          Sign Up
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+
+
+
+
+

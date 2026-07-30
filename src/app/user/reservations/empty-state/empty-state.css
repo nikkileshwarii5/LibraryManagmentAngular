@@ -1,0 +1,107 @@
+.empty-state-container {
+
+  min-height: 520px;
+
+  border: 2px dashed #d1d5db;
+
+  border-radius: 28px;
+
+  background: #f8fafc;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  padding: 40px;
+}
+
+.empty-icon-wrapper {
+
+  width: 120px;
+  height: 120px;
+
+  border-radius: 50%;
+
+  background: rgba(168, 85, 247, 0.18);
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 28px;
+}
+
+.empty-icon {
+
+  font-size: 38px;
+
+  color: rgb(14, 14, 14);
+}
+
+.empty-title {
+
+  font-size: 2rem;
+
+  font-weight: 800;
+
+  color: #1e293b;
+
+  margin-bottom: 16px;
+}
+
+.empty-subtitle {
+
+  font-size: 1.5rem;
+
+  color: #64748b;
+
+  margin-bottom: 36px;
+}
+
+.create-btn {
+
+  border: none;
+
+  border-radius: 16px;
+
+  padding: 18px 38px;
+
+  font-size: 1.3rem;
+
+  font-weight: 700;
+
+  color: white;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  background: linear-gradient(
+    90deg,
+    #6366f1,
+    #c026d3
+  );
+
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.35);
+
+  transition: all 0.3s ease;
+}
+
+.create-btn:hover {
+
+  transform: translateY(-2px);
+
+  opacity: 0.95;
+}
+
+.btn-icon {
+
+  font-size: 24px;
+}

@@ -1,0 +1,42 @@
+<div
+  *ngIf="snackbar.open"
+  class="custom-snackbar"
+  [ngClass]="{
+    'success-snackbar': snackbar.severity === 'success',
+    'error-snackbar': snackbar.severity === 'error',
+    'warning-snackbar': snackbar.severity === 'warning'
+  }"
+>
+
+  <div class="snackbar-content">
+
+    <div class="snackbar-left">
+
+      <span class="material-icons snackbar-icon">
+        {{
+          snackbar.severity === 'success'
+            ? 'check_circle'
+
+            : snackbar.severity === 'error'
+            ? 'error'
+
+            : 'warning'
+        }}
+      </span>
+
+      <span class="snackbar-message">
+        {{ snackbar.message }}
+      </span>
+
+    </div>
+
+    <button
+      class="snackbar-close"
+      (click)="snackbar.open = false"
+    >
+      ✕
+    </button>
+
+  </div>
+
+</div>

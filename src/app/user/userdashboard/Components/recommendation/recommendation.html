@@ -1,0 +1,80 @@
+<div class="recommendation-wrapper p-4">
+
+  <!-- TITLE -->
+
+  <h3 class="recommend-title">
+
+    Recommended For You
+
+  </h3>
+
+  <p class="recommend-subtitle">
+
+    Based on your reading history and preferences
+
+  </p>
+
+  <!-- GRID -->
+
+  <div class="row g-4">
+
+    <div
+      class="col-6 col-md-3"
+      *ngFor="let book of recommendations"
+    >
+
+      <!-- CARD -->
+
+      <div
+        class="recommend-card"
+        (click)="navigateToBook(book.id)"
+      >
+
+        <!-- IMAGE -->
+
+        <!-- <div class="recommend-image">
+
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+        </div> -->
+
+        <img [src]="book.coverImageUrl" [alt]="book.title" class="recommend-image"/>
+
+        <!-- TITLE -->
+
+        <h4 class="book-title">
+
+          {{ book.title }}
+
+        </h4>
+
+        <!-- AUTHOR -->
+
+        <p class="book-author">
+
+          {{ book.author }}
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- BUTTON -->
+
+  <div class="text-center mt-5">
+
+    <button
+      class="explore-btn"
+      (click)="navigateToBooks()"
+    >
+
+      Explore All Books
+
+    </button>
+
+  </div>
+
+</div>

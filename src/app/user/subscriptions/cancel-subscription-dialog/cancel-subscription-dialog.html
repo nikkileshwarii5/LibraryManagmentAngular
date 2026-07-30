@@ -1,0 +1,239 @@
+<!-- cancel-subscription-dialog.component.html -->
+
+<div
+  class="modal fade show d-block"
+  tabindex="-1"
+  *ngIf="open"
+  style="background: rgba(0,0,0,0.5)"
+>
+  <div class="modal-dialog modal-dialog-centered custom-dialog">
+    <div class="modal-content custom-modal">
+
+      <!-- HEADER -->
+
+      <div class="modal-header custom-header">
+
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-exclamation-circle-fill text-danger fs-4"></i>
+
+          <h5 class="modal-title fw-bold">
+            Cancel Subscription
+          </h5>
+        </div>
+
+        <button
+          type="button"
+          class="btn-close"
+          (click)="handleClose()"
+          [disabled]="loading"
+        ></button>
+
+      </div>
+
+      <!-- BODY -->
+
+      <div class="modal-body p-4">
+
+        <!-- WARNING -->
+
+        <div class="alert alert-warning mb-4">
+
+          <div class="fw-semibold mb-1">
+            Are you sure you want to cancel?
+          </div>
+
+          <small>
+            Your subscription will remain active until
+            <strong>
+              {{ formatDate(subscription?.endDate) }}
+            </strong>
+            ({{ daysRemaining }} days remaining),
+            but it won't auto-renew.
+          </small>
+
+        </div>
+
+        <!-- PLAN INFO -->
+
+        <div class="plan-box">
+
+          <small class="text-muted d-block mb-1">
+            Current Plan
+          </small>
+
+       <h5 class="fw-bold mb-1">
+  {{ subscription?.planName }}
+</h5>
+<!-- <p class="text-muted mb-0">
+  ₹{{ subscription?.price }}
+  /
+  {{
+    subscription?.daysRemaining >= 365
+      ? 'year'
+      : subscription?.daysRemaining >= 90
+      ? '3 months'
+      : 'month'
+  }}
+</p> -->
+
+
+<p class="text-muted mb-0">
+  ₹{{ subscription?.price }}
+  /
+  {{
+    subscription?.planName?.toLowerCase().includes('gold')
+      ? 'year'
+      : subscription?.planName?.toLowerCase().includes('silver')
+      ? '3 months'
+      : 'month'
+  }}
+</p>
+        </div>
+
+        <!-- FEATURES -->
+
+        <div class="mb-4">
+
+          <div class="fw-semibold mb-2">
+            What you'll lose after
+            {{ formatDate(subscription?.endDate) }}:
+          </div>
+
+          <ul class="feature-list">
+
+            <li
+              *ngFor="
+                let feature of subscription?.subscriptionPlan?.features?.split(',')
+              "
+            >
+              {{ feature.trim() }}
+            </li>
+
+            <li
+              *ngIf="
+                subscription?.subscriptionPlan?.maxBooksAllowed > 0
+              "
+            >
+              Ability to borrow up to
+              {{
+                subscription?.subscriptionPlan?.maxBooksAllowed
+              }}
+              books
+            </li>
+
+          </ul>
+
+        </div>
+
+        <!-- REASONS -->
+
+        <div class="mb-3">
+
+          <div class="fw-semibold mb-3">
+            Why are you cancelling? *
+          </div>
+
+          <div
+            class="reason-card"
+            *ngFor="let reason of cancellationReasons"
+            [class.active]="selectedReason === reason"
+          >
+
+            <div class="form-check">
+
+              <input
+                class="form-check-input"
+                type="radio"
+                name="reason"
+                [value]="reason"
+                [(ngModel)]="selectedReason"
+                (change)="error=''"
+              />
+
+              <label class="form-check-label">
+                {{ reason }}
+              </label>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- OTHER REASON -->
+
+        <div *ngIf="selectedReason === 'Other'" class="mb-3">
+
+          <textarea
+            class="form-control"
+            rows="3"
+            placeholder="Help us improve by sharing your feedback..."
+            [(ngModel)]="customReason"
+            (input)="error=''"
+          ></textarea>
+
+          <small class="text-muted">
+            Minimum 5 characters
+          </small>
+
+        </div>
+
+        <!-- ERROR -->
+
+        <div
+          *ngIf="error"
+          class="alert alert-danger"
+        >
+          {{ error }}
+        </div>
+
+        <!-- INFO -->
+
+        <div class="alert alert-info mt-4">
+
+          <div class="fw-semibold mb-1">
+            Consider downgrading instead?
+          </div>
+
+          <small>
+            You can switch to a lower-tier plan and keep some
+            benefits at a reduced price.
+          </small>
+
+        </div>
+
+      </div>
+
+      <!-- FOOTER -->
+
+      <div class="modal-footer custom-footer">
+
+        <button
+          class="btn btn-light"
+          (click)="handleClose()"
+          [disabled]="loading"
+        >
+          Keep Subscription
+        </button>
+
+        <button
+          class="btn cancel-btn"
+          (click)="handleConfirm()"
+          [disabled]="loading || !selectedReason"
+        >
+
+          <i class="bi bi-x-circle me-2"></i>
+
+          {{
+            loading
+              ? 'Cancelling...'
+              : 'Confirm Cancellation'
+          }}
+
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+</div>

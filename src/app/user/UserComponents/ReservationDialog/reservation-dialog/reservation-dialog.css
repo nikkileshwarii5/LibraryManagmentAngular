@@ -1,0 +1,39 @@
+.modal-content {
+  overflow: hidden;
+}
+
+.reservation-book-card {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  padding: 18px;
+  border-radius: 16px;
+}
+
+.reservation-textarea {
+  border-radius: 12px;
+}
+
+.reservation-textarea:focus {
+  border-color: #f59e0b;
+  box-shadow:
+    0 0 0 0.15rem
+    rgba(245,158,11,0.15);
+}
+
+.btn-warning {
+  background: #f59e0b;
+  border-color: #f59e0b;
+}
+
+.btn-warning:hover {
+  background: #d97706;
+  border-color: #d97706;
+}
+
+.modal-backdrop {
+  z-index: 1040;
+}
+
+.modal {
+  z-index: 1050;
+}

@@ -1,0 +1,156 @@
+<div class="plan-card">
+
+
+  <div class="badge-wrapper">
+
+  <div
+    class="popular-tag"
+    *ngIf="plan.price === 499 || plan.price === 1499"
+  >
+    <i class="bi bi-stars"></i>
+
+    {{
+      plan.price === 499
+        ? 'Most Popular'
+        : plan.price === 1499
+        ? 'Best Value'
+        : ''
+    }}
+  </div>
+
+  <div
+    class="active-tag"
+    *ngIf="isCurrentPlan"
+  >
+    <i class="bi bi-check-circle-fill"></i>
+    Active
+  </div>
+
+</div>
+  
+
+  <div class="plan-header">
+
+    <h3>
+      {{ plan.name }}
+    </h3>
+
+
+
+    <div class="price-row">
+
+  <div class="price">
+
+    ₹ {{ plan.price }}
+
+  </div>
+
+<span
+  class="save-tag"
+  *ngIf="plan.price === 499 || plan.price === 1499"
+>
+
+  <i class="fa-solid fa-tag"></i>
+
+  {{
+    plan.price === 499
+      ? 'Save 16%'
+
+      : 'Save 37%'
+  }}
+
+</span>
+
+</div>
+
+    
+
+  </div>
+
+  <div class="plan-body">
+
+    <p class="description">
+      {{ plan.description }}
+    </p>
+
+    <div class="feature-card">
+
+  <div class="feature-icon">
+    <i class="bi bi-book"></i>
+  </div>
+
+  <div class="feature-content">
+
+    <span class="feature-title">
+      Borrow Limit
+    </span>
+
+    <h4>
+      {{ plan.maxBooksAllowed }} Books
+    </h4>
+
+  </div>
+
+</div>
+
+<div class="feature-card">
+
+  <div class="feature-icon">
+    <i class="bi bi-clock"></i>
+  </div>
+
+  <div class="feature-content">
+
+    <span class="feature-title">
+      Loan Duration
+    </span>
+
+    <h4>
+      {{ plan.maxDaysPerBook }} Days/Book
+    </h4>
+
+  </div>
+
+</div>
+
+    <!-- <button
+      class="subscribe-btn"
+      (click)="subscribe.emit(plan)"
+    >
+
+      Subscribe
+
+    </button> -->
+
+    <!-- <button
+  class="subscribe-btn"
+
+  [class.current-plan-btn]="isCurrentPlan"
+
+ [disabled]="hasActiveSubscription"
+  (click)="subscribe.emit(plan)"
+> -->
+<button
+  class="subscribe-btn"
+  [class.current-plan-btn]="isCurrentPlan"
+  [class.membership-active-btn]="!isCurrentPlan && hasActiveSubscription"
+  [disabled]="hasActiveSubscription"
+  (click)="subscribe.emit(plan)"
+>
+  <i
+    *ngIf="isCurrentPlan"
+    class="bi bi-check-circle-fill"
+  ></i>
+
+  <!-- <i
+    *ngIf="canUpgrade"
+    class="bi bi-arrow-up-circle-fill"
+  ></i> -->
+
+  {{ buttonText }}
+
+</button>
+
+  </div>
+
+</div>

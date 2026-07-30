@@ -1,0 +1,72 @@
+.reservation-header {
+
+  margin-bottom: 32px;
+}
+
+.title-wrapper {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+}
+
+.title-icon {
+
+  width: 62px;
+  height: 62px;
+
+  border-radius: 18px;
+
+  background: linear-gradient(
+    135deg,
+    #6366f1,
+    #c026d3
+  );
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 12px 28px rgba(99,102,241,0.28);
+}
+
+.title-icon i {
+
+  font-size: 28px;
+
+  color: white;
+}
+
+.reservation-title {
+
+  margin: 0;
+
+  font-size: 40px;
+
+  font-weight: 800;
+line-height: 1;
+padding-bottom: 8px;
+  background: linear-gradient(
+    90deg,
+    #4f46e5,
+    #c026d3
+  );
+
+  -webkit-background-clip: text;
+  
+background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.reservation-subtitle {
+
+  margin-top: 8px;
+
+  font-size: 1.35rem;
+
+  color: #64748b;
+}

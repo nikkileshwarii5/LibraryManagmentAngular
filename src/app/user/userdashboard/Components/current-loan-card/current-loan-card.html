@@ -1,0 +1,95 @@
+<div class="loan-card">
+
+  <div class="loan-left">
+
+    <img
+      *ngIf="loan?.bookCoverImage"
+      [src]="loan.bookCoverImage"
+      class="book-cover"
+    />
+
+    <div
+      *ngIf="!loan?.bookCoverImage"
+      class="book-placeholder"
+    >
+      <i class="fa-solid fa-book"></i>
+    </div>
+
+    <div class="loan-details">
+
+      <h4 class="book-title">
+        {{ loan.bookTitle }}
+      </h4>
+
+      <p class="book-author">
+        {{ loan.bookAuthor }}
+      </p>
+
+      <div class="loan-meta">
+
+        <!-- <span>
+          Due:
+          {{ loan.dueDate | date }}
+        </span> -->
+
+        <span class="due-date">
+  <i class="fa-regular fa-clock"></i>
+  Due: {{ loan.dueDate | date:'dd/MM/yyyy' }}
+</span>
+
+        <!-- <span class="status-chip">
+          {{ loan.status }}
+        </span> -->
+
+        <span
+  class="loan-status"
+  [ngClass]="{
+    'status-returned': loan.status === 'RETURNED',
+    'status-active': loan.status === 'CHECKED_OUT'
+  }"
+>
+  <i
+    class="fa-solid"
+    [ngClass]="loan.status === 'RETURNED'
+      ? 'fa-circle-check'
+      : 'fa-book-open-reader'"
+  ></i>
+
+  {{ loan.status }}
+</span>
+
+        <span
+          class="days-chip"
+          [ngClass]="getDaysRemainingColor(loan.remainingDays)"
+        >
+
+          {{
+            loan.remainingDays > 0
+              ? loan.remainingDays
+              : loan.overdueDays
+          }}
+
+          days
+
+          {{
+            loan.remainingDays >= 0
+              ? 'remaining'
+              : 'overdue'
+          }}
+
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <button
+    class="btn btn-outline-primary"
+    (click)="navigateToBook(loan.bookId)"
+  >
+    View
+  </button>
+
+</div>

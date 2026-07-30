@@ -1,0 +1,244 @@
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+<div class="page-wrapper">
+
+  <div class="page-content">
+
+    <div class="header-row">
+      <div>
+        <h2 class="title">Books Management</h2>
+        <p class="subtitle">Manage your library's book collection</p>
+      </div>
+
+      <button class="add-btn" (click)="openDialog()">
+        <i class="fa-solid fa-plus"></i> Add New Book
+      </button>
+    </div>
+
+    <div class="filter-card">
+      <div class="filters-row">
+
+       
+        <div class="filter-item">
+          <div class="input-box search-field">
+            <i class="fa fa-search"></i>
+            <input
+              type="text"
+              placeholder="Search by title, author"
+              [(ngModel)]="searchTerm"
+              (input)="loadBooks()"
+            />
+          </div>
+        </div>
+
+    <!--Gener-->
+      <div class="filter-item">
+  <div class="dropdown-wrapper floating-wrapper genre-field"
+       (click)="toggleDropdown('genre'); $event.stopPropagation()">
+
+    <!-- BOX -->
+    <div class="custom-dropdown floating-dropdown">
+
+      <!-- ✅ Show selected value only -->
+      <div class="sort-content">
+        <!-- <span *ngIf="selectedGenreId"> -->
+          <span *ngIf="selectedGenreId !== '' && selectedGenreId !== null">
+          {{ getGenreName() }}
+        </span>
+      </div>
+
+      <!-- <i class="fa-solid fa-sort-down"></i> -->
+       <i class="fa-solid"
+   [ngClass]="activeDropdown === 'genre' ? 'fa-sort-up' : 'fa-sort-down'">
+</i>
+
+      <!-- 🔥 FLOATING LABEL -->
+      <label
+        class="floating-label genre-label"
+       [class.active]="activeDropdown === 'genre' || selectedGenreId">
+        Filter by Genre
+      </label>
+
+    </div>
+
+    <!-- MENU -->
+    <div class="dropdown-menu-custom genre-dropdown"
+         *ngIf="activeDropdown === 'genre'">
+
+      <div (click)="selectGenre('')">All Genre</div>
+
+      <div *ngFor="let genre of genres"
+           (click)="selectGenre(genre.id)">
+        {{ genre.name }}
+      </div>
+
+    </div>
+
+  </div>
+</div>
+        <!--Availability-->
+
+        <div class="filter-item">
+  <div class="dropdown-wrapper floating-wrapper availability-field"
+       (click)="toggleDropdown('availability'); $event.stopPropagation()">
+
+    <!-- BOX -->
+    <div class="custom-dropdown floating-dropdown">
+
+      <div class="sort-content">
+        
+        <span>{{ getAvailabilityLabel() }}</span>
+      </div>
+
+      <!-- <i class="fa-solid fa-sort-down"></i> --> <i class="fa-solid"
+   [ngClass]="activeDropdown === 'availability' ? 'fa-sort-up' : 'fa-sort-down'">
+</i>
+
+      <!-- 🔥 FLOATING LABEL -->
+      <label
+        class="floating-label availability-label"
+        [class.active]="activeDropdown === 'availability' || availabilityFilter">
+        Availability
+      </label>
+
+    </div>
+
+    <!-- MENU -->
+    <div class="dropdown-menu-custom"
+         *ngIf="activeDropdown === 'availability'">
+
+      <div (click)="selectAvailability('')">All Books</div>
+      <div (click)="selectAvailability('AVAILABLE')">Available</div>
+      <div (click)="selectAvailability('CHECKED_OUT')">Checked Out</div>
+
+    </div>
+
+  </div>
+</div>
+
+      <!-- sort-->
+
+<div class="filter-item">
+  <div class="dropdown-wrapper floating-wrapper  sort-field"
+       (click)="toggleDropdown('sort'); $event.stopPropagation()">
+
+    <!-- BOX -->
+    <div class="custom-dropdown floating-dropdown">
+
+      <div class="sort-content">
+        <i class="fa-solid fa-arrow-down-wide-short"></i>
+        <span>{{ getSortLabel() }}</span>
+      </div>
+
+   <!-- <i class="fa-solid fa-sort-down"></i> -->  <i class="fa-solid"
+   [ngClass]="activeDropdown === 'sort' ? 'fa-sort-up' : 'fa-sort-down'">
+</i>
+
+      <!-- 🔥 FLOATING LABEL -->
+      <label
+        class="floating-label"
+        [class.active]="activeDropdown === 'sort' || sortValue">
+        Sort By
+      </label>
+
+    </div>
+
+    <!-- MENU -->
+    <div class="dropdown-menu-custom" *ngIf="activeDropdown === 'sort'">
+      <div (click)="selectSort('title-asc')">Title (A-Z)</div>
+      <div (click)="selectSort('title-desc')">Title (Z-A)</div>
+      <div (click)="selectSort('author-asc')">Author (A-Z)</div>
+      <div (click)="selectSort('author-desc')">Author (Z-A)</div>
+      <div (click)="selectSort('createdAt-desc')">Newest First</div>
+      <div (click)="selectSort('createdAt-asc')">Oldest First</div>
+    </div>
+
+  </div>
+</div>
+
+       
+        <div class="filter-item">
+          <button class="clear-btn" (click)="clearFilters()">
+            <i class="fa-solid fa-filter"></i> CLEAR
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+    <div class="table-section">
+  <div class="table-card">
+
+   
+    <div class="table-scroll-wrapper">
+
+      <app-data-table
+        [columns]="columns"
+        [data]="books"
+        (edit)="openDialog($event)"
+        (delete)="deleteBook($event)">
+      </app-data-table>
+
+    </div>
+
+  </div>
+</div>
+
+  </div>
+
+  <app-book-form
+    *ngIf="dialogOpen"
+    [book]="editingBook"
+    (close)="onDialogClose($event)">
+  </app-book-form>
+
+
+
+
+
+
+<div
+  class="pagination-container"
+  *ngIf=" totalPages > 1">
+
+  <button
+    class="pagination-btn"
+    [disabled]="currentPage === 1"
+    (click)="changePage(currentPage - 1)">
+
+    <i class="fa-solid fa-angle-left"></i>
+    Previous
+
+  </button>
+
+  <div class="pagination-info">
+
+    <h5>
+      Page {{ currentPage }}
+      <span>of {{ totalPages }}</span>
+    </h5>
+
+    <p>{{ totalElements }} books found</p>
+
+  </div>
+
+  <button
+    class="pagination-btn"
+    [disabled]="currentPage === totalPages"
+    (click)="changePage(currentPage + 1)">
+
+    Next
+    <i class="fa-solid fa-angle-right"></i>
+
+  </button>
+
+</div>
+
+</div>

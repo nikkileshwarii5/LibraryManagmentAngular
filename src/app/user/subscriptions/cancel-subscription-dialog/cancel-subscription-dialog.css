@@ -1,0 +1,94 @@
+.custom-dialog {
+  max-width: 600px;
+}
+
+.custom-modal {
+  border-radius: 18px;
+  overflow: hidden;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-header {
+  background: #fee2e2;
+  border-bottom: 2px solid #fecaca;
+  padding: 18px 24px;
+  flex-shrink: 0;
+}
+
+.custom-footer {
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  padding: 18px 24px;
+  flex-shrink: 0;
+}
+
+.modal-body {
+  overflow-y: auto;
+  flex: 1;
+  padding: 24px !important;
+}
+
+/* scrollbar */
+
+.modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: #6366f1;
+  border-radius: 20px;
+}
+
+.plan-box {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 20px;
+  background: #f9fafb;
+  margin-bottom: 24px;
+}
+
+.feature-list {
+  padding-left: 20px;
+}
+
+.feature-list li {
+  margin-bottom: 8px;
+  color: #374151;
+}
+
+.reason-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  transition: 0.3s;
+}
+
+.reason-card.active {
+  background: #fee2e2;
+  border-color: #fca5a5;
+}
+
+.form-check-input:checked {
+  background-color: #ef4444;
+  border-color: #ef4444;
+}
+
+.cancel-btn {
+  background: #ef4444;
+  color: white;
+  font-weight: 600;
+  padding: 10px 22px;
+  border: none;
+}
+
+.cancel-btn:hover {
+  background: #dc2626;
+  color: white;
+}
+
+.cancel-btn:disabled {
+  background: #fca5a5;
+}

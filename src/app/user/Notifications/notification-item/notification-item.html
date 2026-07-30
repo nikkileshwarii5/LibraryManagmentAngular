@@ -1,0 +1,77 @@
+<div
+  class="notification-item"
+  [class.unread]="!notification.isRead"
+  (click)="handleMarkAsRead($event)"
+>
+
+  <!-- Icon -->
+  <div
+    class="notification-avatar"
+    [ngClass]="'bg-' + getColor(notification.type)"
+  >
+    <i [class]="getIcon(notification.type)"></i>
+  </div>
+
+  <!-- Content -->
+  <div class="notification-content">
+
+    <div class="notification-header">
+
+      <div class="notification-title">
+
+        {{ notification.title }}
+
+        <span
+          *ngIf="!notification.isRead"
+          class="blue-dot">
+        </span>
+
+      </div>
+
+      <!-- <button
+        class="menu-btn"
+        (click)="handleDelete($event)"
+      >
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+      </button> -->
+
+
+      <button class="menu-btn" (click)="openMenu($event)">
+    <i class="fa-solid fa-ellipsis-vertical"></i>
+</button>
+
+    </div>
+
+    <div class="notification-message">
+
+      {{ notification.message }}
+
+    </div>
+
+    <div class="notification-footer">
+
+      <span class="category-badge">
+
+        {{ getTypeLabel(notification.type) }}
+
+      </span>
+
+      <span class="time">
+
+        {{ formatTime(notification.createdAt) }}
+
+      </span>
+
+      <span
+        *ngIf="!notification.isRead"
+        class="new-badge">
+
+        NEW
+
+      </span>
+
+    </div>
+
+  </div>
+
+</div>

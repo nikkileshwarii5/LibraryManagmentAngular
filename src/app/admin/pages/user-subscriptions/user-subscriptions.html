@@ -1,0 +1,519 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- admin-subscriptions.html -->
+
+<div class="page-wrapper">
+
+  <div class="page-content">
+
+
+<div class="container mt-4">
+
+  <!-- HEADER -->
+  <div class="mb-3">
+    <h3 class="fw-bold">User Subscriptions</h3>
+    <small class="text-muted">Monitor and manage user subscriptions</small>
+  </div>
+
+  <!-- STATS -->
+
+<div class="row g-4 mb-4">
+
+  <!-- Active -->
+  <div class="col-md-3">
+    <div class="modern-card green">
+
+      <div class="card-top">
+        <div class="card-icon">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <span class="card-chip">
+          <i class="fa-solid fa-check"></i>
+          Active
+        </span>
+      </div>
+
+      <h2>
+        {{ allActiveSubscriptions.filter(s => s.isActive && !s.cancelledAt).length }}
+      </h2>
+
+      <p>Active Subscriptions</p>
+
+    </div>
+  </div>
+
+  <!-- Expired -->
+  <div class="col-md-3">
+    <div class="modern-card red">
+
+      <div class="card-top">
+        <div class="card-icon">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+
+        <span class="card-chip">
+          <i class="fa-solid fa-hourglass-end"></i>
+          Expired
+        </span>
+      </div>
+
+      <h2>
+        {{ allActiveSubscriptions.filter(s => s.isExpired).length }}
+      </h2>
+
+      <p>Expired Plans</p>
+
+    </div>
+  </div>
+
+  <!-- Cancelled -->
+  <div class="col-md-3">
+    <div class="modern-card orange">
+
+      <div class="card-top">
+        <div class="card-icon">
+          <i class="fa-solid fa-ban"></i>
+        </div>
+
+        <span class="card-chip">
+          <i class="fa-solid fa-xmark"></i>
+          Cancelled
+        </span>
+      </div>
+
+      <h2>
+        {{ allActiveSubscriptions.filter(s => s.cancelledAt).length }}
+      </h2>
+
+      <p>Cancelled Plans</p>
+
+    </div>
+  </div>
+
+  <!-- Revenue -->
+  <div class="col-md-3">
+    <div class="modern-card blue">
+
+      <div class="card-top">
+        <div class="card-icon">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+        </div>
+
+        <span class="card-chip">
+          <i class="fa-solid fa-wallet"></i>
+          Revenue
+        </span>
+      </div>
+
+      <h2>₹{{ totalRevenue }}</h2>
+
+      <p>Total Revenue</p>
+
+    </div>
+  </div>
+
+</div>
+
+  <!-- FILTER -->
+  <div class="row mb-3">
+
+
+    <div class="col-md-6 position-relative">
+
+  <i class="fa-solid fa-magnifying-glass search-icon"></i>
+
+  <input class="form-control ps-5"
+         placeholder="Search by Subscription Id, user or plan..."
+         [(ngModel)]="searchQuery">
+
+</div>
+
+  
+
+    <div class="col-md-4 position-relative">
+<select class="form-select custom-select"
+        [(ngModel)]="filterStatus"
+        (change)="loadSubscriptions()"
+        (focus)="isDropdownOpen = true"
+        (blur)="isDropdownOpen = false">
+
+  <option value="" disabled selected hidden>Filter by Status</option>
+  <option value="">All</option>
+  <option value="ACTIVE">Active</option>
+  <option value="EXPIRED">Expired</option>
+  <option value="CANCELLED">Cancelled</option>
+
+</select>
+
+<!-- Arrow -->
+<i [ngClass]="isDropdownOpen ? 'fa-solid fa-sort-up' : 'fa-solid fa-sort-down'"
+   class="dropdown-icon"></i>
+
+</div>
+
+    <div class="col-md-2">
+      <button class="btn btn-outline-primary w-100"
+              (click)="searchQuery=''; filterStatus=''; loadSubscriptions()">
+        CLEAR
+      </button>
+    </div>
+
+  </div>
+
+  <!-- TABLE -->
+<div class="subscriptions-table">
+
+  <div class="table-card">
+
+      <div class="table-scroll-wrapper">
+
+    <table class="custom-table">
+
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>User</th>
+          <th>Plan</th>
+          <th>Price</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Status</th>
+          <th>Auto Renew</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <!-- EMPTY -->
+        <tr *ngIf="filteredSubscriptions.length === 0">
+          <td colspan="9" class="no-data">
+            No subscriptions available
+          </td>
+        </tr>
+
+        <!-- DATA -->
+        <tr *ngFor="let s of filteredSubscriptions">
+
+          <td>{{ s.id }}</td>
+
+          <!-- USER -->
+
+          <td>
+  <div class="user-info">
+    <div class="avatar">
+      {{ s.userName.charAt(0).toUpperCase() }}
+    </div>
+
+    <div class="user-details">
+      <div class="primary">{{ s.userName }}</div>
+      <small>{{ s.userEmail }}</small>
+    </div>
+  </div>
+</td>
+
+          <!-- PLAN -->
+          <!-- <td class="text-left">
+            <div class="primary">{{ s.planName }}</div>
+           
+          </td>
+
+          <td class="amount">₹ {{ s.price }}</td> -->
+
+          <td class="text-left">
+  <div class="plan-name">{{ s.planName }}</div>
+</td>
+
+<td class="amount">
+  <span class="price-badge">₹ {{ s.price }}</span>
+</td>
+
+          <td>{{ s.startDate | date:'dd/MM/yyyy' }}</td>
+
+          <td>
+            {{ s.endDate | date:'dd/MM/yyyy' }}
+            <div *ngIf="getDaysRemaining(s) !== null" class="text-danger small">
+              {{ getDaysRemaining(s) }} days left
+            </div>
+          </td>
+
+          <!-- STATUS -->
+          <td>
+            <span class="fine-badge"
+                  [ngClass]="getStatusClass(s)">
+              {{ getStatus(s) }}
+            </span>
+          </td>
+
+          <!-- AUTO RENEW -->
+          <td>
+            <span class="fine-badge gray">
+              {{ s.autoRenew ? 'Yes' : 'No' }}
+            </span>
+          </td>
+
+          <!-- ACTIONS -->
+          <!-- <td class="actions">
+
+            <button class="fine-btn danger"
+                    *ngIf="!s.isExpired"
+                    (click)="handleOpenCancelDialog(s)">
+              Cancel
+            </button>
+
+            <button class="fine-btn gray"
+                    *ngIf="s.isExpired">
+              Expired
+            </button>
+
+          </td> -->
+
+
+          <td class="actions">
+
+  <!-- View Details -->
+ <button
+      class="action-btn details-btn"
+      (click)="openDetails(s)"
+      title="View Details">
+
+      <i class="fa-solid fa-eye"></i>
+  </button>
+
+
+  <!-- Payment Receipt -->
+ <button
+      class="action-btn receipt-btn"
+      (click)="openReceipt(s)"
+      title="Payment Receipt">
+
+      <i class="fa-solid fa-receipt"></i>
+  </button>
+
+
+</td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+
+    <div class="pagination-wrapper">
+
+  <div class="page-size">
+
+    <label>Rows</label>
+
+    <select
+      [ngModel]="rowsPerPage"
+      (change)="changePageSize($event)">
+
+      <option [value]="10">10</option>
+      <option [value]="20">20</option>
+      <option [value]="50">50</option>
+
+    </select>
+
+  </div>
+
+  <div class="pagination">
+
+    <button
+      class="page-btn"
+      (click)="previousPage()"
+      [disabled]="page === 0">
+
+      Previous
+
+    </button>
+
+    <button
+      *ngFor="let p of pageNumbers"
+      class="page-btn"
+      [class.active]="page === p"
+      (click)="changePage(p)">
+
+      {{ p + 1 }}
+
+    </button>
+
+    <button
+      class="page-btn"
+      (click)="nextPage()"
+      [disabled]="page >= totalPages - 1">
+
+      Next
+
+    </button>
+
+  </div>
+
+</div>
+
+
+  </div>
+
+  
+
+  <div class="modal-backdrop" *ngIf="detailsDialogOpen">
+
+  <div class="modal-card">
+
+    <div class="modal-header">
+
+      <h3>Subscription Details</h3>
+
+      <button class="close-btn"
+              (click)="closeDetails()">
+
+        <i class="fa-solid fa-xmark"></i>
+
+      </button>
+
+    </div>
+
+    <div class="details-body">
+
+      <p><b>Subscription ID:</b> {{selectedSubscription?.id}}</p>
+
+      <p><b>User:</b> {{selectedSubscription?.userName}}</p>
+
+      <p><b>Email:</b> {{selectedSubscription?.userEmail}}</p>
+
+      <p><b>Plan:</b> {{selectedSubscription?.planName}}</p>
+
+      <p>
+  <b>Subscription Duration:</b>
+
+  <span *ngIf="selectedSubscription.planCode==='YEARLY'">
+    365 Days
+  </span>
+
+  <span *ngIf="selectedSubscription.planCode==='QUARTERLY'">
+    90 Days
+  </span>
+
+  <span *ngIf="selectedSubscription.planCode==='MONTHLY'">
+    30 Days
+  </span>
+</p>
+
+      <p><b>Price:</b> ₹{{selectedSubscription?.price}}</p>
+
+      <p><b>Start Date:</b>
+        {{selectedSubscription?.startDate | date:'dd/MM/yyyy'}}
+      </p>
+
+      <p><b>End Date:</b>
+        {{selectedSubscription?.endDate | date:'dd/MM/yyyy'}}
+      </p>
+
+      <p><b>Status:</b>
+        {{getStatus(selectedSubscription)}}
+      </p>
+
+
+  <p>
+    <b>Created At</b>
+    <span>{{ selectedSubscription?.createdAt | date:'dd/MM/yyyy hh:mm a' }}</span>
+  </p>
+
+
+      <p *ngIf="selectedSubscription.cancelledAt">
+    <b>Cancelled At:</b>
+    <span>{{ selectedSubscription.cancelledAt | date:'dd/MM/yyyy' }}</span>
+</p>
+
+      <p><b>Auto Renew:</b>
+        {{selectedSubscription?.autoRenew ? 'Yes' : 'No'}}
+      </p>
+
+
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- /////////////// -->
+
+<div class="modal-backdrop" *ngIf="receiptDialogOpen">
+
+<div class="modal-card receipt-card">
+
+<div class="modal-header">
+
+<h3>Subscription Receipt</h3>
+
+<button
+class="close-btn"
+(click)="closeReceipt()">
+
+<i class="fa-solid fa-xmark"></i>
+
+</button>
+
+</div>
+
+ <div class="receipt-body">
+
+<h4>Library Management System</h4>
+
+<hr>
+
+<p><b>Receipt No :</b> {{selectedSubscription?.id}}</p>
+
+<p><b>User :</b> {{selectedSubscription?.userName}}</p>
+
+<p><b>Email :</b> {{selectedSubscription?.userEmail}}</p>
+
+<p><b>Plan :</b> {{selectedSubscription?.planName}}</p>
+
+<p><b>Amount Paid :</b>
+
+₹ {{selectedSubscription?.price}}
+
+</p>
+
+<p><b>Payment Status :</b> Paid</p>
+
+<p><b>Start :</b>
+
+{{selectedSubscription?.startDate | date:'dd/MM/yyyy'}}
+
+</p>
+
+<p><b>Valid Till :</b>
+
+{{selectedSubscription?.endDate | date:'dd/MM/yyyy'}}
+
+</p>
+
+<button
+class="btn btn-primary mt-3 btn-print"
+(click)="printSubscriptionReceipt()">
+<i class="fa-solid fa-print"></i>
+Print Receipt
+</button>
+
+</div> 
+
+
+
+</div>
+
+</div>
+
+<!-- ///////// -->
+</div>
+
+</div>
+
+</div>

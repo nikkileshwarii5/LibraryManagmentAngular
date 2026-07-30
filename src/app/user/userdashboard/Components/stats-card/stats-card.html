@@ -1,0 +1,31 @@
+<div class="stats-card">
+
+  <div class="stats-header">
+
+    <div
+      class="stats-icon"
+      [ngClass]="bgColor"
+    >
+
+      <i [class]="icon"></i>
+
+    </div>
+
+    <span
+      class="stats-value"
+      [ngClass]="textColor"
+    >
+      {{ value }}
+    </span>
+
+  </div>
+
+  <p class="stats-title">
+    {{ title }}
+  </p>
+
+  <p class="stats-subtitle">
+    {{ subtitle }}
+  </p>
+
+</div>

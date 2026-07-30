@@ -1,0 +1,137 @@
+<!-- <div
+  class="modal fade show d-block"
+  *ngIf="open"
+  style="background: rgba(0,0,0,0.5)"
+>
+
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h5 class="modal-title fw-bold">
+          Create Reservation
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          (click)="close.emit()"
+        ></button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <label class="form-label fw-semibold">
+          Book ID
+        </label>
+
+        <input
+          type="number"
+          class="form-control"
+          [ngModel]="bookId"
+          (ngModelChange)="bookIdChange.emit($event)"
+        />
+
+      </div>
+
+      <div class="modal-footer">
+
+        <button
+          class="btn btn-secondary"
+          (click)="close.emit()"
+        >
+          Cancel
+        </button>
+
+        <button
+          class="btn btn-primary"
+          [disabled]="!bookId"
+          (click)="create.emit()"
+        >
+          Reserve
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div> -->
+
+
+
+
+<div
+  class="dialog-backdrop"
+  *ngIf="open"
+>
+
+  <div class="dialog-container">
+
+    <!-- Header -->
+    <div class="dialog-header">
+
+      <h2>
+        Create New Reservation
+      </h2>
+
+      <button
+        class="close-btn"
+        (click)="close.emit()"
+      >
+        ✕
+      </button>
+
+    </div>
+
+    <!-- Content -->
+    <div class="dialog-content">
+
+      <p class="dialog-text">
+        Enter the <strong>Book ID</strong>
+        you want to reserve.
+      </p>
+
+      <div class="input-group">
+
+        <label>
+          Book ID
+        </label>
+
+        <input
+          type="number"
+          [ngModel]="bookId"
+          (ngModelChange)="bookIdChange.emit($event)"
+        />
+
+      </div>
+
+    </div>
+
+    <!-- Actions -->
+    <div class="dialog-actions">
+
+      <button
+        class="cancel-button"
+        (click)="close.emit()"
+      >
+        Cancel
+      </button>
+
+      <button
+        class="reserve-button"
+        [disabled]="!bookId"
+        (click)="create.emit()"
+      >
+        Reserve
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,228 @@
+
+<div class="reservation-card shadow-sm">
+
+  <!-- Status -->
+  <div
+    class="status-header"
+    [ngClass]="getStatusColor(reservation.status).bg"
+  >
+    <i class="bi bi-hourglass-split me-2"></i>
+    {{ reservation.status }}
+  </div>
+
+  <div class="reservation-body">
+
+    <div class="book-section">
+
+      <div class="book-icon">
+        <i class="bi bi-bookmark-fill"></i>
+      </div>
+
+      <div class="book-details">
+        <small>BOOK ID</small>
+
+        <h2>#{{ reservation.bookId }}</h2>
+
+        <p>{{ reservation.bookTitle }}</p>
+      </div>
+
+    </div>
+
+    <hr>
+
+
+
+
+    <div class="date-section">
+
+  <!-- Reserved -->
+  <div class="date-row">
+    <div class="date-icon reserved">
+      <i class="bi bi-clock-history"></i>
+    </div>
+
+    <div class="date-content">
+      <span class="date-label reserved-label">Reserved</span>
+      <span class="date-value reserved-value">
+        {{ reservation.reservedAt | date:'medium' }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Available -->
+  <div class="date-row" *ngIf="reservation.availableAt">
+    <div class="date-icon available">
+      <i class="bi bi-calendar-check"></i>
+    </div>
+
+    <div class="date-content">
+      <span class="date-label available-label">Available</span>
+      <span class="date-value available-value">
+        {{ reservation.availableAt | date:'medium' }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Fulfilled -->
+  <div class="date-row" *ngIf="reservation.fulfilledAt">
+    <div class="date-icon fulfilled">
+      <i class="bi bi-check-circle-fill"></i>
+    </div>
+
+    <div class="date-content">
+      <span class="date-label fullfilled-label  ">Fulfilled</span>
+      <span class="date-value fulfilled-value">
+        {{ reservation.fulfilledAt | date:'medium' }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Cancelled -->
+  <div class="date-row" *ngIf="reservation.cancelledAt">
+    <div class="date-icon cancelled">
+      <i class="bi bi-x-circle-fill"></i>
+    </div>
+
+    <div class="date-content">
+      <span class="date-label cancelled-label">Cancelled</span>
+      <span class="date-value cancelled-value">
+        {{ reservation.cancelledAt | date:'medium' }}
+      </span>
+    </div>
+  </div>
+
+</div>
+
+  </div>
+
+
+
+
+<div class="reservation-footer">
+
+  <!-- AVAILABLE -->
+  <ng-container *ngIf="reservation.status === 'AVAILABLE'">
+
+    <button
+      class="btn btn-success w-100 mb-2"
+      (click)="checkoutBook()">
+
+      <i class="bi bi-book me-2"></i>
+      Checkout Book
+
+    </button>
+
+    <button
+      class="btn btn-outline-danger w-100"
+       (click)="openCancelDialog()">
+
+      <i class="bi bi-x-lg me-2"></i>
+      Cancel
+
+    </button>
+
+  </ng-container>
+
+  <!-- PENDING -->
+  <ng-container *ngIf="reservation.status === 'PENDING'">
+
+    <button
+      class="btn btn-outline-danger w-100"
+     (click)="openCancelDialog()">
+
+      <i class="bi bi-x-lg me-2"></i>
+      Cancel
+
+    </button>
+
+  </ng-container>
+
+</div>
+</div>
+
+
+
+<!-- ================= CANCEL MODAL ================= -->
+
+<div class="custom-modal" *ngIf="cancelDialogOpen">
+
+  <div
+    class="modal-backdrop-custom"
+    (click)="cancelDialogOpen=false">
+  </div>
+
+  <div class="cancel-modal">
+
+    <div class="cancel-icon">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+    </div>
+
+    <h2>Cancel Reservation?</h2>
+
+    <p class="subtitle">
+      Are you sure you want to cancel your reservation?
+    </p>
+
+    <div class="book-card">
+
+      <div class="info-row">
+        <span>Book</span>
+        <strong>{{ reservation?.bookTitle }}</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Reservation ID</span>
+        <strong>#{{ reservation?.id }}</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Status</span>
+        <strong>{{ reservation?.status }}</strong>
+      </div>
+
+    </div>
+
+    <div class="warning-box">
+
+      <i class="bi bi-info-circle-fill"></i>
+
+      <div>
+        <strong>After cancellation</strong>
+
+        <ul>
+          <li>Your reservation will be removed.</li>
+          <li>Your queue position will be lost.</li>
+          <li>You can reserve again later.</li>
+        </ul>
+
+      </div>
+
+    </div>
+
+    <div class="modal-actions">
+
+      <button
+        class="keep-btn"
+        (click)="cancelDialogOpen=false">
+
+        <i class="bi bi-arrow-left"></i>
+        Keep Reservation
+
+      </button>
+
+      <button
+        class="delete-btn"
+        (click)="confirmCancel()">
+
+        <i class="bi bi-trash-fill"></i>
+        Cancel Reservation
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+

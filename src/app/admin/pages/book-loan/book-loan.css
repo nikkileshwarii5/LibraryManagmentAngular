@@ -1,0 +1,702 @@
+/* ================= PAGE ================= */
+
+.page-wrapper{
+    width:100%;
+    min-height:100vh;
+    background:#f8fafc;
+}
+
+.page-content{
+    
+  width: 960px;
+  padding: 20px;
+}
+
+/* ================= HEADER ================= */
+
+.header-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:24px;
+}
+
+.title{
+    font-size:34px;
+    font-weight:700;
+    margin:0;
+    color:#111827;
+}
+
+.subtitle{
+    color:#6b7280;
+    margin-top:4px;
+    margin-bottom:0;
+}
+
+/* ================= STATS ================= */
+
+.card{
+    border:none;
+    border-radius:16px;
+    box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+
+.card h3{
+    margin-bottom:8px;
+    font-weight:700;
+}
+
+.stat-label{
+    margin:0;
+    font-size:14px;
+    letter-spacing:.3px;
+}
+
+/* ================= FILTER CARD ================= */
+
+.filter-card{
+    background:#fff;
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,.05);
+    margin-bottom:24px;
+}
+
+.filters-row{
+    display:flex;
+    justify-content:flex-end;
+    gap:16px;
+    flex-wrap:wrap;
+}
+
+/* ================= DROPDOWN ================= */
+
+.floating-select{
+    position:relative;
+    width:220px;
+}
+
+.floating-select label{
+    position:absolute;
+    top:-8px;
+    left:14px;
+    background:#fff;
+    padding:0 6px;
+    color:#6366f1;
+    font-size:13px;
+    font-weight:600;
+}
+
+.select-box{
+    height:56px;
+    border:2px solid #6366f1;
+    border-radius:12px;
+    padding:0 16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#fff;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.dropdown-panel{
+    position:absolute;
+    width:100%;
+    left:0;
+    top:58px;
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    z-index:1000;
+    overflow:hidden;
+}
+
+.dropdown-panel .option{
+    padding:12px 16px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.dropdown-panel .option:hover{
+    background:#f3f4f6;
+}
+
+.dropdown-panel .active{
+    background:#eef2ff;
+    color:#4f46e5;
+}
+
+/* ================= FILTER BUTTON ================= */
+
+.filter-btn{
+    height:56px;
+    padding:0 24px;
+    border-radius:12px;
+    border:2px solid #6366f1;
+    background:#fff;
+    color:#6366f1;
+    font-weight:600;
+    transition:.2s;
+}
+
+.filter-btn:hover{
+    background:#6366f1;
+    color:#fff;
+}
+
+/* ================= TABLE SECTION ================= */
+
+.table-section{
+    margin-top:24px;
+}
+
+.table-card{
+    background:#fff;
+    border-radius:18px;
+    box-shadow:0 4px 12px rgba(0,0,0,.06);
+    overflow:hidden;
+}
+
+/* ================= HORIZONTAL SCROLL ================= */
+
+.table-scroll-wrapper{
+    width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar{
+    height:8px;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-track{
+    background:#e5e7eb;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-thumb{
+    background:#6366f1;
+    border-radius:20px;
+}
+
+/* ================= TABLE ================= */
+
+.custom-table{
+    width:100%;
+    min-width:1450px;
+    border-collapse:collapse;
+}
+
+.custom-table thead{
+    background:#ececf9;
+}
+
+.custom-table th{
+    padding:18px;
+    text-align:left;
+    font-size:17px;
+    font-weight:700;
+    color:#1f2937;
+    white-space:nowrap;
+}
+
+.custom-table td{
+    padding:22px 18px;
+    border-top:1px solid #eee;
+    vertical-align:middle;
+}
+
+/* ================= COLUMN WIDTHS ================= */
+
+.custom-table th:nth-child(1),
+.custom-table td:nth-child(1){
+    width:90px;
+}
+
+.custom-table th:nth-child(2),
+.custom-table td:nth-child(2){
+    width:280px;
+}
+
+.custom-table th:nth-child(3),
+.custom-table td:nth-child(3){
+    width:220px;
+}
+
+.custom-table th:nth-child(4),
+.custom-table td:nth-child(4),
+.custom-table th:nth-child(5),
+.custom-table td:nth-child(5),
+.custom-table th:nth-child(6),
+.custom-table td:nth-child(6){
+    width:160px;
+}
+
+.custom-table th:nth-child(7),
+.custom-table td:nth-child(7){
+    width:170px;
+}
+
+.custom-table th:nth-child(8),
+.custom-table td:nth-child(8){
+    width:170px;
+}
+
+/* ================= BOOK / USER ================= */
+
+.text-left{
+    text-align:left;
+}
+
+.primary{
+    font-size:18px;
+    font-weight:600;
+    color:#111827;
+    line-height:1.4;
+}
+
+small{
+    display:block;
+    margin-top:4px;
+    font-size:14px;
+    color:#6b7280;
+}
+
+/* ================= BADGES ================= */
+.loan-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:7px 14px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.4px;
+    border:1px solid transparent;
+    box-shadow:0 2px 6px rgba(0,0,0,.05);
+    white-space:nowrap;
+}
+
+
+/* Overdue */
+.loan-danger{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+/* Returned */
+.loan-returned{
+    background:#deffe4;
+    color:#0dbd19;
+}
+
+/* Return Requested */
+.loan-request{
+    background:#fef3c7;
+    color:#b45309;
+}
+
+/* Damaged */
+.loan-damaged{
+    background:#fde68a;
+    color:#92400e;
+}
+
+/* Loss Reported */
+.loan-loss-report{
+    background:#fef2f2;
+    color:#dc2626;
+}
+
+/* Lost */
+.loan-lost{
+    background:#fecaca;
+    color:#991b1b;
+}
+.loan-checkedout{
+  background-color:#efedfe ;
+  color: rgb(27, 27, 232);
+}
+
+/* ================= OVERDUE ================= */
+
+.overdue{
+    margin-top:6px;
+    color:#dc2626;
+    font-size:13px;
+}
+
+/* ================= ACTION BUTTONS ================= */
+
+.actions{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    min-width:120px;
+}
+
+.loan-btn{
+    border:none;
+    border-radius:8px;
+    padding:6px 10px;
+    font-size:13px;
+    cursor:pointer;
+    transition:.2s;
+    width: 100px;
+    min-width: 120px;
+    white-space: nowrap;
+    font-weight: 700;
+}
+
+.loan-success-btn{
+    background:#22c55e;
+    color:#fff;
+}
+
+.loan-warning-btn{
+    background:#f59e0b;
+    color:#fff;
+}
+
+.loan-danger-btn{
+    background:#ef4444;
+    color:#fff;
+}
+
+.loan-info-btn{
+    background:#3b82f6;
+    color:#fff;
+}
+
+.loan-btn:hover{
+    opacity:.9;
+}
+
+/* ================= EMPTY ================= */
+
+.no-data{
+    text-align:center;
+    padding:60px;
+    color:#6b7280;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:992px){
+
+    .filters-row{
+        justify-content:flex-start;
+    }
+
+    .floating-select{
+        width:100%;
+    }
+
+    .filter-btn{
+        width:100%;
+    }
+
+}
+
+
+
+
+
+.modal-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+.modal-card{
+    width:650px;
+    background:#fff;
+    border-radius:10px;
+    padding:25px;
+    max-height:90vh;
+    overflow:auto;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.close-btn{
+    border:none;
+    background:none;
+    font-size:22px;
+}
+
+.alert-box{
+    background:#fdecec;
+    color:#e63232;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+
+    
+}
+
+
+
+.alert-box i{
+    font-size:30px;
+    margin-top:3px;
+}
+
+.alert-box b{
+    font-weight:700;
+}
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-control{
+    width:100%;
+    padding:10px;
+}
+
+.dialog-footer{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+}
+
+
+
+.pagination-wrapper{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:15px;
+    padding:20px;
+    border-top:1px solid #e5e5e5;
+}
+
+.page-info{
+    font-size:14px;
+    color:#555;
+}
+
+.page-size{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.page-size select{
+    padding:6px 10px;
+    border:1px solid #ddd;
+    border-radius:6px;
+}
+
+.pagination{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.page-btn{
+    padding:8px 14px;
+    border:none;
+    border-radius:6px;
+    background:#f3f3f3;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.page-btn:hover:not(:disabled){
+    background:#0d6efd;
+    color:#fff;
+}
+
+.page-btn.active{
+    background:#0d6efd;
+    color:#fff;
+}
+
+.page-btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+
+
+
+.amount-input{
+    position: relative;
+}
+
+.rupee-symbol{
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    font-weight: 600;
+    color: #555;
+    pointer-events: none;
+}
+
+.amount-field{
+    padding-left: 35px; /* space for ₹ */
+}
+
+
+.loss-modal{
+  border-top: 6px solid #ff0303;
+}
+.damage-modal{
+    border-top: 6px solid #f59e0b;
+}
+
+.loss-alert{
+  background: #ffd0d0;
+    color: #f80c0c;
+    border-left: 5px solid #ff0000;
+
+}
+.damage-alert{
+    background: #fff8e1;
+    color: #8a5b00;
+    border-left: 5px solid #f59e0b;
+}
+
+.damage-alert i{
+    color: #f59e0b;
+}
+
+.btn-warning{
+    background: #f59e0b;
+    color: white;
+    border: none;
+}
+
+.btn-warning:hover{
+    background: #d97706;
+}
+
+.completed-text{
+    color:#9ca3af;
+    font-size:14px;
+    font-style:italic;
+    font-weight:500;
+}
+
+
+
+
+/*================== MODERN STATS CARD ==================*/
+
+.stats-card{
+    position: relative;
+    background: #fff;
+    border-radius: 18px;
+    padding: 24px;
+    height: 180px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(15,23,42,.08);
+    border: 1px solid #eef2f7;
+    transition: .3s ease;
+}
+
+.stats-card:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 14px 30px rgba(0,0,0,.12);
+}
+
+.stats-card::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    border-radius: 18px 18px 0 0;
+}
+
+/*================== ICON ==================*/
+
+.icon-box{
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 18px;
+}
+
+/*================== NUMBER ==================*/
+
+.stats-card h3{
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.2;
+}
+
+/*================== LABEL ==================*/
+
+.stats-card .stat-label{
+    margin-top: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+/*================== Active ==================*/
+
+.active-card::before{
+    background:#3b82f6;
+}
+
+.active-card .icon-box{
+    background:#dbeafe;
+    color:#2563eb;
+}
+
+/*================== Overdue ==================*/
+
+.overdue-card::before{
+    background:#ef4444;
+}
+
+.overdue-card .icon-box{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+/*================== Returned ==================*/
+
+.returned-card::before{
+    background:#22c55e;
+}
+
+.returned-card .icon-box{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+/*================== Return Request ==================*/
+
+.request-card::before{
+    background:#f59e0b;
+}
+
+.request-card .icon-box{
+    background:#fef3c7;
+    color:#d97706;
+}
+

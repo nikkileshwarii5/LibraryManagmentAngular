@@ -1,0 +1,17 @@
+<div class="p-4">
+
+  <h3 class="section-title">
+    Books You're Currently Reading
+  </h3>
+
+  <div class="loan-list">
+
+    <app-current-loan-card
+      *ngFor="let loan of myLoans"
+      [loan]="loan"
+    >
+    </app-current-loan-card>
+
+  </div>
+
+</div>

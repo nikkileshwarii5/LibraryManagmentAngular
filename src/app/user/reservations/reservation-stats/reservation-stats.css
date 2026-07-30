@@ -1,0 +1,56 @@
+.stats-card {
+  transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+  transform: translateY(-4px);
+}
+
+.icon-box {
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.icon-box i {
+  font-size: 1rem;
+}
+
+
+.bg-primary-gradient {
+  background: linear-gradient(
+    135deg,
+    #6366f1,
+    #9333ea
+  );
+}
+
+.bg-warning-gradient {
+  background: linear-gradient(
+    135deg,
+    #facc15,
+    #f59e0b
+  );
+}
+
+.bg-success-gradient {
+  background: linear-gradient(
+    135deg,
+    #22c55e,
+    #10b981
+  );
+}
+
+.bg-warning-light {
+  background: #fffaf0;
+}
+
+.bg-success-light {
+  background: #f0fdf4;
+}

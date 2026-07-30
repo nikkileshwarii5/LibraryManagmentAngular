@@ -1,0 +1,95 @@
+.payment-modal{
+    border-radius:14px;
+    border:none;
+    overflow:hidden;
+    box-shadow:0 12px 32px rgba(0,0,0,.20);
+}
+
+.modal-header{
+    padding:18px 22px 8px;
+}
+
+.modal-header h4{
+    font-size:26px;
+    margin:0;
+}
+
+.modal-body{
+    padding:8px 22px 18px;
+}
+
+.alert{
+    border-radius:8px;
+    padding:12px 16px;
+    font-size:15px;
+}
+
+.alert i{
+    font-size:20px !important;
+}
+
+.amount-card{
+    margin-top:14px;
+    padding:18px;
+    border-radius:10px;
+    background:#fef2f2;
+    border:1px solid #fca5a5;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.amount-card h4{
+    font-size:22px;
+    font-weight:700;
+}
+
+.amount{
+    font-size:38px;
+    font-weight:700;
+    color:#dc2626;
+    margin:0;
+}
+
+.amount-card hr{
+    margin:14px 0;
+}
+
+.amount-card strong{
+    font-size:15px;
+}
+
+.amount-card span,
+.amount-card div{
+    font-size:15px;
+}
+
+.type-chip{
+    padding:5px 14px;
+    border-radius:20px;
+    border:1px solid #ef4444;
+    color:#ef4444;
+    background:#fff5f5;
+    font-size:13px;
+    font-weight:600;
+}
+
+.modal-footer{
+    padding:0 22px 20px;
+}
+
+.modal-footer .btn{
+    font-size:15px;
+    padding:10px 20px;
+}
+
+.modal-footer .btn-danger{
+    border-radius:8px;
+    box-shadow:0 5px 12px rgba(220,53,69,.25);
+}
+
+.modal-footer .btn-danger:hover{
+    transform:translateY(-2px);
+}
+
+.btn-close{
+    box-shadow:none;
+}

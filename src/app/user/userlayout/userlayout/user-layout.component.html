@@ -1,0 +1,132 @@
+<div class="layout-wrapper">
+
+  <!-- SIDEBAR -->
+
+  <app-user-sidebar
+    [(mobileOpen)]="mobileOpen"
+    [isMobile]="isMobile"
+  >
+  </app-user-sidebar>
+
+  <!-- MAIN -->
+
+  <div class="main-wrapper">
+
+    <!-- TOPBAR -->
+
+    <nav class="navbar navbar-expand-lg bg-white topbar shadow-sm">
+
+      <button
+        class="btn d-md-none"
+        (click)="handleDrawerToggle()"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <!-- <h5 class="mb-0 fw-bold flex-grow-1">
+        Dashboard
+      </h5> -->
+      <h5 class="mb-0 fw-bold flex-grow-1">
+  {{ pageTitle }}
+</h5>
+
+      <button class="btn">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+
+      <!-- <button class="btn position-relative ms-2">
+
+        <i class="fa-regular fa-bell"></i>
+
+        <span class="notification-badge">
+          3
+        </span>
+
+      </button> -->
+
+      <app-notification-bell></app-notification-bell>
+
+      <!-- PROFILE -->
+
+      <div #profileContainer class="position-relative ms-3">
+<!-- <div
+  class="profile-avatar d-flex align-items-center justify-content-center"
+  (click)="handleProfileMenuOpen()"
+>
+
+  <img
+    *ngIf="user?.profilePicture"
+    [src]="user.profilePicture"
+    class="avatar-image"
+  />
+
+  <span *ngIf="!user?.profilePicture"  class="avatar-text">
+    {{ user?.fullName?.charAt(0)}}
+  </span> -->
+
+  <div
+  class="profile-avatar d-flex align-items-center justify-content-center"
+  (click)="handleProfileMenuOpen()"
+>
+
+  <img
+    *ngIf="user?.profileImage"
+    [src]="user.profileImage"
+    class="avatar-image"
+  />
+
+  <span
+    *ngIf="!user?.profileImage"
+    class="avatar-text"
+  >
+    {{ user?.fullName?.charAt(0) }}
+  </span>
+
+</div>
+
+        <div
+          class="profile-menu"
+          *ngIf="profileMenuOpen"
+        >
+
+          <button
+            class="dropdown-item"
+            (click)="handleNavigation('/user/profile')"
+          >
+          <i class="fa-solid fa-user me-2"></i>
+            Profile
+          </button>
+
+          <button
+            class="dropdown-item"
+            (click)="handleNavigation('/user/settings')"
+          >
+           <i class="fa-solid fa-gear me-2"></i>
+            Settings
+          </button>
+
+          <hr>
+
+          <button
+            class="dropdown-item text-danger"
+            (click)="handleLogout()"
+          >
+           <i class="fa-solid fa-right-from-bracket me-2"></i>
+            Logout
+          </button>
+
+        </div>
+
+      </div>
+
+    </nav>
+
+    <!-- CONTENT -->
+
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+
+</div>

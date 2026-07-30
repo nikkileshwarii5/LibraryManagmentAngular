@@ -1,0 +1,661 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<div class="page-wrapper">
+
+  <div class="page-content">
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header-row">
+      <div>
+        <h2 class="title">Book Loans Management</h2>
+        <p class="subtitle">
+          Monitor and manage all book loans
+        </p>
+      </div>
+    </div>
+
+    <!-- ================= STATS ================= -->
+
+    <div class="row mb-4">
+
+  <!-- Active Loans -->
+  <div class="col-lg-3 col-md-6 mb-3">
+    <div class="stats-card active-card">
+      <div class="icon-box">
+        <i class="fa-solid fa-book-open"></i>
+      </div>
+
+      <h3>{{ allLoans.filter(l => l.status==='CHECKED_OUT').length }}</h3>
+      <p class="stat-label">Active Loans</p>
+    </div>
+  </div>
+
+  <!-- Overdue Loans -->
+  <div class="col-lg-3 col-md-6 mb-3">
+    <div class="stats-card overdue-card">
+      <div class="icon-box">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+
+      <h3>{{ allLoans.filter(l => l.status==='OVERDUE' || l.isOverdue).length }}</h3>
+      <p class="stat-label">Overdue Loans</p>
+    </div>
+  </div>
+
+  <!-- Returned -->
+  <div class="col-lg-3 col-md-6 mb-3">
+    <div class="stats-card returned-card">
+      <div class="icon-box">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+
+      <h3>{{ allLoans.filter(l => l.status==='RETURNED').length }}</h3>
+      <p class="stat-label">Returned</p>
+    </div>
+  </div>
+
+  <!-- Return Requests -->
+  <div class="col-lg-3 col-md-6 mb-3">
+    <div class="stats-card request-card">
+      <div class="icon-box">
+        <i class="fa-solid fa-arrow-rotate-left"></i>
+      </div>
+
+      <h3>{{ allLoans.filter(l => l.status==='RETURN_REQUESTED').length }}</h3>
+      <p class="stat-label">Return Requests</p>
+    </div>
+  </div>
+
+
+
+    </div>
+
+    <!-- ================= FILTERS ================= -->
+
+    <div class="filter-card">
+
+      <div class="filters-row">
+
+        <!-- SORT BY -->
+
+        <div class="floating-select custom-dropdown">
+
+          <label>Sort By</label>
+
+          <div class="select-box" (click)="toggleSortBy()">
+            {{ getSortByLabel() }}
+            <i class="fa-solid fa-sort-down"></i>
+          </div>
+
+          <div class="dropdown-panel" *ngIf="sortByOpen">
+
+            <div
+              class="option"
+              *ngFor="let opt of sortByOptions"
+              [class.active]="opt.value===sortBy"
+              (click)="selectSortBy(opt.value,$event)">
+
+              {{ opt.label }}
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- SORT DIRECTION -->
+
+        <div class="floating-select custom-dropdown">
+
+          <label>Sort Direction</label>
+
+          <div class="select-box" (click)="toggleSortDir()">
+
+            {{ sortDirection=='ASC' ? 'Ascending' : 'Descending' }}
+
+            <i class="fa-solid fa-sort-down"></i>
+
+          </div>
+
+          <div class="dropdown-panel" *ngIf="sortDirOpen">
+
+            <div
+              class="option"
+              [class.active]="sortDirection=='ASC'"
+              (click)="selectSortDir('ASC',$event)">
+              Ascending
+            </div>
+
+            <div
+              class="option"
+              [class.active]="sortDirection=='DESC'"
+              (click)="selectSortDir('DESC',$event)">
+              Descending
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- FILTER BUTTON -->
+
+        <button
+          class="filter-btn"
+          (click)="filterModalOpen=true">
+
+          <i class="fa-solid fa-filter"></i>
+
+          FILTERS
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- ================= TABLE ================= -->
+
+    <div class="table-section">
+
+      <div class="table-card">
+
+        <div class="table-scroll-wrapper">
+
+          <table class="custom-table">
+
+            <thead>
+
+              <tr>
+
+                <th>Loan ID</th>
+
+                <th>Book</th>
+
+                <th>User</th>
+
+                <th>Check-out Date</th>
+
+                <th>Due Date</th>
+
+                <th>Return Date</th>
+
+                <th>Status</th>
+
+                <th>Actions</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr *ngIf="allLoans.length==0">
+
+                <td colspan="8" class="no-data">
+
+                  No data available
+
+                </td>
+
+              </tr>
+
+              <tr *ngFor="let row of allLoans">
+
+                <!-- ID -->
+
+                <td>
+
+                  {{ row.id }}
+
+                </td>
+
+                <!-- BOOK -->
+
+                <td class="text-left">
+
+                  <div class="primary">
+
+                    {{ row.bookTitle }}
+
+                  </div>
+
+                  <small>
+
+                    by {{ row.bookAuthor }}
+
+                  </small>
+
+                </td>
+
+                <!-- USER -->
+
+                <td class="text-left">
+
+                  <div class="primary">
+
+                    {{ row.userName }}
+
+                  </div>
+
+                  <small>
+
+                    {{ row.userEmail }}
+
+                  </small>
+
+                </td>
+
+                <!-- CHECKOUT -->
+
+             
+
+                <td>{{ row.checkoutDate | date:'dd/MM/yyyy' }}</td>
+
+                <!-- DUE -->
+
+                <td>
+
+                  {{ row.dueDate | date:'dd/MM/yyyy' }}
+
+                  <div
+                    class="overdue"
+                    *ngIf="row.isOverdue">
+
+                    {{ row.overdueDays }} days overdue
+
+                  </div>
+
+                </td>
+
+                <!-- RETURN -->
+
+                <td>
+
+                  {{ row.returnDate ? (row.returnDate | date:'dd/MM/yyyy') : '-' }}
+
+                </td>
+
+                <!-- STATUS -->
+
+                <td>
+
+                  <span
+                    class="loan-badge loan-checkedout"
+                    *ngIf="row.status=='CHECKED_OUT'">
+
+                    CHECKED_OUT
+
+                  </span>
+
+                  <span
+                    class="loan-badge loan-danger"
+                    *ngIf="row.status=='OVERDUE'">
+
+                    OVERDUE
+
+                  </span>
+
+                  <span
+                    class="loan-badge loan-returned"
+                    *ngIf="row.status=='RETURNED'">
+
+                    RETURNED
+
+                  </span>
+
+                  <span
+                    class="loan-badge loan-request"
+                    *ngIf="row.status=='RETURN_REQUESTED'">
+
+                    RETURN_REQUESTED
+
+                  </span>
+
+                  <span
+                    class="loan-badge loan-damaged"
+                    *ngIf="row.status=='DAMAGED'">
+
+                    DAMAGED
+
+                  </span>
+
+                  <span
+  class="loan-badge loan-loss-report"
+  *ngIf="row.status=='LOSS_REPORTED'">
+
+  LOSS REPORTED
+
+</span>
+
+<span
+  class="loan-badge loan-lost"
+  *ngIf="row.status=='LOST'">
+
+  LOST
+
+</span>
+
+                </td>
+
+           
+
+
+                <!-- ACTIONS -->
+<td class="actions">
+
+  <!-- ================= CHECKED_OUT ================= -->
+
+  <button
+    *ngIf="row.status=='CHECKED_OUT' || row.status=='OVERDUE'"
+    class="loan-btn loan-warning-btn"
+    (click)="selectedLoan=row;
+             fineType='DAMAGE';
+             createFineFormData={amount:'',reason:'',notes:''};
+             createFineDialogOpen=true">
+  
+   <i class="fa-solid fa-triangle-exclamation" style="color: rgb(255, 255, 255);"></i>
+    DAMAGE
+
+  </button>
+
+  <!-- ================= RETURN_REQUESTED ================= -->
+
+  <button
+    *ngIf="row.status=='RETURN_REQUESTED'"
+    class="loan-btn loan-success-btn"
+    (click)="handleReturn(row)">
+<i class="fa-solid fa-circle-check" style="color: rgb(255, 255, 255);"></i>
+    RETURN
+
+  </button>
+
+  <button
+    *ngIf="row.status=='RETURN_REQUESTED'"
+    class="loan-btn loan-warning-btn"
+    (click)="selectedLoan=row;
+             fineType='DAMAGE';
+             createFineFormData={amount:'',reason:'',notes:''};
+             createFineDialogOpen=true">
+  <i class="fa-solid fa-triangle-exclamation" style="color: rgb(255, 255, 255);"></i>
+    DAMAGE
+
+  </button>
+
+  <!-- ================= LOSS_REPORTED ================= -->
+
+  <button
+    *ngIf="row.status=='LOSS_REPORTED'"
+    class="loan-btn loan-danger-btn"
+    (click)="selectedLoan=row;
+             fineType='LOSS';
+             createFineFormData={
+               amount:'',
+               reason:'Book lost by borrower',
+               notes:''
+             };
+             createFineDialogOpen=true">
+<i class="fa-solid fa-circle-minus" style="color: rgb(255, 255, 255);"></i>
+
+    LOST
+
+  </button>
+
+  <!-- ================= EDIT ================= -->
+
+  <!-- <button
+    *ngIf="row.status!='LOST' &&
+           row.status!='DAMAGED' &&
+           row.status!='RETURNED'"
+    class="loan-btn loan-info-btn"
+    (click)="selectedLoan=row;
+             editDialogOpen=true">
+<i class="fa-solid fa-pen-to-square" style="color: rgb(255, 255, 255);"></i>
+    EDIT
+
+  </button> -->
+
+
+  <span
+    *ngIf="row.status == 'RETURNED'"
+    class="completed-text">
+
+    No Actions
+
+  </span>
+
+</td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+
+      <div class="pagination-wrapper" *ngIf="totalElements > 0">
+
+  <div class="page-info">
+    Showing
+    {{ page * rowsPerPage + 1 }}
+    -
+    <!-- {{ Math.min((page + 1) * rowsPerPage, totalElements) }} -->
+      {{ getEndRecord() }}
+    of
+    {{ totalElements }}
+  </div>
+
+  <div class="page-size">
+    <label>Rows:</label>
+
+    <select
+      [ngModel]="rowsPerPage"
+      (change)="changePageSize($event)">
+
+      <option [value]="10">10</option>
+      <option [value]="20">20</option>
+      <option [value]="50">50</option>
+      <option [value]="100">100</option>
+
+    </select>
+  </div>
+
+  <div class="pagination">
+
+    <button
+      class="page-btn"
+      (click)="previousPage()"
+      [disabled]="page==0">
+      Previous
+    </button>
+
+    <button
+      *ngFor="let p of pageNumbers"
+      class="page-btn"
+      [class.active]="page===p"
+      (click)="changePage(p)">
+
+      {{ p + 1 }}
+
+    </button>
+
+    <button
+      class="page-btn"
+      (click)="nextPage()"
+      [disabled]="page >= totalPages-1">
+
+      Next
+
+    </button>
+
+  </div>
+
+</div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+<!-- ================= CREATE FINE DIALOG ================= -->
+
+<div class="modal-backdrop" *ngIf="createFineDialogOpen">
+
+  <!-- <div class="modal-card"> -->
+    <div
+  class="modal-card"
+  [ngClass]="fineType === 'DAMAGE' ? 'damage-modal' : 'loss-modal'">
+
+    <div class="modal-header">
+      <h3>
+        Create {{ fineType == 'LOSS' ? 'Loss' : 'Damage' }} Fine
+      </h3>
+
+      <button
+        class="close-btn"
+        (click)="createFineDialogOpen=false">
+
+        ✕
+
+      </button>
+    </div>
+
+    <!-- <div class="alert-box"> -->
+      <div
+  class="alert-box"
+  [ngClass]="fineType === 'DAMAGE' ? 'damage-alert' : 'loss-alert'">
+
+          <i
+      class="fa-solid"
+      [ngClass]="fineType=='LOSS'
+          ? 'fa-circle-exclamation'
+          : 'fa-triangle-exclamation'">
+    </i>
+
+      Creating
+      <b>{{ fineType == 'LOSS' ? 'loss' : 'damage' }}</b>
+      fine for
+
+      <b>{{ selectedLoan?.bookTitle }}</b>
+
+      borrowed by
+
+      <b>{{ selectedLoan?.userName }}</b>
+
+      <br><br>
+
+      This will update the loan status to
+
+      <b>
+        {{ fineType == 'LOSS' ? 'LOST' : 'DAMAGED' }}
+      </b>
+
+    </div>
+
+    <div class="form-group">
+
+
+       
+ 
+      <label>Fine Amount *</label>
+
+       
+
+        
+        <div class="amount-input">
+
+  <span class="rupee-symbol">₹</span>
+
+  <input
+    type="number"
+    class="form-control amount-field"
+    [(ngModel)]="createFineFormData.amount">
+
+</div>
+
+      <small>
+        {{
+          fineType=='LOSS'
+          ? 'Enter the replacement cost'
+          : 'Enter the repair cost'
+        }}
+      </small>
+
+    </div>
+
+ 
+
+
+    <div *ngIf="fineType === 'LOSS'">
+  <label>Reason</label>
+  <input
+    type="text"
+    class="form-control"
+    value="Book lost by borrower"
+    readonly>
+</div>
+
+<div *ngIf="fineType !== 'LOSS'">
+  <label>Reason</label>
+  <textarea
+    class="form-control"
+    [(ngModel)]="createFineFormData.reason">
+  </textarea>
+</div>
+
+    <div class="form-group">
+
+      <label>Admin Notes</label>
+
+      <textarea
+        rows="3"
+        class="form-control"
+        [(ngModel)]="createFineFormData.notes">
+
+      </textarea>
+
+    </div>
+
+    <div class="dialog-footer">
+
+      <button
+        class="btn btn-light"
+        (click)="createFineDialogOpen=false">
+
+        Cancel
+
+      </button>
+
+      <!-- <button
+        class="btn btn-danger"
+        (click)="handleCreateFine()">
+
+        Create Fine & Update Status
+
+      </button> -->
+
+
+      <button
+  class="btn"
+  [ngClass]="fineType === 'DAMAGE' ? 'btn-warning' : 'btn-danger'"
+  (click)="handleCreateFine()">
+
+  Create Fine & Update Status
+
+</button>
+
+    </div>
+
+  </div>
+
+</div>

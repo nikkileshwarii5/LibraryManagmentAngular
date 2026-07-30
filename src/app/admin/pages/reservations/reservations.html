@@ -1,0 +1,622 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+<div class="container mt-4">
+
+  <!-- HEADER -->
+  <div class="mb-3">
+    <h3 class="fw-bold">Reservations Management</h3>
+    <small class="text-muted">Manage book reservations and fulfill request</small>
+  </div>
+
+  <!-- STATS -->
+  <div class="row g-3 mb-4">
+
+
+
+   <!-- Pending -->
+  <div class="col-lg-3 col-md-6 mb-3">
+    <div class="stats-card pending-card">
+      <div class="icon-box">
+        <i class="fa-solid fa-hourglass-half"></i>
+      </div>
+
+      <h3>{{ allReservations.filter(r => r.status==='PENDING').length }}</h3>
+      <p class="stat-label">Pending Reservations</p>
+    </div>
+  </div>
+
+
+
+   <!-- Fulfilled -->
+  <div class="col-lg-3 col-md-6 mb-3">
+    <div class="stats-card fulfilled-card">
+      <div class="icon-box">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+
+      <h3>{{ allReservations.filter(r => r.status==='FULFILLED').length }}</h3>
+      <p class="stat-label">Fulfilled</p>
+    </div>
+  </div>
+
+
+
+
+
+   <!-- Cancelled -->
+  <div class="col-lg-3 col-md-6 mb-3">
+    <div class="stats-card cancelled-card">
+      <div class="icon-box">
+        <i class="fa-solid fa-ban"></i>
+      </div>
+
+      <h3>{{ allReservations.filter(r => r.status==='CANCELLED').length }}</h3>
+      <p class="stat-label">Cancelled</p>
+    </div>
+  </div>
+
+  <!-- Total -->
+  <div class="col-lg-3 col-md-6 mb-3">
+    <div class="stats-card total-card">
+      <div class="icon-box">
+        <i class="fa-solid fa-book-bookmark"></i>
+      </div>
+
+      <h3>{{ totalElements }}</h3>
+      <p class="stat-label">Total Reservations</p>
+    </div>
+  </div>
+
+</div>
+
+  <!-- FILTERS -->
+  <div class="filter-card mb-3">
+
+  <div class="filter-title">
+    <i class="bi bi-funnel"></i> Filter
+  </div>
+
+  <div class="row g-3">
+
+    <div class="col-md-2">
+  <!-- <div class="dropdown-wrapper floating-wrapper"
+       (click)="toggleDropdown('status'); $event.stopPropagation()">
+
+    <div class="custom-dropdown floating-dropdown"> -->
+
+      <div class="dropdown-wrapper floating-wrapper">
+
+  <div class="custom-dropdown floating-dropdown"
+       (click)="toggleDropdown('status'); $event.stopPropagation()">
+      <div class="sort-content">
+        <span>{{ getStatusLabel() }}</span>
+      </div>
+
+      <i class="fa-solid"
+         [ngClass]="activeDropdown === 'status' ? 'fa-sort-up' : 'fa-sort-down'">
+      </i>
+
+      <label class="floating-label"
+             [class.active]="activeDropdown === 'status' || filterStatus">
+        Status
+      </label>
+    </div>
+
+    <div class="dropdown-menu-custom"
+         *ngIf="activeDropdown === 'status'">
+
+      <!-- <div (click)="selectStatus('')">All Status</div>
+      <div (click)="selectStatus('PENDING')">Pending</div>
+      <div (click)="selectStatus('FULFILLED')">Fulfilled</div>
+      <div (click)="selectStatus('CANCELLED')">Cancelled</div>
+      <div (click)="selectStatus('EXPIRED')">Expired</div> -->
+
+
+      <div class="dropdown-menu-custom" *ngIf="activeDropdown === 'status'">
+
+  <div (click)="selectStatus(''); $event.stopPropagation()">
+    All Status
+  </div>
+
+  <div (click)="selectStatus('PENDING'); $event.stopPropagation()">
+    Pending
+  </div>
+
+  <div (click)="selectStatus('FULFILLED'); $event.stopPropagation()">
+    Fulfilled
+  </div>
+
+  <div (click)="selectStatus('CANCELLED'); $event.stopPropagation()">
+    Cancelled
+  </div>
+
+  <div (click)="selectStatus('EXPIRED'); $event.stopPropagation()">
+    Expired
+  </div>
+
+</div>
+
+    </div>
+
+  </div>
+</div>
+ 
+   <div class="col-md-3">
+  <!-- <div class="dropdown-wrapper floating-wrapper"
+       (click)="toggleDropdown('active'); $event.stopPropagation()">
+
+    <div class="custom-dropdown floating-dropdown"> -->
+
+      <div class="dropdown-wrapper floating-wrapper">
+
+  <div class="custom-dropdown floating-dropdown"
+       (click)="toggleDropdown('active'); $event.stopPropagation()">
+      <div class="sort-content">
+        <span>{{ getActiveLabel() }}</span>
+      </div>
+
+      <i class="fa-solid"
+         [ngClass]="activeDropdown === 'active' ? 'fa-sort-up' : 'fa-sort-down'">
+      </i>
+
+      <label class="floating-label"
+           [class.active]="activeDropdown === 'active' || filterActiveOnly">
+        Active Only
+      </label>
+    </div>
+
+    <!-- <div class="dropdown-menu-custom"
+         *ngIf="activeDropdown === 'active'">
+
+      <div (click)="selectActive('')">All Reservations</div>
+      <div (click)="selectActive('true')">Active Only</div>
+      <div (click)="selectActive('false')">Include Inactive</div>
+
+    </div> -->
+
+    <div class="dropdown-menu-custom" *ngIf="activeDropdown === 'active'">
+
+  <div (click)="selectActive(''); $event.stopPropagation()">
+    All Reservations
+  </div>
+
+  <div (click)="selectActive('true'); $event.stopPropagation()">
+    Active Only
+  </div>
+
+  <div (click)="selectActive('false'); $event.stopPropagation()">
+    Include Inactive
+  </div>
+
+</div>
+
+  </div>
+</div>
+
+
+
+    <div class="col-md-2">
+      <input class="form-control" placeholder="User ID" [(ngModel)]="filterUserId" (keyup.enter)="loadReservations()">
+    </div>
+
+    <div class="col-md-2">
+      <input class="form-control" placeholder="Book ID" [(ngModel)]="filterBookId"  (keyup.enter)="loadReservations()">
+    </div>
+
+
+  <div class="col-md-3">
+  <button class="clear-btn" (click)="clearFilters()">
+    <i class="fa-solid fa-filter"></i>
+    CLEAR FILTERS
+  </button>
+</div>
+
+  </div>
+</div>
+  <!-- ERROR -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- TABLE -->
+
+  <div class="table-card">
+
+  <table class="custom-table">
+
+    <!-- HEADER -->
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Book</th>
+        <th>User</th>
+        <th>Reserved On</th>
+        <th>Priority</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <!-- BODY -->
+    <tbody>
+
+      <!-- EMPTY -->
+      <tr *ngIf="allReservations.length === 0">
+        <td colspan="7" class="no-data">
+          No reservations available
+        </td>
+      </tr>
+
+      <!-- DATA -->
+      <tr *ngFor="let row of allReservations">
+
+        <td>{{ row.id }}</td>
+
+        <td class="text-left">
+          <div class="primary">{{ row.bookTitle }}</div>
+        </td>
+
+        <td class="text-left">
+          <div class="primary">{{ row.userName }}</div>
+        </td>
+
+        <td>
+          {{ row.reservedAt | date:'dd/MM/yyyy' }}
+          <div *ngIf="row.status === 'PENDING'" class="small-text">
+            {{ getWaitingDays(row.reservedAt) }} days waiting
+          </div>
+        </td>
+
+        <td>
+          <span *ngIf="row.queuePosition" class="badge primary">
+            #{{ row.queuePosition }}
+          </span>
+        </td>
+
+        <td>
+          <span class="badge warning" *ngIf="row.status==='PENDING'">PENDING</span>
+          <span class="badge success" *ngIf="row.status==='FULFILLED'">FULFILLED</span>
+          <span class="badge danger" *ngIf="row.status==='CANCELLED'">CANCELLED</span>
+          <span class="badge primary" *ngIf="row.status==='AVAILABLE'">AVAILABLE</span>
+          <span class="badge gray" *ngIf="row.status==='EXPIRED'">EXPIRED</span>
+        </td>
+
+
+       
+
+        <!-- <td class="actions">
+
+          <button class="action-btn success"
+                  *ngIf="row.status==='AVAILABLE'"
+                  (click)="openApproveDialog(row)">
+            Issue Book
+          </button>
+
+          <button class="action-btn danger"
+                  *ngIf="row.status==='AVAILABLE'"
+                  (click)="handleCancel(row)">
+            Cancel
+          </button>
+
+        </td> -->
+
+
+        <td class="actions">
+
+  <button
+    class="action-btn issue-btn"
+    *ngIf="row.status==='AVAILABLE'"
+    (click)="openApproveDialog(row)">
+
+    <i class="fa-solid fa-book-open-reader"></i>
+    <span>Issue Book</span>
+
+  </button>
+
+  <button
+    class="action-btn cancel-btn"
+    *ngIf="row.status==='AVAILABLE'"
+    (click)="openCancelDialog(row)">
+
+    <i class="fa-solid fa-xmark"></i>
+    <span>Cancel</span>
+
+  </button>
+
+</td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+  <!-- DIALOG -->
+  <!-- DIALOG -->
+<div class="custom-modal" *ngIf="approveDialogOpen">
+
+  <!-- Backdrop -->
+  <div
+    class="modal-backdrop-custom"
+    (click)="approveDialogOpen=false">
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-box modern-modal">
+
+    <!-- Header -->
+    <div class="modal-header-custom">
+
+      <div class="modal-icon">
+        <i class="fa-solid fa-book-open"></i>
+      </div>
+
+      <div>
+
+        <h4>Issue Reserved Book</h4>
+
+        <p class="subtitle">
+          Confirm issuing this reserved book to the member.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- Book Details -->
+    <div class="info-card">
+
+      <h6>
+        <i class="fa-solid fa-book"></i>
+        Book Details
+      </h6>
+
+      <div class="info-row">
+        <span>Title</span>
+        <strong>{{ selectedReservation?.bookTitle }}</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Book ID</span>
+        <strong>#{{ selectedReservation?.bookId }}</strong>
+      </div>
+
+    </div>
+
+    <!-- Member Details -->
+    <div class="info-card">
+
+      <h6>
+        <i class="fa-solid fa-user"></i>
+        Member Details
+      </h6>
+
+      <div class="info-row">
+        <span>Name</span>
+        <strong>{{ selectedReservation?.userName }}</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Email</span>
+        <strong>{{ selectedReservation?.userEmail }}</strong>
+      </div>
+
+    </div>
+
+    <!-- Notice -->
+    <div class="notice-box">
+
+      <h6>
+        <i class="fa-solid fa-circle-info"></i>
+        What will happen?
+      </h6>
+
+      <ul>
+
+        <li>Book loan will be created.</li>
+
+        <li>Reservation status will change to <b>Fulfilled</b>.</li>
+
+        <li>Available book copies will decrease by <b>1</b>.</li>
+
+        <li>
+          Loan due date will be calculated automatically based on the
+          member's active subscription.
+        </li>
+
+      </ul>
+
+    </div>
+
+    <!-- Buttons -->
+
+
+    <div class="modal-actions">
+
+  <button
+    class="modal-btn cancel-btn"
+    (click)="approveDialogOpen=false">
+
+    <i class="fa-solid fa-xmark me-2"></i>
+    Cancel
+
+  </button>
+
+  <button
+    class="modal-btn issue-btn"
+    (click)="handleApprove()">
+
+    <i class="fa-solid fa-book-open-reader me-2"></i>
+    Issue Book
+
+  </button>
+
+</div>
+
+  </div>
+
+
+</div>
+
+
+<!-- Cancel Dialog -->
+<div class="custom-modal" *ngIf="cancelDialogOpen">
+
+  <!-- Backdrop -->
+  <div
+    class="modal-backdrop-custom"
+    (click)="cancelDialogOpen = false">
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-box cancel-modal">
+
+    <!-- Fixed Header -->
+    <div class="cancel-header">
+
+      <div class="cancel-icon">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+
+      <div class="cancel-title">
+        <h2>Cancel Reservation?</h2>
+
+        <p class="cancel-subtitle">
+            Are you sure you want to cancel this reservation?
+        </p>
+    </div>
+
+    </div>
+
+    <!-- Scrollable Content -->
+    <div class="cancel-content">
+
+      <div class="cancel-info">
+
+        <div class="info-row">
+          <span>Book</span>
+          <strong>{{ selectedCancelReservation?.bookTitle }}</strong>
+        </div>
+
+        <div class="info-row">
+          <span>Member</span>
+          <strong>{{ selectedCancelReservation?.userName }}</strong>
+        </div>
+
+      </div>
+
+      <div class="warning-box">
+
+        <i class="fa-solid fa-circle-info"></i>
+
+        <span>
+          This reservation will be cancelled and the member will lose
+          their place in the queue.
+        </span>
+
+      </div>
+
+    </div>
+
+    <!-- Fixed Footer -->
+    <div class="modal-actions">
+
+      <button
+        class="keep-btn"
+        (click)="cancelDialogOpen = false">
+
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Keep Reservation</span>
+
+      </button>
+
+      <button
+        class="delete-btn"
+        (click)="confirmCancel()">
+
+        <i class="fa-solid fa-trash"></i>
+        <span>Cancel Reservation</span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+  
+
+</div>
+
+
+
+
+<div class="pagination-container" >
+
+    <div class="page-info">
+        Showing
+        <strong>{{ page * rowsPerPage + 1 }}</strong>
+        -
+        <strong>
+            {{getEndRecord()}}
+        </strong>
+        of
+        <strong>{{ totalElements }}</strong>
+    </div>
+
+    <div class="pagination">
+
+        <button
+            class="page-btn"
+            (click)="previousPage()"
+            [disabled]="page===0">
+
+            <i class="fa-solid fa-angle-left"></i>
+
+        </button>
+
+        <button
+            *ngFor="let p of pages"
+            class="page-btn"
+            [class.active]="p===page"
+            (click)="goToPage(p)">
+
+            {{ p + 1 }}
+
+        </button>
+
+        <button
+            class="page-btn"
+            (click)="nextPage()"
+            [disabled]="page===totalPages-1">
+
+            <i class="fa-solid fa-angle-right"></i>
+
+        </button>
+
+    </div>
+
+    <div>
+
+        <select
+            class="page-size"
+            [(ngModel)]="rowsPerPage"
+            (change)="changePageSize(+rowsPerPage)">
+
+            <option [value]="5">5</option>
+            <option [value]="10">10</option>
+            <option [value]="20">20</option>
+            <option [value]="50">50</option>
+
+        </select>
+
+    </div>
+
+</div>
+
+
+</div>

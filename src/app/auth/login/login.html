@@ -1,0 +1,125 @@
+<div class="min-vh-100 d-flex align-items-center justify-content-center py-5 px-3 bg-light">
+
+  <div class="w-100" style="max-width: 450px;">
+
+    <!-- Header -->
+    <div class="text-center mb-4">
+      <div class="d-inline-flex align-items-center gap-2 mb-4">
+        <div class="p-2 bg-primary rounded">
+          <!-- <mat-icon class="text-white">menu_book</mat-icon> -->
+           <img src="book.png" class="logo-icon" />
+        </div>
+        <span class="fs-3 fw-bold text-dark">LibraOne</span>
+      </div>
+
+      <h2 class="fw-bold text-dark mb-2">Welcome Back</h2>
+      <p class="text-muted">Sign in to your account to continue</p>
+    </div>
+
+    <!-- Card -->
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+
+      <!-- Error -->
+      <div *ngIf="error" class="alert alert-danger">
+        {{ error }}
+      </div>
+
+      <!-- Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="d-grid gap-4">
+
+        <!-- Email -->
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Email Address</mat-label>
+          <input matInput formControlName="email">
+          <mat-icon matPrefix>email</mat-icon>
+        </mat-form-field>
+
+        <!-- Password -->
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Password</mat-label>
+
+          <input matInput
+                 [type]="showPassword ? 'text' : 'password'"
+                 formControlName="password">
+
+          <mat-icon matPrefix>lock</mat-icon>
+
+          <button mat-icon-button matSuffix type="button"
+                  (click)="showPassword = !showPassword">
+            <mat-icon>
+              {{ showPassword ? 'visibility_off' : 'visibility' }}
+            </mat-icon>
+          </button>
+        </mat-form-field>
+
+        <!-- Remember + Forgot -->
+        <div class="d-flex justify-content-between align-items-center">
+          <mat-checkbox>Remember me</mat-checkbox>
+
+          <a routerLink="/forgot-password"
+             class="text-primary fw-semibold text-decoration-none">
+            Forgot password?
+          </a>
+        </div>
+
+        <!-- Submit -->
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="w-100 py-2 fw-semibold rounded"
+          [disabled]="loading">
+
+          <span *ngIf="!loading">Sign In</span>
+
+          <span *ngIf="loading" class="d-flex align-items-center justify-content-center gap-2">
+            <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+            <span>Signing In...</span>
+          </span>
+
+        </button>
+
+        <!-- Divider -->
+        <div class="position-relative text-center">
+          <hr>
+          <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted">
+            Or continue with
+          </span>
+        </div>
+
+        <!-- Google -->
+        <button
+          mat-stroked-button
+          class="w-100 d-flex align-items-center justify-content-center gap-2"
+          (click)="loginWithGoogle()">
+
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg"
+               width="20" height="20">
+
+          Continue with Google
+        </button>
+
+      </form>
+
+      <!-- Signup -->
+      <div class="mt-4 text-center">
+        <p class="text-muted">
+          Don't have an account?
+          <a routerLink="/register"
+             class="fw-semibold text-primary text-decoration-underline">
+            Sign Up
+          </a>
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <p class="mt-4 text-center text-muted small">
+      By signing in, you agree to our
+      <a class="text-primary text-decoration-none">Terms</a> and
+      <a class="text-primary text-decoration-none">Privacy Policy</a>
+    </p>
+
+  </div>
+</div>

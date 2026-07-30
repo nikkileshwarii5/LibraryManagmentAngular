@@ -1,0 +1,693 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<div class="page-wrapper">
+
+  <div class="page-content">
+
+    <!-- Header -->
+    <div class="mb-3">
+      <h3 class="fw-bold">Users Management</h3>
+      <small class="text-muted">Manage user accounts and permissions</small>
+    </div>
+
+    <!-- Stats Cards -->
+    
+
+    <div class="row g-4 mb-4">
+
+  <!-- Total Users -->
+  <div class="col-md-3">
+    <div class="modern-card blue">
+
+      <div class="card-top">
+        <div class="card-icon">
+          <i class="fa-solid fa-users"></i>
+        </div>
+
+        <span class="card-chip">
+          <i class="fa-solid fa-chart-line"></i>
+          Total
+        </span>
+      </div>
+
+      <h2>{{ usersList.length }}</h2>
+      <p>Total Users</p>
+
+    </div>
+  </div>
+
+  <!-- Verified -->
+  <div class="col-md-3">
+    <div class="modern-card green">
+
+      <div class="card-top">
+        <div class="card-icon">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <span class="card-chip">
+          <i class="fa-solid fa-check"></i>
+          Verified
+        </span>
+      </div>
+
+      <h2>{{ usersList.filter(u => u.verified).length }}</h2>
+      <p>Verified Users</p>
+
+    </div>
+  </div>
+
+  <!-- Admin -->
+  <div class="col-md-3">
+    <div class="modern-card red">
+
+      <div class="card-top">
+        <div class="card-icon">
+          <i class="fa-solid fa-user-shield"></i>
+        </div>
+
+        <span class="card-chip">
+          <i class="fa-solid fa-shield"></i>
+          Admin
+        </span>
+      </div>
+
+      <h2>{{ usersList.filter(u => u.role==='ROLE_ADMIN').length }}</h2>
+      <p>Administrators</p>
+
+    </div>
+  </div>
+
+  <!-- Google -->
+  <div class="col-md-3">
+    <div class="modern-card cyan">
+
+      <div class="card-top">
+        <div class="card-icon">
+          <i class="fa-brands fa-google"></i>
+        </div>
+
+        <span class="card-chip">
+          <i class="fa-brands fa-google"></i>
+          Google
+        </span>
+      </div>
+
+      <h2>{{ usersList.filter(u => u.authProvider==='GOOGLE').length }}</h2>
+      <p>Google Users</p>
+
+    </div>
+  </div>
+
+</div>
+
+    <!-- Search -->
+<div class="search-box">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  
+  <input
+    type="text"
+    placeholder="Search by name, email, or phone number..."
+    [(ngModel)]="searchQuery"
+  />
+</div>
+    <!-- Table -->
+    <div class="users-table">
+
+      <div class="table-card">
+
+        <!-- ✅ SCROLL WRAPPER -->
+        <div class="table-scroll-wrapper">
+
+          <table class="custom-table">
+
+            <!-- HEADER -->
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Role</th>
+                <th>Phone</th>
+                <th>Auth Provider</th>
+                <th>Joined</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <!-- BODY -->
+            <tbody>
+
+              <tr *ngIf="filteredUsers.length === 0">
+                <td colspan="8" class="no-data">
+                  No users available
+                </td>
+              </tr>
+
+              <tr *ngFor="let user of filteredUsers">
+
+                <td>{{ user.id }}</td>
+
+               <td class="user-cell">
+
+
+   <div class="avatar">
+
+    <img
+      *ngIf="user.profileImage"
+      [src]="user.profileImage"
+      [alt]="user.fullName"
+      (error)="user.profileImage = null"
+      class="avatar-img"
+    />
+
+    <span *ngIf="!user.profileImage">
+      {{ user.fullName?.charAt(0) | uppercase }}
+    </span>
+
+  </div>
+
+
+
+  <div class="user-info">
+    <div class="name">{{ user.fullName }}</div>
+    <div class="email">{{ user.email }}</div>
+  </div>
+</td>
+
+            
+
+                <td>
+
+  <!-- ADMIN -->
+  <span class="role-badge admin" *ngIf="user.role==='ROLE_ADMIN'">
+    <i class="fa-solid fa-shield-halved"></i>
+    ROLE_ADMIN
+  </span>
+
+  <!-- USER -->
+  <span class="role-badge user" *ngIf="user.role==='ROLE_USER'">
+    <i class="fa-solid fa-user"></i>
+    ROLE_USER
+  </span>
+
+</td>
+
+                <td>{{ user.phone || '-' }}</td>
+
+                <td>
+                  <span class="badge info">{{ user.authProvider }}</span>
+                </td>
+
+                <td>{{ user.createdAt | date:'dd/MM/yyyy' }}</td>
+
+             
+
+                <td>
+  <span class="status-badge verified" *ngIf="user.verified">
+    <i class="fa-solid fa-check"></i>
+    Verified
+  </span>
+
+  <span class="status-badge unverified" *ngIf="!user.verified">
+    <i class="fa-solid fa-ban"></i>
+    Unverified
+  </span>
+</td>
+
+    
+
+<td class="actions">
+  <button 
+    class="fine-btn"
+    [ngClass]="user.verified ? 'warning' : 'success'"
+          (click)="handleToggleActive(user)">
+
+    <!-- ICON -->
+   <i class="fa-solid"
+   [ngClass]="{
+      'fa-ban text-warning': user.verified,
+      'fa-check text-success': !user.verified
+   }">
+</i>
+
+    <!-- TEXT -->
+    {{ user.verified ? 'Unverify' : 'Verify' }}
+
+  </button>
+
+
+
+<!-- Normal User -->
+<button
+  *ngIf="user.role === 'ROLE_USER'"
+  class="fine-btn danger"
+  (click)="handleUpgradeToAdmin(user)">
+
+  <i class="fa-solid fa-user-shield"></i>
+  <span>Promote</span>
+
+</button>
+
+<!-- Admin -->
+<button
+  *ngIf="user.role === 'ROLE_ADMIN'"
+  class="fine-btn secondary"
+  (click)="handleRemoveAdmin(user)">
+
+  <i class="fa-solid fa-user-minus"></i>
+  <span>Demote</span>
+
+</button>
+
+
+
+<button class="fine-btn info"
+        (click)="handleViewDetails(user)">
+  <i class="fa-solid fa-eye"></i>
+  <span class="btn-text">View</span>
+</button>
+                </td>
+
+
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+
+
+          <div
+  class="pagination-container"
+  *ngIf="totalPages > 1">
+
+  <button
+    class="pagination-btn"
+    [disabled]="currentPage === 1"
+    (click)="changePage(currentPage - 1)">
+
+    <i class="fa-solid fa-angle-left"></i>
+    Previous
+
+  </button>
+
+  <div class="pagination-info">
+
+    <h5>
+      Page {{ currentPage }}
+      <span>of {{ totalPages }}</span>
+    </h5>
+
+    <p>{{ totalElements }} users found</p>
+
+  </div>
+
+  <button
+    class="pagination-btn"
+    [disabled]="currentPage === totalPages"
+    (click)="changePage(currentPage + 1)">
+
+    Next
+    <i class="fa-solid fa-angle-right"></i>
+
+  </button>
+
+</div>
+
+
+
+
+         
+
+        </div>
+
+
+      </div>
+
+       <!-- View User Dialog -->
+
+
+       <!-- ================= USER DETAILS DIALOG ================= -->
+
+<div class="modal-backdrop" *ngIf="viewDialogOpen">
+
+  <div class="user-modal-card">
+
+    <!-- HEADER -->
+    <div class="modern-header">
+
+      <button class="close-btn"
+              (click)="viewDialogOpen = false">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="profile">
+
+        <div class="avatar-xl">
+
+          <img
+            *ngIf="selectedUser?.profileImage"
+            [src]="selectedUser.profileImage"
+            class="avatar-img">
+
+          <span *ngIf="!selectedUser?.profileImage">
+            {{ selectedUser?.fullName?.charAt(0) }}
+          </span>
+
+        </div>
+
+        <h2>{{ selectedUser?.fullName }}</h2>
+
+        <p>{{ selectedUser?.email }}</p>
+
+        <div class="badge-group">
+
+          <span class="role-pill"
+                [ngClass]="selectedUser?.role=='ROLE_ADMIN' ? 'admin' : 'user'">
+
+            <i class="fa-solid"
+               [ngClass]="selectedUser?.role=='ROLE_ADMIN'
+               ? 'fa-user-shield'
+               : 'fa-user'"></i>
+
+            {{ selectedUser?.role }}
+
+          </span>
+
+          <span class="status-pill"
+                [ngClass]="selectedUser?.verified
+                ? 'verified'
+                : 'unverified'">
+
+            <i class="fa-solid"
+               [ngClass]="selectedUser?.verified
+               ? 'fa-circle-check'
+               : 'fa-circle-xmark'"></i>
+
+            {{ selectedUser?.verified ? 'Verified' : 'Unverified' }}
+
+          </span>
+
+        </div>
+
+      </div>
+
+      
+
+    <div class="modern-body">
+
+    <!-- ================= PERSONAL INFORMATION ================= -->
+
+    <div class="section-heading">
+        <i class="fa-solid fa-user"></i>
+        <span>Personal Information</span>
+    </div>
+
+    <div class="section-grid">
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-id-card"></i>
+            </div>
+            <div>
+                <small>User ID</small>
+                <h6>#{{selectedUser?.id}}</h6>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-phone"></i>
+            </div>
+            <div>
+                <small>Phone</small>
+                <h6>{{selectedUser?.phone || '-'}}</h6>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <div>
+                <small>Role</small>
+                <h6>{{selectedUser?.role}}</h6>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="icon-box">
+                <!-- <i class="fa-solid fa-globe"></i> -->
+                 <i class="fa-solid fa-location-dot" ></i>
+            </div>
+            <div>
+                <small>Address</small>
+                <h6>{{selectedUser?.address}}</h6>
+            </div>
+        </div>
+
+        <div class="info-card joined">
+            <div class="icon-box">
+                <i class="fa-solid fa-calendar"></i>
+            </div>
+            <div>
+                <small>Joined</small>
+                <h6>{{selectedUser?.createdAt | date:'dd MMM yyyy'}}</h6>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-clock"></i>
+            </div>
+            <div>
+                <small>Last Login</small>
+                <h6>
+                    {{selectedUser?.lastLogin ?
+                    (selectedUser.lastLogin | date:'dd MMM yyyy') : '-'}}
+                </h6>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- ================= LIBRARY ACTIVITY ================= -->
+
+    <div class="section-heading">
+        <i class="fa-solid fa-book-open"></i>
+        <span>Library Activity</span>
+    </div>
+
+    <div class="section-grid">
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-book"></i>
+            </div>
+            <div>
+                <small>Total Borrowed</small>
+                <h6>{{selectedUser?.totalBorrowedBooks}}</h6>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-book-open-reader"></i>
+            </div>
+            <div>
+                <small>Current Loans</small>
+                <h6>{{selectedUser?.currentlyBorrowedBooks}}</h6>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-rotate-left"></i>
+            </div>
+            <div>
+                <small>Returned Books</small>
+                <h6>{{selectedUser?.returnedBooks}}</h6>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-bookmark"></i>
+            </div>
+            <div>
+                <small>Reserved Books</small>
+                <h6>{{selectedUser?.reservedBooks}}</h6>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div>
+                <small>Overdue Books</small>
+                <h6>{{selectedUser?.overdueBooks}}</h6>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-book-skull"></i>
+            </div>
+            <div>
+                <small>Damaged Books</small>
+                <h6>{{selectedUser?.damagedBooks}}</h6>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+            </div>
+            <div>
+                <small>Pending Fine</small>
+                <h6>₹{{selectedUser?.pendingFine}}</h6>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- ================= READING PROFILE ================= -->
+
+    <div class="section-heading">
+        <i class="fa-solid fa-fire"></i>
+        <span>Reading Profile</span>
+    </div>
+
+    <div class="section-grid">
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-fire"></i>
+            </div>
+            <div>
+                <small>Reading Streak</small>
+                <h6>{{selectedUser?.currentStreak}} Days</h6>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+            <div>
+                <small>Favorite Genre</small>
+                <h6>{{selectedUser?.favoriteGenre}}</h6>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-star"></i>
+            </div>
+            <div>
+                <small>Reward Points</small>
+                <h6>{{selectedUser?.points}}</h6>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-gem"></i>
+            </div>
+            <div>
+                <small>Membership Tier</small>
+                <h6>{{selectedUser?.membershipTier}}</h6>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- ================= SUBSCRIPTION ================= -->
+
+    <div class="section-heading">
+        <i class="fa-solid fa-credit-card"></i>
+        <span>Subscription</span>
+    </div>
+
+    <div class="section-grid">
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-crown"></i>
+            </div>
+            <div>
+                <small>Plan</small>
+                <h6>{{selectedUser?.subscriptionPlan}}</h6>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div>
+                <small>Status</small>
+                <h6>{{selectedUser?.subscriptionActive ? 'Active' : 'Inactive'}}</h6>
+            </div>
+        </div>
+
+        <div class="info-card expiry">
+            <div class="icon-box">
+                <i class="fa-solid fa-calendar-check"></i>
+            </div>
+            <div>
+                <small>Expiry</small>
+                <h6>{{selectedUser?.subscriptionExpiry | date:'dd MMM yyyy'}}</h6>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- FOOTER -->
+
+    <!-- <div class="dialog-footer">
+
+      <button class="btn btn-secondary"
+              (click)="viewDialogOpen=false">
+        Close
+      </button>
+
+    </div> -->
+
+    <div class="dialog-footer">
+    <button class="close-dialog-btn"
+            (click)="viewDialogOpen=false">
+        <!-- <i class="fa-solid fa-xmark"></i> -->
+        Close
+    </button>
+</div>
+
+  </div>
+
+</div>
+
+
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+    
+
+  
+

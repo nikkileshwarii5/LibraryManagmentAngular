@@ -1,0 +1,261 @@
+<div class="min-vh-100 bg-light py-5">
+
+  <div class="container">
+
+    <!-- Header -->
+    <div class="mb-5">
+      <h1 class="display-5 fw-bold mb-2">
+        <span class="gradient-text">
+          Settings
+        </span>
+      </h1>
+
+      <p class="text-muted fs-5">
+        Manage your account preferences and settings
+      </p>
+    </div>
+
+    <!-- Notification Settings Card -->
+    <div class="card shadow-sm border-0">
+
+      <div class="card-body p-4">
+
+        <div class="d-flex align-items-center mb-4">
+
+          <div class="notification-icon me-3">
+            <i class="bi bi-bell-fill fs-3 text-primary"></i>
+          </div>
+
+          <div>
+            <h2 class="fw-bold mb-1">Notifications</h2>
+            <p class="text-muted mb-0">
+              Manage how you receive updates
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Email Notifications -->
+        <div class="form-check form-switch py-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="notifications.emailNotifications"
+            (change)="handleNotificationChange('emailNotifications')">
+
+          <label class="form-check-label ms-2">
+            <div class="fw-semibold">
+              Email Notifications
+            </div>
+            <small class="text-muted">
+              Receive notifications via email
+            </small>
+          </label>
+        </div>
+
+        <hr>
+
+        <!-- Push Notifications -->
+        <div class="form-check form-switch py-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="notifications.pushNotifications"
+            (change)="handleNotificationChange('pushNotifications')">
+
+          <label class="form-check-label ms-2">
+            <div class="fw-semibold">
+              Push Notifications
+            </div>
+            <small class="text-muted">
+              Receive push notifications on your device
+            </small>
+          </label>
+        </div>
+
+        <hr>
+
+        <!-- Book Reminders -->
+        <div class="form-check form-switch py-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="notifications.bookReminders"
+            (change)="handleNotificationChange('bookReminders')">
+
+          <label class="form-check-label ms-2">
+            <div class="fw-semibold">
+              Book Reminders
+            </div>
+            <small class="text-muted">
+              Reminders about borrowed books
+            </small>
+          </label>
+        </div>
+
+        <hr>
+
+        <!-- Due Date Alerts -->
+        <div class="form-check form-switch py-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="notifications.dueDateAlerts"
+            (change)="handleNotificationChange('dueDateAlerts')">
+
+          <label class="form-check-label ms-2">
+            <div class="fw-semibold">
+              Due Date Alerts
+            </div>
+            <small class="text-muted">
+              Alerts when books are due soon
+            </small>
+          </label>
+        </div>
+
+        <hr>
+
+        <!-- New Arrivals -->
+        <div class="form-check form-switch py-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="notifications.newArrivals"
+            (change)="handleNotificationChange('newArrivals')">
+
+          <label class="form-check-label ms-2">
+            <div class="fw-semibold">
+              New Arrivals
+            </div>
+            <small class="text-muted">
+              Notifications about new books
+            </small>
+          </label>
+        </div>
+
+        <hr>
+
+        <!-- Recommendations -->
+        <div class="form-check form-switch py-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="notifications.recommendations"
+            (change)="handleNotificationChange('recommendations')">
+
+          <label class="form-check-label ms-2">
+            <div class="fw-semibold">
+              Recommendations
+            </div>
+            <small class="text-muted">
+              Personalized book recommendations
+            </small>
+          </label>
+        </div>
+
+        <hr>
+
+        <!-- Marketing Emails -->
+        <div class="form-check form-switch py-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="notifications.marketingEmails"
+            (change)="handleNotificationChange('marketingEmails')">
+
+          <label class="form-check-label ms-2">
+            <div class="fw-semibold">
+              Marketing Emails
+            </div>
+            <small class="text-muted">
+              Promotional offers and updates
+            </small>
+          </label>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Delete Account Modal -->
+<div
+  class="modal fade show d-block"
+  tabindex="-1"
+  *ngIf="deleteAccountDialog">
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title text-danger">
+          Delete Account?
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          (click)="deleteAccountDialog = false">
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+        <p class="text-muted">
+          Are you sure you want to delete your account?
+          This action cannot be undone.
+        </p>
+
+        <div class="alert alert-warning">
+          All your data, including reading history,
+          wishlist, and preferences will be permanently deleted.
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+
+        <button
+          class="btn btn-secondary"
+          (click)="deleteAccountDialog = false">
+          Cancel
+        </button>
+
+        <button
+          class="btn btn-danger"
+          (click)="handleDeleteAccount()">
+          Delete Account
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Snackbar -->
+<div
+  *ngIf="snackbar.open"
+  class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
+
+  <div
+    class="toast show">
+
+    <div
+      class="alert mb-0"
+      [ngClass]="{
+      'alert-success': snackbar.severity === 'success',
+      'alert-warning': snackbar.severity === 'warning',
+      'alert-danger': snackbar.severity === 'error'
+    }">
+
+      {{ snackbar.message }}
+
+    </div>
+
+  </div>
+
+</div>

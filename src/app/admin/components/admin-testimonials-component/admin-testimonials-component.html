@@ -1,0 +1,310 @@
+<div class="page-wrapper">
+
+    <div class="page-content">
+
+        <div class="page-header mb-4">
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+        <div>
+
+            <h1 class="page-title">
+                Testimonials Management
+            </h1>
+
+            <p class="page-subtitle mb-0">
+                Review, approve, reject, and manage customer testimonials.
+            </p>
+
+        </div>
+
+     
+    </div>
+
+</div>
+
+        <!-- Statistics -->
+        <div class="row g-4 mb-4">
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stats-card total-card">
+
+                    <div class="stats-top">
+
+                        <div class="stats-icon">
+                            <i class="bi bi-chat-square-quote"></i>
+                        </div>
+
+                        <div class="stats-badge">
+                            <i class="bi bi-bar-chart"></i>
+                            Total
+                        </div>
+
+                    </div>
+
+                    <h2>{{ testimonials.length }}</h2>
+
+                    <p>Total Testimonials</p>
+
+                </div>
+
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stats-card pending-card">
+
+                    <div class="stats-top">
+
+                        <div class="stats-icon">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+
+                        <div class="stats-badge">
+                            <i class="bi bi-hourglass"></i>
+                            Pending
+                        </div>
+
+                    </div>
+
+                    <h2>{{ pendingCount }}</h2>
+
+                    <p>Waiting for Approval</p>
+
+                </div>
+
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stats-card approved-card">
+
+                    <div class="stats-top">
+
+                        <div class="stats-icon">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+
+                        <div class="stats-badge">
+                            <i class="bi bi-check2"></i>
+                            Approved
+                        </div>
+
+                    </div>
+
+                    <h2>{{ approvedCount }}</h2>
+
+                    <p>Published Reviews</p>
+
+                </div>
+
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stats-card rejected-card">
+
+                    <div class="stats-top">
+
+                        <div class="stats-icon">
+                            <i class="bi bi-x-circle"></i>
+                        </div>
+
+                        <div class="stats-badge">
+                            <i class="bi bi-x-lg"></i>
+                            Rejected
+                        </div>
+
+                    </div>
+
+                    <h2>{{ rejectedCount }}</h2>
+
+                    <p>Rejected Reviews</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Table -->
+
+        <div class="testimonials-table">
+
+            <div class="table-card">
+
+                <div class="table-scroll-wrapper">
+
+                    <table class="testimonial-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th style="min-width:240px;">User</th>
+
+                                <th style="min-width:180px;">Role</th>
+
+                                <th style="min-width:150px;">Rating</th>
+
+                                <th style="min-width:520px;">Review</th>
+
+                                <th style="min-width:180px;">Status</th>
+
+                                <th style="min-width:220px;">Actions</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr *ngFor="let t of testimonials">
+
+                                <td>
+
+                                    <div class="d-flex align-items-center">
+
+                                        <div class="avatar">
+
+                                            {{ t.name.charAt(0) | uppercase }}
+
+                                        </div>
+
+                                        <div class="ms-3">
+
+                                            <h6 class="mb-0 fw-bold">
+
+                                                {{ t.name }}
+
+                                            </h6>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>
+
+                                    {{ t.role }}
+
+                                </td>
+
+                                <td>
+
+                                    <span
+                                        class="star"
+                                        *ngFor="let star of [1,2,3,4,5]">
+
+                                        <i
+                                            class="bi bi-star-fill"
+                                            *ngIf="star <= t.rating">
+                                        </i>
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <p class="review">
+
+                                        "{{ t.text }}"
+
+                                    </p>
+
+                                </td>
+
+                                <td>
+
+                                    <span
+                                        class="status pending"
+                                        *ngIf="t.status=='PENDING'">
+
+                                        Pending
+
+                                    </span>
+
+                                    <span
+                                        class="status approved"
+                                        *ngIf="t.status=='APPROVED'">
+
+                                        Approved
+
+                                    </span>
+
+                                    <span
+                                        class="status rejected"
+                                        *ngIf="t.status=='REJECTED'">
+
+                                        Rejected
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <button
+                                        class="btn btn-success action-btn"
+                                        (click)="approve(t.id)"
+                                        [disabled]="t.status=='APPROVED'">
+
+                                        <i class="bi bi-check-circle"></i>
+
+                                    </button>
+
+                                    <button
+                                        class="btn btn-warning action-btn"
+                                        (click)="reject(t.id)"
+                                        [disabled]="t.status=='REJECTED'">
+
+                                        <i class="bi bi-x-circle"></i>
+
+                                    </button>
+
+                                    <button
+                                        class="btn btn-danger action-btn"
+                                        (click)="delete(t.id)">
+
+                                        <i class="bi bi-trash"></i>
+
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                            <tr *ngIf="testimonials.length==0">
+
+                                <td colspan="6">
+
+                                    <div class="empty-state">
+
+                                        <i class="bi bi-chat-square-heart"></i>
+
+                                        <h5>No Testimonials Yet</h5>
+
+                                        <p>User testimonials will appear here.</p>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

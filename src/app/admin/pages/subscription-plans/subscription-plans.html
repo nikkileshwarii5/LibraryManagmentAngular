@@ -1,0 +1,388 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+<div class="container mt-4">
+
+  <!-- HEADER -->
+  <div class="d-flex justify-content-between mb-4">
+    <div>
+      <h3 class="fw-bold">Subscription Plans</h3>
+      <small class="text-muted">Manage subscription plans and pricing</small>
+    </div>
+
+    <button type="button" class="add-btn" (click)="openDialog()">
+  + Add Plan
+</button>
+  </div>
+<!-- <div class="row mb-4">
+
+  <div class="col-md-3">
+    <div class="stat-card blue">
+      <h3>{{ totalPlans }}</h3>
+      <p>Total Plans</p>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="stat-card green">
+      <h3>{{ activePlans }}</h3>
+      <p>Active Plans</p>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="stat-card orange">
+      <h3>{{ featuredPlans }}</h3>
+      <p>Featured Plans</p>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="stat-card purple">
+      <h3>{{ avgPriceValue }}</h3>
+      <p>Avg Price (INR)</p>
+    </div>
+  </div>
+
+</div>
+   -->
+
+
+   <div class="row g-4 mb-4">
+
+  <!-- Total Plans -->
+  <div class="col-md-3">
+    <div class="modern-stat blue">
+
+      <div class="stat-top">
+        <div class="stat-icon">
+          <i class="fa-solid fa-layer-group"></i>
+        </div>
+
+        <span class="stat-chip">
+          <i class="fa-solid fa-chart-line"></i>
+          Total
+        </span>
+      </div>
+
+      <h2>{{ totalPlans }}</h2>
+      <p>Total Plans</p>
+
+    </div>
+  </div>
+
+  <!-- Active Plans -->
+  <div class="col-md-3">
+    <div class="modern-stat green">
+
+      <div class="stat-top">
+        <div class="stat-icon">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <span class="stat-chip">
+          <i class="fa-solid fa-check"></i>
+          Active
+        </span>
+      </div>
+
+      <h2>{{ activePlans }}</h2>
+      <p>Active Plans</p>
+
+    </div>
+  </div>
+
+  <!-- Featured -->
+  <div class="col-md-3">
+    <div class="modern-stat orange">
+
+      <div class="stat-top">
+        <div class="stat-icon">
+          <i class="fa-solid fa-star"></i>
+        </div>
+
+        <span class="stat-chip">
+          <i class="fa-solid fa-crown"></i>
+          Featured
+        </span>
+      </div>
+
+      <h2>{{ featuredPlans }}</h2>
+      <p>Featured Plans</p>
+
+    </div>
+  </div>
+
+  <!-- Average Price -->
+  <div class="col-md-3">
+    <div class="modern-stat purple">
+
+      <div class="stat-top">
+        <div class="stat-icon">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+        </div>
+
+        <span class="stat-chip">
+          <i class="fa-solid fa-wallet"></i>
+          Average
+        </span>
+      </div>
+
+      <h2>₹{{ avgPriceValue }}</h2>
+      <p>Average Price</p>
+
+    </div>
+  </div>
+
+</div>
+
+  <!-- CARDS -->
+  <div class="row justify-content-center">
+
+    <div class="col-md-4 mb-4" *ngFor="let p of allPlans">
+
+<div class="plan-card"
+     [class.featured-card]="p.isFeatured"
+     [class.inactive]="!p.isActive">
+
+        <!-- FEATURED BADGE -->
+        <div *ngIf="p.isFeatured" class="featured-top">
+          Featured
+        </div>
+
+        <!-- ICON -->
+        <div class="icon-circle">📚</div>
+
+        <!-- TITLE -->
+        <h5 class="plan-name">{{ p.name }}</h5>
+
+        <!-- PRICE -->
+        <h2 class="price">
+          ₹ {{ p.price }}
+          <span class="billing-text">
+            {{ getBillingText(p.durationDays) }}
+          </span>
+        </h2>
+
+        <!-- FEATURES -->
+        <ul class="features">
+          <li>Max Books: {{ p.maxBooksAllowed }}</li>
+          <li>Loan Period: {{ p.maxDaysPerBook }} days</li>
+          <li>Plan Validity: {{ p.durationDays }} days</li>
+        </ul>
+
+        <!-- STATUS -->
+        <div class="status">
+          <span class="badge success" *ngIf="p.isActive">Active</span>
+          <span class="badge gray inactive-overlay" *ngIf="!p.isActive">Inactive</span>
+        </div>
+
+        <!-- BUTTON -->
+       <button type="button" class="buy-btn" (click)="openDialog(p)"><i class="fa-solid fa-pen-to-square"></i>
+          Edit Plan
+        </button>
+        <!-- DELETE -->
+        <button type="button" class="delete-btn" (click)="handleDelete(p)"><i class="fa-solid fa-trash"></i>
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+     </div>
+
+
+<!-- SINGLE MODAL -->
+<div class="modal-overlay" *ngIf="dialogOpen">
+
+  <div class="modal-container">
+
+    <!-- HEADER -->
+    <div class="modal-header">
+      <h4>{{ editingPlan ? 'Edit Subscription Plan' : 'Create Subscription Plan' }}</h4>
+      <span class="close-btn" (click)="closeDialog()">✖</span>
+    </div>
+
+    <!-- FORM -->
+    <form (ngSubmit)="savePlan()" #planForm="ngForm" novalidate>
+
+      <div class="modal-body">
+        <div class="form-grid">
+
+   
+          <div class="form-group floating">
+  <input 
+    [(ngModel)]="formData.planCode" 
+    name="planCode" 
+    placeholder=""
+    required
+  >
+  <label>Plan Code *</label>
+  <small>Unique identifier for the plan (e.g. BASIC, PREMIUM)</small>
+</div>
+
+<div class="form-group floating">
+  <input
+    [(ngModel)]="formData.name"
+    name="name"
+    placeholder=""
+    required
+  >
+  <label>Plan Name *</label>
+  <small>Display name for the plan</small>
+</div>
+
+<div class="form-group floating full-width">
+  <textarea
+    [(ngModel)]="formData.description"
+    name="description"
+    placeholder=" "
+    required
+  ></textarea>
+  <label>Description</label>
+  <small>Brief description of plan benefits</small>
+</div>
+
+          <div class="form-group floating">
+  <input
+    type="number"
+    [(ngModel)]="formData.price"
+    name="price"
+    placeholder=" "
+    required
+  />
+  <label>Price *</label>
+</div>
+
+<div class="form-group floating">
+  <input
+    [(ngModel)]="formData.currency"
+    name="currency"
+    placeholder=" "
+    required
+  />
+  <label>Currency *</label>
+  <small>e.g., USD, EUR, INR</small>
+</div>
+<div class="form-group floating">
+  <input
+    type="number"
+    [(ngModel)]="formData.durationDays"
+    name="durationDays"
+    placeholder=" "
+    required
+  />
+  <label>Duration (Days) *</label>
+  <small>Subscription duration in days</small>
+</div>
+
+<div class="form-group floating">
+  <input
+    type="number"
+    [(ngModel)]="formData.maxBooksAllowed"
+    name="maxBooksAllowed"
+    placeholder=" "
+    required
+  />
+  <label>Max Books Allowed *</label>
+  <small>Maximum books user can borrow simultaneously</small>
+</div>
+
+<div class="form-group floating">
+  <input
+    type="number"
+    [(ngModel)]="formData.maxDaysPerBook"
+    name="maxDaysPerBook"
+    placeholder=" "
+    required
+  />
+  <label>Max Days Per Book *</label>
+  <small>Maximum days allowed for each book loan</small>
+</div>
+
+<div class="form-group floating">
+  <input
+    type="number"
+    [(ngModel)]="formData.displayOrder"
+    name="displayOrder"
+    placeholder=" "
+  />
+  <label>Display Order</label>
+  <small>Order for displaying plans (lower numbers first)</small>
+</div>
+
+          <div class="form-group full-width">
+  <input
+    [(ngModel)]="formData.badgeText"
+    name="badgeText"
+    placeholder="Badge Text"
+  />
+  <small>Optional badge text (e.g., 'POPULAR', 'BEST VALUE')</small>
+</div>
+
+<div class="form-group full-width">
+  <textarea
+    [(ngModel)]="formData.adminNotes"
+    name="adminNotes"
+    placeholder="Admin Notes"
+  ></textarea>
+  <small>Internal notes for admins (not visible to users)</small>
+</div>
+<div class="form-group toggle-group">
+
+  <div class="toggle-row" (click)="formData.isFeatured = !formData.isFeatured">
+
+    <i 
+      class="fa-solid"
+      [ngClass]="formData.isFeatured ? 'fa-toggle-on active' : 'fa-toggle-off'">
+    </i>
+
+    <span>Featured Plan</span>
+
+  </div>
+
+  <small>Featured plans are highlighted to users</small>
+
+</div>
+
+
+<div class="form-group toggle-group">
+
+  <div class="toggle-row" (click)="formData.isActive = !formData.isActive">
+
+    <i 
+      class="fa-solid"
+      [ngClass]="formData.isActive ? 'fa-toggle-on active' : 'fa-toggle-off'">
+    </i>
+
+    <span>Active</span>
+
+  </div>
+
+  <small>Only active plans are available for purchase</small>
+
+</div>
+
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="modal-footer">
+        <button type="button" class="cancel-btn" (click)="closeDialog()">Cancel</button>
+        <button type="submit" class="save-btn">
+          {{ editingPlan ? 'Update Plan' : 'Create Plan' }}
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+
+</div>
+
+</div>
+

@@ -1,0 +1,175 @@
+<div
+  class="wishlist-card"
+  [class.selected]="isSelected"
+>
+
+  <div class="card-content">
+
+    <!-- Checkbox -->
+
+    <input
+      type="checkbox"
+      class="wishlist-checkbox"
+      [checked]="isSelected"
+      (change)="selectItem.emit(item.id)"
+    >
+
+    <!-- Cover -->
+
+    <div
+      class="book-cover"
+      (click)="viewBook.emit(item.book.id)"
+    >
+
+      <img
+        *ngIf="item.book.coverImageUrl"
+        [src]="item.book.coverImageUrl"
+        [alt]="item.book.title"
+      >
+
+      <i
+        *ngIf="!item.book.coverImageUrl"
+        class="bi bi-heart-fill placeholder-icon"
+      ></i>
+
+    </div>
+
+    <!-- Content -->
+
+    <div class="book-info">
+
+      <div class="header-row">
+
+        <div>
+
+          <h3
+            class="book-title"
+            (click)="viewBook.emit(item.book.id)"
+          >
+            {{ item.book.title }}
+          </h3>
+
+          <p class="author">
+            {{ item.book.author }}
+          </p>
+
+        </div>
+
+        <button
+          class="delete-btn"
+          (click)="removeItem.emit(item.book.id)"
+        >
+          <i class="bi bi-trash"></i>
+        </button>
+
+      </div>
+
+      <!-- Chips -->
+
+      <div class="chips-row">
+
+        <span class="chip genre">
+
+          {{ item.book.genreName || 'General' }}
+
+        </span>
+
+        <span
+          *ngIf="isAvailable"
+          class="chip available"
+        >
+
+          <i class="bi bi-check-circle-fill"></i>
+
+          {{ item.book.availableCopies }}
+          available
+
+        </span>
+
+        <span
+          *ngIf="!isAvailable"
+          class="chip unavailable"
+        >
+
+          <i class="bi bi-x-circle-fill"></i>
+
+          Unavailable
+
+        </span>
+
+        <span
+          *ngIf="item.notes"
+          class="chip notes"
+        >
+
+          Note:
+          {{ item.notes }}
+
+        </span>
+
+      </div>
+
+      <!-- Footer -->
+
+      <div class="footer-row">
+
+        <p class="date">
+
+          Added:
+          {{ item.addedAt | date:'shortDate' }}
+
+        </p>
+
+        <div class="actions">
+
+          <button
+            class="details-btn"
+            (click)="viewBook.emit(item.book.id)"
+          >
+
+            View Details
+
+          </button>
+
+          <!-- <button
+            *ngIf="isAvailable"
+            class="reserve-btn"
+            (click)="reserveBook.emit(item.book.id)"
+          >
+
+            Reserve Now
+
+
+          </button> -->
+
+
+
+          <!-- Available -->
+<button
+  *ngIf="isAvailable"
+  class="borrow-btn"
+  (click)="viewBook.emit(item.book.id)"
+>
+  <i class="bi bi-book-fill me-2"></i>
+  Borrow Book
+</button>
+
+<!-- Unavailable -->
+<button
+  *ngIf="!isAvailable"
+  class="reserve-btn"
+  (click)="viewBook.emit(item.book.id)"
+>
+  <i class="bi bi-bookmark-check-fill me-2"></i>
+  Reserve Now
+</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

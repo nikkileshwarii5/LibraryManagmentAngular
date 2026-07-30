@@ -1,0 +1,320 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+<div class="container mt-4">
+
+  <!-- HEADER -->
+  <div class="d-flex justify-content-between mb-3">
+    <div>
+      <h3 class="fw-bold">Genres Management</h3>
+      <small class="text-muted">Manage book categories and sub-categories</small>
+    </div>
+
+ <button class="add-genre-btn" (click)="handleOpenDialog()">
+  <i class="fa-solid fa-plus"></i>
+  ADD GENRE
+</button>
+  </div>
+
+  <!-- SEARCH -->
+<div class="mb-3 position-relative">
+
+  <i class="fa-solid fa-magnifying-glass search-icon"></i>
+
+  <input
+    class="form-control ps-5"
+    placeholder="Search genres by name or code..."
+    [(ngModel)]="searchTerm"
+    (input)="handleSearch()"
+  />
+
+</div>
+
+
+  <!-- STATS -->
+<!-- <div class="row text-center mb-4">
+
+  <div class="col-md-4">
+    <div class="stats-card primary">
+      <h4>{{ getRootGenres().length }}</h4>
+      <small>Root Genres</small>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="stats-card success">
+      <h4>{{ genres.length }}</h4>
+      <small>Total Genres</small>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="stats-card info">
+      <h4>{{ genres.filter(g => g.active).length }}</h4>
+      <small>Active Genres</small>
+    </div>
+  </div>
+
+</div> -->
+
+
+<div class="row g-4 mb-4">
+
+  <!-- Root Genres -->
+  <div class="col-md-4">
+    <div class="modern-card purple">
+
+      <div class="card-top">
+        <div class="card-icon">
+          <i class="fa-regular fa-folder-open"></i>
+        </div>
+
+        <span class="trend">
+          <i class="fa-solid fa-arrow-trend-up"></i>
+          Root
+        </span>
+      </div>
+
+      <h2>{{ getRootGenres().length }}</h2>
+
+      <p>Root Genres</p>
+
+    </div>
+  </div>
+
+  <!-- Total Genres -->
+  <div class="col-md-4">
+    <div class="modern-card green">
+
+      <div class="card-top">
+        <div class="card-icon">
+          <i class="fa-solid fa-layer-group"></i>
+        </div>
+
+        <span class="trend">
+          <i class="fa-solid fa-check"></i>
+          Total
+        </span>
+      </div>
+
+      <h2>{{ genres.length }}</h2>
+
+      <p>Total Genres</p>
+
+    </div>
+  </div>
+
+  <!-- Active -->
+  <div class="col-md-4">
+    <div class="modern-card blue">
+
+      <div class="card-top">
+        <div class="card-icon">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <span class="trend">
+          <i class="fa-solid fa-bolt"></i>
+          Active
+        </span>
+      </div>
+
+      <h2>{{ genres.filter(g => g.active).length }}</h2>
+
+      <p>Active Genres</p>
+
+    </div>
+  </div>
+
+</div>
+
+  <!-- TABLE -->
+  <div class="genres-table">
+  <div class="table-card">
+
+    <table class="custom-table">
+
+      <!-- HEADER -->
+      <thead>
+        <tr>
+          <th>Genre Name</th>
+          <th>Description</th>
+          <th>Parent Genre</th>
+          <th>Books</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <!-- BODY -->
+      <tbody>
+
+        <!-- EMPTY -->
+        <tr *ngIf="genres.length === 0">
+          <td colspan="6" class="no-data">
+            No genres available
+          </td>
+        </tr>
+
+        <!-- DATA -->
+        <tr *ngFor="let row of genres">
+            <td class="text-left"> 
+                <span class="genre-wrapper"><i class="fa-regular fa-folder genre-icon"></i>
+                    <span class="genre-name">{{ row.name }}</span>
+                </span>
+          </td>
+        
+        
+          <td class="description-cell">
+            {{ row.description }}
+          </td>
+
+          <td>
+            <span *ngIf="!row.parentId" class="badge primary">Root</span>
+
+            <span *ngIf="row.parentId">
+              {{ genres.find(g => g.id === row.parentId)?.name }}
+            </span>
+          </td>
+
+      <td>
+  <span class="book-count">
+    <i class="fa-solid fa-book-open"></i>
+    {{ row.bookCount || 0 }}
+  </span>
+</td>
+
+          <td>
+            <span class="badge success" *ngIf="row.active">Active</span>
+            <span class="badge gray" *ngIf="!row.active">Inactive</span>
+          </td>
+
+          <td class="actions">
+
+            <button class="action-btn warning"
+                    (click)="handleOpenDialog(row)"> <i class="fa-regular fa-pen-to-square"></i>
+             
+            </button>
+
+            <button class="action-btn danger"
+                    (click)="handleDelete(row)"> <i class="fa-solid fa-trash"></i>
+          
+            </button>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+</div>
+
+  <!-- MODAL -->
+  <div class="modal fade show custom-modal" *ngIf="dialogOpen">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+
+      <!-- HEADER -->
+      <div class="modal-header border-0">
+        <h4 class="fw-bold">
+          {{ editingGenre ? 'Edit Genre' : 'Add New Genre' }}
+        </h4>
+        <button class="btn-close" (click)="handleCloseDialog()"></button>
+      </div>
+
+      <!-- BODY -->
+      <div class="modal-body">
+
+        <div class="row g-3">
+
+          <!-- CODE -->
+          <div class="col-md-6">
+            <label class="form-label">Genre Code *</label>
+            <input class="form-control"
+                   [(ngModel)]="formData.code"
+                   placeholder="e.g., PROGRAMMING">
+            <small class="text-muted">Unique code identifier (uppercase)</small>
+          </div>
+
+          <!-- NAME -->
+          <div class="col-md-6">
+            <label class="form-label">Genre Name *</label>
+            <input class="form-control"
+                   [(ngModel)]="formData.name"
+                    [class.is-invalid]="errorMessage"
+                   placeholder="e.g., Programming">
+          </div>
+
+          <div class="text-danger mt-1" *ngIf="errorMessage">
+  {{ errorMessage }}
+</div>
+
+          <!-- DESCRIPTION -->
+          <div class="col-12">
+            <label class="form-label">Description</label>
+            <textarea class="form-control"
+                      rows="3"
+                      [(ngModel)]="formData.description"
+                      placeholder="Books covering Programming Fundamentals">
+            </textarea>
+          </div>
+
+          <!-- DISPLAY ORDER -->
+          <div class="col-md-6">
+            <label class="form-label">Display Order *</label>
+            <input type="number"
+                   class="form-control"
+                   [(ngModel)]="formData.displayOrder">
+            <small class="text-muted">
+              Order for displaying genres (lower numbers first)
+            </small>
+          </div>
+
+          <!-- PARENT -->
+          <div class="col-md-6">
+            <label class="form-label">Parent Genre (Optional)</label>
+            <select class="form-select"
+                    [(ngModel)]="formData.parentId">
+              <option value="">None (Root)</option>
+              <option *ngFor="let g of getRootGenres()" [value]="g.id">
+                {{ g.name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- ACTIVE -->
+          <div class="col-12 mt-2">
+            <div class="form-check form-switch">
+              <input type="checkbox"
+                     class="form-check-input"
+                     [(ngModel)]="formData.active">
+              <label class="form-check-label ms-2">Active</label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="modal-footer border-0">
+        <button class="btn btn-light"
+                (click)="handleCloseDialog()">
+          CANCEL
+        </button>
+
+        <button class="create-btn"
+                (click)="handleSubmit()">
+          {{ editingGenre ? 'UPDATE' : 'CREATE' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</div>

@@ -1,0 +1,31 @@
+<!-- MOBILE DRAWER -->
+
+<div
+  class="mobile-backdrop"
+  *ngIf="mobileOpen"
+  (click)="handleDrawerToggle()"
+></div>
+
+<div
+  class="mobile-drawer"
+  [class.mobile-drawer-open]="mobileOpen"
+>
+
+  <app-sidebar-drawer
+    [isMobile]="isMobile"
+    (closeDrawer)="setMobileOpen(false)"
+  >
+  </app-sidebar-drawer>
+
+</div>
+
+<!-- DESKTOP DRAWER -->
+
+<div class="desktop-drawer">
+
+  <app-sidebar-drawer
+    [isMobile]="false"
+  >
+  </app-sidebar-drawer>
+
+</div>
