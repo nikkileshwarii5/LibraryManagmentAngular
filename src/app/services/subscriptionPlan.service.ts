@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-const API = 'http://localhost:8080/api/subscriptions';
+const API = 'http://15.206.209.161:8080/api/subscriptions';
 
 @Injectable({ providedIn: 'root' })
 export class SubscriptionPlanService {
