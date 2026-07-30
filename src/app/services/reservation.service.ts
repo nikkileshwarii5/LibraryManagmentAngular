@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-const API_URL = 'http://localhost:8080/api/reservations';
+const API_URL = 'http://15.206.209.161:8080/api/reservations';
 
 @Injectable({ providedIn: 'root' })
 export class ReservationService {
