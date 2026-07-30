@@ -8,7 +8,7 @@ import { HttpParams } from '@angular/common/http';
 })
 export class NotificationService {
 
-  API_URL = 'http://localhost:8080/api/notifications';
+  API_URL = 'http://15.206.209.161:8080/api/notifications';
 
   constructor(private http: HttpClient) {}
 
