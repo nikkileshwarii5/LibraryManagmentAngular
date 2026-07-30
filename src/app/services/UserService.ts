@@ -7,7 +7,7 @@ import { UserProfile } from '../models/UserProfile';
 })
 export class UserService {
 
-  private API = 'http://localhost:8080';
+  private API = 'http://15.206.209.161:8080';
 
   constructor(private http: HttpClient) {}
 
@@ -115,7 +115,7 @@ updateUserRole(id: number, role: string) {
 getAchievements() {
 
   return this.http.get<any[]>(
-    'http://localhost:8080/api/achievements/my-achievements',
+    'http://15.206.209.161:8080/api/achievements/my-achievements',
     {
       headers: this.getHeaders()
     }
